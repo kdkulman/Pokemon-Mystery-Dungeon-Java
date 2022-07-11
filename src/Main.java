@@ -1,5 +1,7 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        DungeonCharacter test = new Snorlax();
+        System.out.println(test.toString());
+        System.out.println(Math.random());
     }
 }
