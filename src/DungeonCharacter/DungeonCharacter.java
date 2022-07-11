@@ -1,3 +1,5 @@
+package DungeonCharacter;
+
 public class DungeonCharacter {
     protected String myName;
     protected double myHP;

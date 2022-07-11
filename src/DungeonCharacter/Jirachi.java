@@ -1,8 +1,8 @@
-
+package DungeonCharacter;
 
 public class Jirachi extends Hero{
     Jirachi() {
-        super("Jirachi");
+        super("DungeonCharacter.Jirachi");
         this.myHP = 75;
         this.myDamageRange = 0.20;
         this.myAttack = 50;

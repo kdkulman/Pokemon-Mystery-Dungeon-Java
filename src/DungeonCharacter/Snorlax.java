@@ -1,9 +1,10 @@
+package DungeonCharacter;
 
 public class Snorlax extends Hero{
     private int mySleepCounter;
 
     Snorlax() {
-        super("Snorlax");
+        super("DungeonCharacter.Snorlax");
         this.myHP = 200;
         this.myDamageRange = 0.15;
         this.myAttack = 20;
