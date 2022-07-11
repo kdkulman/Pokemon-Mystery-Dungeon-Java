@@ -1,4 +1,4 @@
-import java.util.Arrays;
+package DungeonCharacter;
 
 public class Hero extends DungeonCharacter{
     protected int myOranBerryCount;

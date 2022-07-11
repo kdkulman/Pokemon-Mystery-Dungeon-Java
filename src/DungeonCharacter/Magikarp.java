@@ -1,8 +1,10 @@
+package DungeonCharacter;
+
 public class Magikarp extends Hero {
     private double myBigAttackChance;
 
     Magikarp() {
-        super("Magikarp");
+        super("DungeonCharacter.Magikarp");
         this.myHP = 60;
         this.myAttack = 1;
         this.myDefense = 1;
