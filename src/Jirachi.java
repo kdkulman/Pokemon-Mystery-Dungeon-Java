@@ -1,3 +1,5 @@
+
+
 public class Jirachi extends Hero{
     Jirachi() {
         super("Jirachi");
