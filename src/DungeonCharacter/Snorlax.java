@@ -3,7 +3,8 @@ package DungeonCharacter;
 public class Snorlax extends Hero{
     private int mySleepCounter;
 
-    Snorlax() {
+    //I made it public because he cannot be accessed out of package unless public -Kevin
+    public Snorlax() {
         super("DungeonCharacter.Snorlax");
         this.myHP = 200;
         this.myDamageRange = 0.15;
