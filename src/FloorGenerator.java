@@ -111,8 +111,8 @@ public class FloorGenerator {
         }
     }
 
-    //EDIT ALL OF THIS SHIT
-    //HAS A BUG FOR SURE
+    
+    //Has one minor bug 
     private void placeSouthHallway(final int start, final int end, final int column, final char c) {
         placeVerticalTileObjects(start, end-1, column-1, c);
         placeVerticalTileObjects(start, end, column+1, c);
