@@ -1,3 +1,5 @@
+package FloorGenerator;
+
 import java.util.Random;
 
 public class Room {
@@ -38,7 +40,7 @@ public class Room {
         if (height == width) return true;
         double max = Math.max(height, width);
         double min = Math.min(height, width);
-        if(max/min <= 7) return true;
+        if(max/min <= 3) return true;
         return false;
     }
 
@@ -58,6 +60,20 @@ public class Room {
         return height;
     }
 
+    @Override //prints out the dimensions of the room
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                sb.append("R");
+            }
+            sb.append("\n");
+        }
+        sb.append("\n");
+        sb.append("FloorGenerator.Room size: " + width + " x " + height);
+        return sb.toString();
+    }
+
     public int getHeight() {
         return height;
     }
@@ -70,17 +86,5 @@ public class Room {
         return rightHallway;
     }
 
-    @Override //prints out the dimensions of the room
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < width; i++){
-            for(int j = 0; j < height; j++){
-                sb.append("R");
-            }
-            sb.append("\n");
-        }
-        sb.append("\n");
-        sb.append("Room size: " + width + " x " + height);
-        return sb.toString();
-    }
+
 }

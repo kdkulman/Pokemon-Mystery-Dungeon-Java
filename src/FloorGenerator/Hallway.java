@@ -1,3 +1,5 @@
+package FloorGenerator;
+
 public class Hallway {
 
     private final int width;
@@ -5,7 +7,7 @@ public class Hallway {
 
     public Hallway(final int maxHeight, final int maxWidth, final int roomWidth, final int roomHeight){
         width = maxWidth - roomWidth;
-        height = maxHeight - roomHeight; //unverfied formula
+        height = maxHeight - roomHeight;
     }
 
     public int getWidth() {
