@@ -1,4 +1,6 @@
-public class Main {
+import DungeonCharacter.*;
+
+class Main {
 
     public static void main(String[] args) {
         DungeonCharacter test = new Snorlax();
