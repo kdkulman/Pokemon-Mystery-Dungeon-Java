@@ -1,15 +1,18 @@
 package DungeonCharacter;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Snorlax extends Hero{
     private int mySleepCounter;
     private BufferedImage mySprite = null;
 
     //I made it public because he cannot be accessed out of package unless public -Kevin
-    public Snorlax() {
+    public Snorlax() throws IOException {
         super("Snorlax", 200, 200,15, 20, 0,
-                10, 5, null);
+                10, 5, ImageIO.read(new File("SnorlaxPlayer.png")));
         this.mySleepCounter = 0;
     }
 

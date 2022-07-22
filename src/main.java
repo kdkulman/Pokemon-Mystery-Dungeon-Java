@@ -1,10 +1,10 @@
 import DungeonCharacter.*;
 
+import java.io.IOException;
+
 class Main {
 
-    public static void main(String[] args) {
-        DungeonCharacter test = new Snorlax();
-        System.out.println(test.toString());
-        System.out.println(Math.random());
+    public static void main(String[] args) throws IOException {
+        DungeonCharacter test = new Magikarp();
     }
 }

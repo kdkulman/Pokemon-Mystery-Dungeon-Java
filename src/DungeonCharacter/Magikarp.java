@@ -1,11 +1,15 @@
 package DungeonCharacter;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+
 public class Magikarp extends Hero {
     private double myBigAttackChance;
 
-    Magikarp() {
+    public Magikarp() throws IOException {
         super("Magikarp", 60, 60,0, 1, 0,
-                2, 5, null);
+                2, 5, ImageIO.read(new File("MagikarpPlayer.png")));
         this.myBigAttackChance = 0.1;
     }
 
