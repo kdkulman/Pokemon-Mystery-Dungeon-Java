@@ -3,7 +3,7 @@ package DungeonCharacter;
 public class Jirachi extends Hero{
     Jirachi() {
         super("DungeonCharacter.Jirachi");
-        this.myHP = 75;
+//        this.myHP = 75;
         this.myDamageRange = 0.20;
         this.myAttack = 50;
         this.mySpecialAttack = this.myTarget.getHP() / 2;

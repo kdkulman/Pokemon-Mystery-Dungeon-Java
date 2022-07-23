@@ -5,7 +5,7 @@ public class Magikarp extends Hero {
 
     Magikarp() {
         super("DungeonCharacter.Magikarp");
-        this.myHP = 60;
+//        this.myHP = 60;
         this.myAttack = 1;
         this.myDefense = 1;
         this.myEvasion = 0.05;
@@ -19,7 +19,7 @@ public class Magikarp extends Hero {
             if(this.myBigAttackChance < 1) {
                 this.myBigAttackChance += 0.05;
             }
-            this.myHP = 60;
+//            this.myHP = 60;
         }
     }
 }

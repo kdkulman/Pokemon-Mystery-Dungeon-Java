@@ -5,7 +5,7 @@ public class Gallade extends Hero{
 
     public Gallade() {
         super("DungeonCharacter.Gallade");
-        this.myHP = 100;
+ //       this.myHP = 100;
         this.myDamageRange = 0.30;
         this.myAttack = 20;
         this.mySpecialAttack = this.myAttack * 1.5;

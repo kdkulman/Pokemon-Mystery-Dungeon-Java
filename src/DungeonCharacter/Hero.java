@@ -5,7 +5,7 @@ public class Hero extends DungeonCharacter{
     //protected Item[] myInventory;
 
     Hero(String THE_NAME) {
-        super(THE_NAME);
+
         this.myOranBerryCount = 1;
 //        this.myInventory = new Item[10];
 //        for(int i = 0; i < this.myInventory.length; i++) {
@@ -15,8 +15,8 @@ public class Hero extends DungeonCharacter{
 
     public String toString() {
         String result = "";
-        result += "Name: " + this.myName + "\n";
-        result += "HP: " + this.myHP + "\n";
+ //       result += "Name: " + this.myName + "\n";
+ //       result += "HP: " + this.myHP + "\n";
         result += "Oran Berries: " + this.myOranBerryCount;
         //result += "Inventory: " + getInventory();
         return result;

@@ -1,6 +1,6 @@
-package com;
+package DungeonCharacter;
 
-public abstract class DungeonCharacter extends TileObject {
+public abstract class DungeonCharacter extends com.TileObject {
 
     protected double myHp;
     protected double myDamageRange;
