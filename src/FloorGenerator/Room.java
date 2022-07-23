@@ -3,8 +3,9 @@ package FloorGenerator;
 import java.util.Random;
 
 public class Room {
-    private Hallway rightHallway;
-    private final int MIN_ROOM_SIZE = 4;
+    private Hallway hallway;
+    private final int MIN_ROOM_WIDTH = 4;
+    private final int MIN_ROOM_HEIGHT = 4;
     private final int maxWidth;
     private final int maxHeight;
     private int height;
@@ -14,29 +15,25 @@ public class Room {
     public Room(final int maxHeight, final int maxWidth){
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
-        setFields();
+        this.r = new Random();
+        this.height = createRoomHeight(maxHeight);
+        this.width = createRoomWidth(maxWidth);
+        this.hallway = generateHallway();
         generateHallway();
-        while(!isRoomRatioGood(height, width)){
+        while(isRoomRatioAtLeast3By2(height, width) == false){
             height = createRoomHeight(maxHeight);
             width = createRoomWidth(maxWidth);
         }
     }
 
-    private void setFields(){
-        r = new Random();
-        height = createRoomHeight(maxHeight);
-        width = createRoomWidth(maxWidth);
-        rightHallway = generateHallway();
-    }
-
     private Hallway generateHallway() {
-        Hallway hallway = new Hallway(maxHeight, maxWidth, width, height);
+        Hallway hallway = new Hallway(maxHeight, maxWidth, height, width);
         return hallway;
     }
 
-    private boolean isRoomRatioGood(int height, int width){
+    private boolean isRoomRatioAtLeast3By2(final int height, final int width){
         //We want to maintain rooms of a minimum of a 3:2 ratio
-        //To prevent funky looking rooms from being created
+        //To prevent funky (weird long) looking rooms from being created
         if (height == width) return true;
         double max = Math.max(height, width);
         double min = Math.min(height, width);
@@ -45,7 +42,7 @@ public class Room {
     }
 
     private int createRoomWidth(final int maxWidth){
-        int width = MIN_ROOM_SIZE + r.nextInt(maxWidth);
+        int width = MIN_ROOM_WIDTH + r.nextInt(maxWidth);
         if (width >= maxWidth){
             return createRoomWidth(maxWidth);
         }
@@ -53,7 +50,7 @@ public class Room {
     }
 
     private int createRoomHeight(final int maxHeight){
-        int height = MIN_ROOM_SIZE + r.nextInt(maxHeight);
+        int height = MIN_ROOM_HEIGHT + r.nextInt(maxHeight);
         if (height >= maxHeight){
             return createRoomHeight(maxHeight);
         }
@@ -82,9 +79,30 @@ public class Room {
         return width;
     }
 
-    public Hallway getRightHallway() {
-        return rightHallway;
+    public Hallway getHallway() {
+        return hallway;
     }
 
+    //Getter for Junit Test
+    public boolean testIsRoomRatioAtLeast3By2(final int height, final int width){
+        return isRoomRatioAtLeast3By2(height, width);
+    }
 
+    //Getter for Junit Test
+    public int testCreateRoomHeight(final int maxHeight){
+        return createRoomHeight(maxHeight);
+    }
+    //Getter for Junit Test
+    public int getMIN_ROOM_HEIGHT(){
+        return MIN_ROOM_HEIGHT;
+    }
+
+    //Getter for Junit Test
+    public int testCreateRoomWidth(final int maxWidth){
+        return createRoomWidth(maxWidth);
+    }
+    //Getter for Junit Test
+    public int getMIN_ROOM_WIDTH(){
+        return MIN_ROOM_WIDTH;
+    }
 }

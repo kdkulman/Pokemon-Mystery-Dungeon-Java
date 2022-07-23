@@ -4,8 +4,8 @@ public class Hero extends DungeonCharacter{
     protected int myOranBerryCount;
     //protected Item[] myInventory;
 
-    Hero(String THE_NAME) {
-        super(THE_NAME);
+    public Hero() {
+        super();
         this.myOranBerryCount = 1;
 //        this.myInventory = new Item[10];
 //        for(int i = 0; i < this.myInventory.length; i++) {

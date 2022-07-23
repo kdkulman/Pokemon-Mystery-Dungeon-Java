@@ -4,7 +4,7 @@ public class Gallade extends Hero{
     private final double SELF_INFLICTION = 12.5;
 
     public Gallade() {
-        super("DungeonCharacter.Gallade");
+        super();
         this.myHP = 100;
         this.myDamageRange = 0.30;
         this.myAttack = 20;

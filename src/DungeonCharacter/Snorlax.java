@@ -5,7 +5,7 @@ public class Snorlax extends Hero{
 
     //I made it public because he cannot be accessed out of package unless public -Kevin
     public Snorlax() {
-        super("DungeonCharacter.Snorlax");
+        super();
         this.myHP = 200;
         this.myDamageRange = 0.15;
         this.myAttack = 20;
