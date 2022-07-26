@@ -1,50 +1,52 @@
 package GameView;
+
+import GameManager.GameManager;
+
 /*
  * Note: Some code in this file has been reference from an online
  * tutorial: https://www.youtube.com/watch?v=om59cwR7psI&ab_channel=RyiSnow
- * The guide was referenced in the interest of time rather than discovering these
- * nuances of Java Swing through trial and error because gui is optional for this project.
+ * The guide was referenced in the interest of time rather than discovering the
+ * nuances of Java Swing through trial and error.
  *
  */
-import FloorGenerator.FloorGenerator;
+import TileObjects.OranBerry;
+import TileObjects.Texture;
+import TileObjects.TileObject;
+import TileObjects.Wall;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
 public class GameView extends JPanel implements Runnable{
     //View will be 9 tiles x 13 tiles so the player can always be in the middle
-    private final int SCALE = 1;
+    private final int SCALE = 3;
     private final int BASE_TILE_SIZE = 24;
     private final int TILE_SIZE = BASE_TILE_SIZE * SCALE;
     private final int SCREEN_TILE_WIDTH = 13;
     private final int SCREEN_TILE_HEIGHT = 9;
-    private final int SCREEN_WIDTH = SCREEN_TILE_WIDTH * TILE_SIZE*5;
-    private final int SCREEN_HEIGHT = SCREEN_TILE_HEIGHT * TILE_SIZE*5;
+    private final int SCREEN_WIDTH = SCREEN_TILE_WIDTH * TILE_SIZE;
+    private final int SCREEN_HEIGHT = SCREEN_TILE_HEIGHT * TILE_SIZE;
     private final int FPS = 60;
     private int drawX;
     private int drawY;
-    private Controller c;
-    private BufferedImage texture2 = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\grass_texture2.png"));
-    private BufferedImage texture = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\grassTexture.png"));
-    private BufferedImage midWall = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\grass_midWall.png"));
-    private BufferedImage northWall = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\grass_northWall.png"));
-    private BufferedImage player = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\MagikarpPlayer.png"));
-    private BufferedImage staircase = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\staircase.png"));
-    private BufferedImage trap = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\trap.png"));
-    private BufferedImage item = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\oranBerry.png"));
-    private BufferedImage enemy = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\enemy.png"));
-
-
+    private GameManager gameManager;
     private Thread gameThread;
+    private TileObject[][] floor;
+
+    private int playerRow;
+    private int playerColumn;
+
+    //CAMERA SETTINGS
+    private int viewWidth;
+    private int viewHeight;
 
 
-    public GameView() throws IOException {
-        c = new Controller();
+    public GameView(final int playerRow, final int playerColumn) throws IOException {
+        this.playerColumn = playerColumn;
+        this.playerRow = playerRow;
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
@@ -52,19 +54,14 @@ public class GameView extends JPanel implements Runnable{
         gameThread.start();
     }
 
-
-
     @Override
     public void run() {
 
         double interval = 1000000000/FPS; //update every .01666 seconds
         double nextUpdate = System.nanoTime() + interval;
         while(gameThread != null){
-
             update();
             repaint();
-
-
             double timeUntilUpdate = nextUpdate - System.nanoTime(); //1mil = 1sec
             timeUntilUpdate = timeUntilUpdate/1000000;
             if(timeUntilUpdate < 0) timeUntilUpdate = 0;
@@ -84,51 +81,60 @@ public class GameView extends JPanel implements Runnable{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        drawFloor(g2);
+        try {
+            drawFloor(g2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void drawFloor(Graphics2D g2){
-        Random r = new Random();
-        char[][] floor = c.getFloor();
-        for(int row = 0; row <  floor.length; row++){
-            for(int column = 0; column < floor[0].length; column++){
-                char tile = floor[row][column];
-                if (tile == 'T'){
-                    draw(column, row, g2, texture2);
-                } else if(tile == 'W'){
-                    draw(column, row, g2, northWall);
-                } else if (tile == 'p'){
-                    draw(column, row, g2, player);
-                } else if (tile == 's'){
-                    draw(column, row, g2, staircase);
-                } else if (tile == 't'){
-                    draw(column, row, g2, trap);
-                } else if (tile == 'i'){
-                    draw(column, row, g2, item);
-                } else if (tile == 'e'){
-                    draw(column, row, g2, enemy);
+    //Clamp is used to make sure the camera stays in bounds
+    private int clamp(final int value, final int min, final int max){
+        int theValue = value;
+//        if(value - 5 < min) theValue += 5;
+//        if(value + 5 > max) theValue -= 5;
+        if (min > value) return min;
+        if (value > max) return max;
+        return theValue;
+    }
+
+    private void drawFloor(final Graphics2D g2) throws IOException {
+        if (floor != null) {
+            for (int row = 0; row < SCREEN_TILE_HEIGHT; row++) {
+                for (int column = 0; column < SCREEN_TILE_WIDTH; column++) {
+                    int cameraHeight = clamp(playerRow + row - SCREEN_TILE_HEIGHT/2, 0, floor.length-1);
+                    int cameraWidth = clamp(playerColumn + column - SCREEN_TILE_WIDTH/2, 0, floor[0].length-1);
+
+                    if(cameraHeight > floor.length-1 || cameraWidth > floor[0].length-1){
+                        draw(row, column,  g2, new Wall().getSprite());
+                    } else {
+                        draw(row, column,  g2, floor[cameraHeight][cameraWidth].getSprite());
+                    }
+                    int c = cameraHeight;
+                    int r = cameraWidth;
+                    System.out.println("Floor[" + c + "][" + r + "].getsprite()");
                 }
             }
         }
     }
 
-    private void draw(int column, int row, Graphics2D g2, BufferedImage image){
-        drawX = column;
-        drawY = row;
-        g2.drawImage(image, drawX*TILE_SIZE,drawY*TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+    public void setFloor(final TileObject[][] floor){
+        this.floor = floor;
+    }
+
+    public void setPlayerRow(final int playerRow){
+        this.playerRow = playerRow;
+    }
+
+    public void setPlayerColumn(final int playerColumn){
+        this.playerColumn = playerColumn;
+    }
+
+    private void draw(final int row, final int column, final Graphics2D g2, final BufferedImage image){
+//        drawX = column;
+//        drawY = row;
+        g2.drawImage(image, column*TILE_SIZE,row*TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
 
     }
-    private class Controller{
-        private char[][] floor;
-        public Controller(){
-            FloorGenerator fg = new FloorGenerator();
-            floor = fg.getFloor();
-            System.out.println(fg.debugToString());
 
-        }
-
-        public char[][] getFloor(){
-            return floor;
-        }
-    }
 }
