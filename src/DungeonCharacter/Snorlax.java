@@ -1,31 +1,32 @@
 package DungeonCharacter;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class Snorlax extends Hero{
     private int mySleepCounter;
+    private BufferedImage mySprite = null;
 
     //I made it public because he cannot be accessed out of package unless public -Kevin
-    public Snorlax() {
-        super("DungeonCharacter.Snorlax");
-        this.myHP = 200;
-        this.myDamageRange = 0.15;
-        this.myAttack = 20;
-        this.mySpecialAttack = 0;
-        this.myDefense = 10;
-        this.myEvasion = 0.05;
+    public Snorlax() throws IOException {
+        super("Snorlax", 200, 200,15, 20, 0,
+                10, 5, ImageIO.read(new File("SnorlaxPlayer.png")));
         this.mySleepCounter = 0;
     }
 
     @Override
     public void specialAttack() {
-        this.myHP = 200;
-        this.myBattleStatus = false;
+        heal(this.getMaxHP());
+        this.setBattleStatus(false);
     }
 
     public void sleepCounter() {
-        if(!this.myBattleStatus) {
+        if(!this.getBattleStatus()) {
             if(this.mySleepCounter == 2) {
                 this.mySleepCounter = 0;
-                this.myBattleStatus = true;
+                this.setBattleStatus(true);
             } else {
                 this.mySleepCounter++;
             }

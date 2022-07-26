@@ -1,21 +1,20 @@
 package DungeonCharacter;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+
 public class Gallade extends Hero{
     private final double SELF_INFLICTION = 12.5;
 
-    public Gallade() {
-        super("DungeonCharacter.Gallade");
-        this.myHP = 100;
-        this.myDamageRange = 0.30;
-        this.myAttack = 20;
-        this.mySpecialAttack = this.myAttack * 1.5;
-        this.myDefense = 3;
-        this.myEvasion = 0.15;
+    public Gallade() throws IOException {
+        super("Gallade", 100, 100,30, 20, 30,
+                3, 15, ImageIO.read(new File("Gallade.png")));
     }
 
     @Override
     public void specialAttack() {
-        this.myTarget.takeDamage(this.mySpecialAttack);
+        this.getTarget().takeDamage(this.getMySpecialAttack());
         this.takeDamage(SELF_INFLICTION);
     }
 }
