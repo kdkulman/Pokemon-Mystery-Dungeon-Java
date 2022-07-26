@@ -16,6 +16,8 @@ public class Hero extends DungeonCharacter{
             this.myVisionSeeds = 0;
     }
 
+
+
     public String toString() {
         String result = "";
         result += "Name: " + super.getName() + "\n";

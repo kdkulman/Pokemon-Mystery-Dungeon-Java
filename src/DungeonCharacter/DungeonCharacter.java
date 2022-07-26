@@ -69,6 +69,7 @@ public class DungeonCharacter extends TileObject {
         }
     }
 
+
     private boolean characterIsHit() {
         if (Math.random() < this.myEvasion) {
             return false;

@@ -13,6 +13,7 @@ public class Magikarp extends Hero {
         this.myBigAttackChance = 0.1;
     }
 
+
     @Override
     public void specialAttack() {
         if(Math.random() < this.myBigAttackChance) {

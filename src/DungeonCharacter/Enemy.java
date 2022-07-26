@@ -11,4 +11,5 @@ public class Enemy extends DungeonCharacter{
             super(THE_NAME, THE_HP, THE_MAX_HP, THE_DAMAGE_RANGE, THE_ATTACK, THE_SPECIAL_ATTACK, THE_DEFENSE, THE_EVASION,
                     THE_SPRITE);
     }
+
 }
