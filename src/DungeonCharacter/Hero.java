@@ -5,7 +5,7 @@ public class Hero extends DungeonCharacter{
     //protected Item[] myInventory;
 
     public Hero() {
-        super();
+        super("");
         this.myOranBerryCount = 1;
 //        this.myInventory = new Item[10];
 //        for(int i = 0; i < this.myInventory.length; i++) {

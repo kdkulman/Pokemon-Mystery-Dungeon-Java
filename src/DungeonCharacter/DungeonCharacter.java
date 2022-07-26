@@ -1,6 +1,8 @@
 package DungeonCharacter;
 
-public class DungeonCharacter {
+import TileObjects.TileObject;
+
+public class DungeonCharacter extends TileObject {
     protected String myName;
     protected double myHP;
     protected double myDamageRange;

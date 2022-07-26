@@ -8,7 +8,7 @@ public class Magikarp extends Hero {
     private double myBigAttackChance;
 
     public Magikarp() throws IOException {
-        //super();
+        super();
         this.myHP = 60;
         this.myAttack = 1;
         this.myDefense = 1;
