@@ -11,19 +11,21 @@ public class Magikarp extends Hero {
         super("Magikarp", 60, 60,
                 0, 1, 0,
                 2, 5,
-                ImageIO.read(new File("MagikarpPlayer.png")));
+                ImageIO.read(new File("./src/DungeonCharacter/MagikarpPlayer.png")));
         this.myBigAttackChance = 0.1;
     }
 
 
     @Override
     public void specialAttack() {
-        if(Math.random() < this.myBigAttackChance) {
-            this.getTarget().takeDamage(this.getTarget().getHP());
-            if(this.myBigAttackChance < 1) {
-                this.myBigAttackChance += 0.05;
-            }
+        if(this.myBigAttackChance < Math.random()) {
+            this.getTarget().takeDamage(this.getTarget().getMaxHP());
+            this.myBigAttackChance += 0.05;
             this.heal(this.getMaxHP());
         }
+    }
+
+    public double getMyBigAttackChance() {
+        return this.myBigAttackChance;
     }
 }

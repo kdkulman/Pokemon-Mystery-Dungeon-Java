@@ -19,7 +19,7 @@ public abstract class DungeonCharacter extends TileObject {
                      final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION,
                      final BufferedImage THE_SPRITE){
 
-        super(THE_NAME, THE_SPRITE);
+        super(THE_SPRITE, THE_NAME,"");
         this.myMaxHP = THE_MAX_HP;
         this.myHP = THE_HP;
         this.myDamageRange = THE_DAMAGE_RANGE;
@@ -31,7 +31,7 @@ public abstract class DungeonCharacter extends TileObject {
         this.myBattleStatus = true;
     }
 
-    public double getHP() {
+    public int getHP() {
         return this.myHP;
     }
 
@@ -52,15 +52,15 @@ public abstract class DungeonCharacter extends TileObject {
     }
 
     public void attack() {
-        this.myTarget.takeDamage(this.myAttack * this.myDamageRange);
+        this.myTarget.takeDamage(this.myAttack);
     }
 
     public void specialAttack() {
-        this.myTarget.takeDamage(this.mySpecialAttack * this.myDamageRange);
+        this.myTarget.takeDamage(this.mySpecialAttack);
     }
 
-    public void takeDamage(final double THE_DAMAGE) {
-        double finalDamage = THE_DAMAGE - this.myDefense;
+    public void takeDamage(final int THE_DAMAGE) {
+        int finalDamage = THE_DAMAGE - this.myDefense;
         if (finalDamage < 0) {
             finalDamage = 0;
         }
@@ -71,7 +71,7 @@ public abstract class DungeonCharacter extends TileObject {
 
 
     private boolean characterIsHit() {
-        if (Math.random() < this.myEvasion) {
+        if (this.myEvasion < Math.random()) {
             return false;
         } else {
             return true;

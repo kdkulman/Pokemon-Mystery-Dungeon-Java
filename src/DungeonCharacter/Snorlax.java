@@ -7,12 +7,11 @@ import java.io.IOException;
 
 public class Snorlax extends Hero{
     private int mySleepCounter;
-    private BufferedImage mySprite = null;
 
     //I made it public because he cannot be accessed out of package unless public -Kevin
     public Snorlax() throws IOException {
         super("Snorlax", 200, 200,15, 20, 0,
-                10, 5, ImageIO.read(new File("SnorlaxPlayer.png")));
+                10, 5, ImageIO.read(new File("./src/DungeonCharacter/SnorlaxPlayer.png")));
         this.mySleepCounter = 0;
     }
 
@@ -31,5 +30,9 @@ public class Snorlax extends Hero{
                 this.mySleepCounter++;
             }
         }
+    }
+
+    public int getSleepCounter() {
+        return this.mySleepCounter;
     }
 }

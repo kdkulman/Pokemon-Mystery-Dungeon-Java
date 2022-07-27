@@ -22,8 +22,24 @@ public abstract class Hero extends DungeonCharacter{
         String result = "";
         result += "Name: " + super.getName() + "\n";
         result += "HP: " + super.getHP() + "\n";
-        result += "Oran Berries: " + this.myOranBerryCount;
+        result += "Oran Berries: " + this.myOranBerryCount + "\n";
         result += "Vision Seeds: " + this.myVisionSeeds;
         return result;
+    }
+
+    public void collectOranBerry() {
+        this.myOranBerryCount++;
+    }
+
+    public void collectVisionSeeds() {
+        this.myVisionSeeds++;
+    }
+
+    public int getBerryCount() {
+        return this.myOranBerryCount;
+    }
+
+    public int getSeedCount() {
+        return this.myVisionSeeds;
     }
 }
