@@ -21,6 +21,10 @@ public abstract class TileObject {
         this.sprite = sprite;
     }
 
+    public TileObject(String the_name, BufferedImage the_sprite) {
+
+    }
+
     public BufferedImage getSprite() {
         return sprite;
     }

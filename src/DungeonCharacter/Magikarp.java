@@ -8,8 +8,10 @@ public class Magikarp extends Hero {
     private double myBigAttackChance;
 
     public Magikarp() throws IOException {
-        super("Magikarp", 60, 60,0, 1, 0,
-                2, 5, ImageIO.read(new File("MagikarpPlayer.png")));
+        super("Magikarp", 60, 60,
+                0, 1, 0,
+                2, 5,
+                ImageIO.read(new File("MagikarpPlayer.png")));
         this.myBigAttackChance = 0.1;
     }
 

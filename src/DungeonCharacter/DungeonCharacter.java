@@ -1,10 +1,10 @@
 package DungeonCharacter;
 
-import Item.TileObject;
+import TileObjects.TileObject;
 
 import java.awt.image.BufferedImage;
 
-public class DungeonCharacter extends TileObject {
+public abstract class DungeonCharacter extends TileObject {
     private int myHP;
     private int myMaxHP;
     private int myDamageRange;
@@ -15,7 +15,7 @@ public class DungeonCharacter extends TileObject {
     private DungeonCharacter myTarget;
     private boolean myBattleStatus;
 
-    DungeonCharacter(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
+    public DungeonCharacter(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
                      final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION,
                      final BufferedImage THE_SPRITE){
 

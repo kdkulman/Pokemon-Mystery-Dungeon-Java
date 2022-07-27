@@ -9,8 +9,6 @@ import GameManager.GameManager;
  * nuances of Java Swing through trial and error.
  *
  */
-import TileObjects.OranBerry;
-import TileObjects.Texture;
 import TileObjects.TileObject;
 import TileObjects.Wall;
 
@@ -18,7 +16,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
 
 public class GameView extends JPanel implements Runnable{
     //View will be 9 tiles x 13 tiles so the player can always be in the middle

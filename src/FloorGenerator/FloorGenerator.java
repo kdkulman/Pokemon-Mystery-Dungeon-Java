@@ -1,9 +1,8 @@
 package FloorGenerator;
-
-import DungeonCharacter.Enemy;
-import DungeonCharacter.Magikarp;
-import DungeonCharacter.Snorlax;
+import DungeonCharacter.*;
 import TileObjects.*;
+import TileObjects.Items.OranBerry;
+import TileObjects.Items.VisionSeed;
 
 import java.io.IOException;
 import java.util.Random;
@@ -35,7 +34,7 @@ public class FloorGenerator {
         putRoomsInFloor();
         placeTileObject(r.nextInt(1), new VisionSeed()); //place items
         placeTileObject(r.nextInt(3), new OranBerry()); //place oran berry
-        placeTileObject(r.nextInt(8), new Enemy());//place enemies
+        //placeTileObject(r.nextInt(8), new Enemy());//place enemies
         placeTileObject(r.nextInt(5), new SpikeTip());//place trap
         placeTileObject(1, new Staircase());//place staircase
         placePlayer();

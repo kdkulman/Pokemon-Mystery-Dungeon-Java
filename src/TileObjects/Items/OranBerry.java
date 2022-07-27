@@ -1,10 +1,10 @@
-package TileObjects;
+package TileObjects.Items;
 
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-public class OranBerry extends Item{
+public class OranBerry extends Item {
 
     public OranBerry(){
 

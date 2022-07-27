@@ -2,11 +2,11 @@ package DungeonCharacter;
 
 import java.awt.image.BufferedImage;
 
-public class Hero extends DungeonCharacter{
+public abstract class Hero extends DungeonCharacter{
     private int myOranBerryCount;
     private int myVisionSeeds;
 
-    Hero(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE, final int THE_ATTACK,
+    public Hero(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE, final int THE_ATTACK,
          final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION,
          final BufferedImage THE_SPRITE){
 
