@@ -11,7 +11,7 @@ public class Magikarp extends Hero {
         super("Magikarp", 60, 60,
                 0, 1, 0,
                 2, 5,
-                ImageIO.read(new File("./src/DungeonCharacter/MagikarpPlayer.png")));
+                ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\MagikarpPlayer.png")));
         this.myBigAttackChance = 0.1;
     }
 
