@@ -1,6 +1,6 @@
 package GameView;
 
-import GameManager.GameManager;
+import FloorGenerator.FloorGenerator;
 
 /*
  * Note: Some code in this file has been reference from an online
@@ -29,7 +29,6 @@ public class GameView extends JPanel implements Runnable{
     private final int FPS = 60;
     private int drawX;
     private int drawY;
-    private GameManager gameManager;
     private Thread gameThread;
     private TileObject[][] floor;
 
@@ -41,14 +40,26 @@ public class GameView extends JPanel implements Runnable{
     private int viewHeight;
 
 
-    public GameView(final int playerRow, final int playerColumn) throws IOException {
-        this.playerColumn = playerColumn;
-        this.playerRow = playerRow;
+    public GameView() throws IOException {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
+        createFloor(); //Create Model
+        createInputControls(); //Create Controller
+
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    private void createInputControls(){
+
+    }
+
+    private void createFloor() throws IOException {
+        FloorGenerator floor = new FloorGenerator();
+        playerRow = floor.getPlayerRow();
+        playerColumn = floor.getPlayerColumn();
+        this.floor = floor.getFloor();
     }
 
     @Override
