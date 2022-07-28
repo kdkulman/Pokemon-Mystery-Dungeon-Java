@@ -182,37 +182,7 @@ public class GameView extends JPanel implements Runnable{
     }
 
     private void draw(final int row, final int column, final Graphics2D g2, final BufferedImage image){
-//        drawX = column;
-//        drawY = row;
         g2.drawImage(image, column*TILE_SIZE,row*TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
 
     }
-
-
-
-//    public void setFloor(final TileObject[][] floor){
-//        this.floor = floor;
-//    }
-
-//    public void setPlayerRow(final int playerRow){
-//        this.playerRow = playerRow;
-//    }
-//
-//    public void setPlayerColumn(final int playerColumn){
-//        this.playerColumn = playerColumn;
-//    }
-//
-//    public int getPlayerRow(){
-//        return playerRow;
-//    }
-//
-//    public int getPlayerColumn() {
-//        return playerColumn;
-//    }
-
-//    public TileObject[][] getFloor() {
-//        return floor;
-//    }
-
-
 }
