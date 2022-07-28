@@ -1,4 +1,3 @@
-import GameManager.GameManager;
 import GameView.GameView;
 
 import javax.swing.*;

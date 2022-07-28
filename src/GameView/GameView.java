@@ -1,7 +1,7 @@
 package GameView;
 
+import Controller.InputControls;
 import FloorGenerator.FloorGenerator;
-
 /*
  * Note: Some code in this file has been reference from an online
  * tutorial: https://www.youtube.com/watch?v=om59cwR7psI&ab_channel=RyiSnow
@@ -31,6 +31,7 @@ public class GameView extends JPanel implements Runnable{
     private int drawY;
     private Thread gameThread;
     private TileObject[][] floor;
+    private InputControls controller;
 
     private int playerRow;
     private int playerColumn;
@@ -52,7 +53,7 @@ public class GameView extends JPanel implements Runnable{
     }
 
     private void createInputControls(){
-
+        controller = new InputControls();
     }
 
     private void createFloor() throws IOException {

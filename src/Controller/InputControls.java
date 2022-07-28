@@ -1,13 +1,13 @@
+package Controller;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class InputControls extends KeyAdapter {
 
-//    Game game;
-//
-//    public InputControls(Game game){
-//        this.game = game;
-//    }
+
+    public InputControls(){
+
+    }
 
 
     public void keyPressed(KeyEvent e){
