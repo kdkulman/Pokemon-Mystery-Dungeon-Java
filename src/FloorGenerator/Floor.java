@@ -7,19 +7,23 @@ import java.io.IOException;
 public class Floor {
 
     private TileObject[][] floor;
+    private int playerRow;
+    private int playerColumn;
+    private int playerFaceDirection;
 
     public Floor() throws IOException {
-        FloorGenerator floor = new FloorGenerator();
-        this.floor = floor.getFloor();
-        //uncomment when FloorTraversal is finished
-
-        //FloorTraversal traversal = new FloorTraversal(floor.getFloor());
-        //if (traversal.getTraversable == true) return floor.getFloor();
-        //return createFloor();
+        this.floor = getFloor();
     }
 
-    public TileObject[][] getFloor(){
-        return floor;
+    public TileObject[][] getFloor() throws IOException {
+        //uncomment when FloorTraversal is finished
+        FloorGenerator floor = new FloorGenerator();
+        playerRow = floor.getPlayerRow();
+        playerColumn = floor.getPlayerColumn();
+        //FloorTraversal traversal = new FloorTraversal(floor.getFloor());
+        //if (traversal.getTraversable == true) return floor.getFloor();
+        //return getFloor();
+        return floor.getFloor();
     }
 
 
