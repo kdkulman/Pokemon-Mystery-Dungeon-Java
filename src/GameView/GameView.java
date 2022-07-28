@@ -2,6 +2,8 @@ package GameView;
 
 import Controller.InputControls;
 import FloorGenerator.FloorGenerator;
+import FloorGenerator.Floor;
+
 /*
  * Note: Some code in this file has been reference from an online
  * tutorial: https://www.youtube.com/watch?v=om59cwR7psI&ab_channel=RyiSnow
@@ -32,17 +34,13 @@ public class GameView extends JPanel implements Runnable{
     private int drawX;
     private int drawY;
     private Thread gameThread;
-    private TileObject[][] floor;
-    private InputControls controller;
-
-    //Player Coordinates
-    private int playerRow;
-    private int playerColumn;
 
     //CAMERA SETTINGS
     private int viewWidth;
     private int viewHeight;
 
+    //Model
+    private Floor floor;
 
     public GameView() throws IOException {
         JFrame jFrame = new JFrame();
@@ -55,7 +53,9 @@ public class GameView extends JPanel implements Runnable{
         jFrame.isDoubleBuffered();
         jFrame.setLocationRelativeTo(null);
         jFrame.setVisible(true);
+
         createFloor(); //Create Model
+
         jFrame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -64,31 +64,38 @@ public class GameView extends JPanel implements Runnable{
 
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println("BUTTON HAS BEEN PRESSED :))");
                 int keyCode = e.getKeyCode();
                 switch (keyCode){
                     case KeyEvent.VK_W:
-                        InputControls.moveUp();
+                        System.out.println("UP");
+                        floor = InputControls.moveUp(floor);
                         break;
                     case KeyEvent.VK_S:
-                        InputControls.moveDown();
+                        System.out.println("DOWN");
+                        floor = InputControls.moveDown(floor);
                         break;
                     case KeyEvent.VK_A:
-                        InputControls.moveLeft();
+                        System.out.println("LEFT");
+                        floor = InputControls.moveLeft(floor);
                         break;
                     case KeyEvent.VK_D:
-                        InputControls.moveRight();
+                        System.out.println("RIGHT");
+                        floor = InputControls.moveRight(floor);
                         break;
                     case KeyEvent.VK_SPACE:
+                        System.out.println("REGULAR ATTACK");
                         InputControls.useRegularAttack();
                         break;
                     case KeyEvent.VK_SHIFT:
+                        System.out.println("SPECIAL ATTACK");
                         InputControls.useSpecialAttack();
                         break;
                     case KeyEvent.VK_1:
+                        System.out.println("USE ORAN BERRY");
                         InputControls.useOranBerry();
                         break;
                     case KeyEvent.VK_ESCAPE:
+                        System.out.println("QUIT GAME");
                         InputControls.quitGame();
                         break;
                     default:
@@ -106,18 +113,8 @@ public class GameView extends JPanel implements Runnable{
         gameThread.start();
     }
 
-
-    private void createInputControls() throws IOException{
-        controller = new InputControls(this);
-    }
-
-
     private void createFloor() throws IOException {
-        FloorGenerator floor = new FloorGenerator();
-        playerRow = floor.getPlayerRow();
-        System.out.println("Player row in GameView:" + playerRow);
-        playerColumn = floor.getPlayerColumn();
-        this.floor = floor.getFloor();
+        floor = new Floor(new FloorGenerator());
     }
 
     @Override
@@ -168,13 +165,13 @@ public class GameView extends JPanel implements Runnable{
         if (floor != null) {
             for (int row = 0; row < SCREEN_TILE_HEIGHT; row++) {
                 for (int column = 0; column < SCREEN_TILE_WIDTH; column++) {
-                    int cameraHeight = clamp(playerRow + row - SCREEN_TILE_HEIGHT/2, 0, floor.length-1);
-                    int cameraWidth = clamp(playerColumn + column - SCREEN_TILE_WIDTH/2, 0, floor[0].length-1);
+                    int cameraHeight = clamp(floor.getPlayerRow() + row - SCREEN_TILE_HEIGHT/2, 0, floor.getFloorArray().length-1);
+                    int cameraWidth = clamp(floor.getPlayerColumn() + column - SCREEN_TILE_WIDTH/2, 0, floor.getFloorArray()[0].length-1);
 
-                    if(cameraHeight > floor.length-1 || cameraWidth > floor[0].length-1){
+                    if(cameraHeight > floor.getFloorArray().length-1 || cameraWidth > floor.getFloorArray()[0].length-1){
                         draw(row, column,  g2, new Wall().getSprite());
                     } else {
-                        draw(row, column,  g2, floor[cameraHeight][cameraWidth].getSprite());
+                        draw(row, column,  g2, floor.getFloorArray()[cameraHeight][cameraWidth].getSprite());
                     }
                     int c = cameraHeight;
                     int r = cameraWidth;
@@ -193,31 +190,29 @@ public class GameView extends JPanel implements Runnable{
 
 
 
-    public void setFloor(final TileObject[][] floor){
-        this.floor = floor;
-    }
+//    public void setFloor(final TileObject[][] floor){
+//        this.floor = floor;
+//    }
 
-    public void setPlayerRow(final int playerRow){
-        this.playerRow = playerRow;
-    }
+//    public void setPlayerRow(final int playerRow){
+//        this.playerRow = playerRow;
+//    }
+//
+//    public void setPlayerColumn(final int playerColumn){
+//        this.playerColumn = playerColumn;
+//    }
+//
+//    public int getPlayerRow(){
+//        return playerRow;
+//    }
+//
+//    public int getPlayerColumn() {
+//        return playerColumn;
+//    }
 
-    public void setPlayerColumn(final int playerColumn){
-        this.playerColumn = playerColumn;
-    }
-
-    public int getPlayerRow(){
-        return playerRow;
-    }
-
-    public int getPlayerColumn() {
-        return playerColumn;
-    }
-
-
-
-    public TileObject[][] getFloor() {
-        return floor;
-    }
+//    public TileObject[][] getFloor() {
+//        return floor;
+//    }
 
 
 }
