@@ -8,10 +8,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         GameView gameView = new GameView();
-        //createGameView();
     }
 
-    private static void createGameView() {
 
-    }
 }
