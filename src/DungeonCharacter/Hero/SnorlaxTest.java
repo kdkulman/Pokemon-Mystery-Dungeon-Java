@@ -1,4 +1,4 @@
-package DungeonCharacter;
+package DungeonCharacter.Hero;
 
 import org.junit.jupiter.api.Test;
 

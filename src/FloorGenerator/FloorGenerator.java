@@ -1,5 +1,5 @@
 package FloorGenerator;
-import DungeonCharacter.*;
+import DungeonCharacter.Hero.Magikarp;
 import TileObjects.*;
 import TileObjects.Items.OranBerry;
 import TileObjects.Items.VisionSeed;

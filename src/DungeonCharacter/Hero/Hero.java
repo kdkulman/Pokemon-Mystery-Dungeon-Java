@@ -1,8 +1,10 @@
-package DungeonCharacter;
+package DungeonCharacter.Hero;
+
+import DungeonCharacter.DungeonCharacter;
 
 import java.awt.image.BufferedImage;
 
-public abstract class Hero extends DungeonCharacter{
+public abstract class Hero extends DungeonCharacter {
     private int myOranBerryCount;
     private int myVisionSeeds;
 

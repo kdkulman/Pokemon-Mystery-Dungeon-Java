@@ -14,9 +14,9 @@ public class Staircase extends TileObject{
 
         private void setSprite(){
             try {
-                this.sprite = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\TileObjects\\staircase.png"));
+                this.sprite = ImageIO.read(new File("./src/TileObjects/staircase.png"));
             } catch (IOException e) {
-                System.out.println("sprite file could not be found");
+                System.out.println("stair file could not be found");
             }
         }
     }

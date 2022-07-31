@@ -1,4 +1,4 @@
-package DungeonCharacter;
+package DungeonCharacter.Hero;
 
 import javax.imageio.ImageIO;
 import java.io.File;

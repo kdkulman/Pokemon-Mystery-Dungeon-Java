@@ -1,5 +1,5 @@
 package Controller;
-import DungeonCharacter.Enemy;
+import DungeonCharacter.Enemy.Enemy;
 import FloorGenerator.Floor;
 import TileObjects.Texture;
 import TileObjects.TileObject;

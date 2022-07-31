@@ -13,9 +13,9 @@ public class Wall extends TileObject{
 
     private void setSprite(){
         try {
-            sprite = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\TileObjects\\grass_northWall.png"));
+            sprite = ImageIO.read(new File("./src/TileObjects/grass_northWall.png"));
         } catch (IOException e) {
-            System.out.println("sprite file could not be found");
+            System.out.println("wall file could not be found");
         }
     }
 }
