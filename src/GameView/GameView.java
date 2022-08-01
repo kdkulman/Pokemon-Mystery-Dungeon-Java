@@ -22,6 +22,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static java.lang.Math.round;
+
 public class GameView extends JPanel implements Runnable{
     private final int SCALE = 3;
     private final int BASE_TILE_SIZE = 24;
@@ -38,22 +40,15 @@ public class GameView extends JPanel implements Runnable{
     //CAMERA SETTINGS
     private int viewWidth;
     private int viewHeight;
+    private int viewWidthAnimation = 0;
+    private int viewHeightAnimation = 0;
 
     //Model
     private Floor floor;
 
-    public GameView() throws IOException {
-        JFrame jFrame = new JFrame();
-        jFrame.add(this);
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setResizable(false);
-        jFrame.setTitle("Pokemon Mystery Dungeon Java");
-        jFrame.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        jFrame.setBackground(Color.BLACK);
-        jFrame.isDoubleBuffered();
-        jFrame.setLocationRelativeTo(null);
-        jFrame.setVisible(true);
+    public GameView(JFrame jFrame) throws IOException {
 
+        jFrame.add(this);
         createFloor(); //Create Model
 
         jFrame.addKeyListener(new KeyListener() {
@@ -81,6 +76,7 @@ public class GameView extends JPanel implements Runnable{
                     case KeyEvent.VK_D:
                         System.out.println("RIGHT");
                         floor = InputControls.moveRight(floor);
+                        viewWidthAnimation = TILE_SIZE;
                         break;
                     case KeyEvent.VK_SPACE:
                         System.out.println("REGULAR ATTACK");
@@ -141,6 +137,8 @@ public class GameView extends JPanel implements Runnable{
 
     }
 
+
+
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -149,6 +147,31 @@ public class GameView extends JPanel implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        g.setColor(new Color(255, 255, 255, 150));
+        g.fillRect(SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 4), 0,
+                SCREEN_WIDTH/3, SCREEN_HEIGHT / 3);
+
+        displayPlayerHp(g);
+
+    }
+
+    private void displayPlayerHp(Graphics g){
+        int textOutlineSize = 1;
+        int xx = SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 5);
+        int yy = SCREEN_HEIGHT / 6;
+
+        g.setFont(new Font("Serif", Font.PLAIN, 32));
+
+        //Create outline around text
+        g.setColor(Color.BLACK);
+        g.drawString("HP  69/69",xx-textOutlineSize, yy-textOutlineSize);
+        g.drawString("HP  69/69",xx+textOutlineSize, yy+textOutlineSize);
+        g.drawString("HP  69/69",xx+textOutlineSize, yy-textOutlineSize);
+        g.drawString("HP  69/69",xx-textOutlineSize, yy+textOutlineSize);
+
+        g.setColor(Color.CYAN);
+        g.drawString("HP  69/69", xx, yy);
     }
 
     //Clamp is used to make sure the camera stays in bounds
@@ -185,4 +208,5 @@ public class GameView extends JPanel implements Runnable{
         g2.drawImage(image, column*TILE_SIZE,row*TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
 
     }
+
 }
