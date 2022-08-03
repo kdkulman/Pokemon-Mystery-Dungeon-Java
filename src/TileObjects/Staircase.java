@@ -12,10 +12,9 @@ public class Staircase extends TileObject{
          setSprite();
      }
 
-
     private void setSprite(){
         try {
-            URL url = this.getClass().getResource("/Sprites/Staircase.png");
+            URL url = this.getClass().getResource("/Sprites/TileObjects/Staircase.png");
             sprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("STAIRCASE file NOT FOUND");

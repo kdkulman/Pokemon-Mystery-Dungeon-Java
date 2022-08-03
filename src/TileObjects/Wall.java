@@ -13,7 +13,7 @@ public class Wall extends TileObject{
 
     private void setSprite(){
         try {
-            URL url = this.getClass().getResource("/Sprites/Floor/Walls/Wall_Top.png");
+            URL url = this.getClass().getResource("/Sprites/TileObjects/Walls/Wall_Top.png");
             sprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("WALL file NOT FOUND");

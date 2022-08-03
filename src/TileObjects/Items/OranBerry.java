@@ -1,7 +1,6 @@
 package TileObjects.Items;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -15,7 +14,7 @@ public class OranBerry extends Item {
 
     private void setSprite(){
         try {
-            URL url = this.getClass().getResource("/Sprites/Items/Oran_Berry.png");
+            URL url = this.getClass().getResource("/Sprites/TileObjects/Items/Oran_Berry.png");
             sprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("ORAN BERRY file NOT FOUND");

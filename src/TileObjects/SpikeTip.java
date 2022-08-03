@@ -1,7 +1,6 @@
 package TileObjects;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -14,7 +13,7 @@ public class SpikeTip extends TileObject{
 
     private void setSprite(){
         try {
-            URL url = this.getClass().getResource("/Sprites/trap.png");
+            URL url = this.getClass().getResource("/Sprites/TileObjects/trap.png");
             sprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("TRAP file NOT FOUND");
