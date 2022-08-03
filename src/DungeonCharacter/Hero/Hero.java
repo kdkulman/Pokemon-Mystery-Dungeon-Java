@@ -16,6 +16,23 @@ public abstract class Hero extends DungeonCharacter {
             this.myVisionSeeds = 0;
     }
 
+    public BufferedImage getSprite() {
+        switch (direction){
+            case UP -> {
+                return up;
+            }
+            case DOWN -> {
+                return down;
+            }
+            case LEFT -> {
+                return left;
+            }
+            case RIGHT -> {
+                return right;
+            }
+        }
+        return down;
+    }
 
     public String toString() {
         String result = "";

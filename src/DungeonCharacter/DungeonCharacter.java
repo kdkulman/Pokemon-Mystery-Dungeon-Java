@@ -14,24 +14,6 @@ public abstract class DungeonCharacter extends TileObject {
     private DungeonCharacter myTarget;
     private boolean myBattleStatus;
 
-    public BufferedImage getSprite() {
-        switch (direction){
-            case UP -> {
-                return up;
-            }
-            case DOWN -> {
-                return down;
-            }
-            case LEFT -> {
-                return left;
-            }
-            case RIGHT -> {
-                return right;
-            }
-        }
-        return down;
-    }
-
     public void setDirection(final Direction direction){
         this.direction = direction;
     }
