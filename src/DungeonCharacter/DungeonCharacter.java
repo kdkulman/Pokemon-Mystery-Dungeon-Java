@@ -1,5 +1,4 @@
 package DungeonCharacter;
-
 import TileObjects.TileObject;
 
 import java.awt.image.BufferedImage;
@@ -15,6 +14,28 @@ public abstract class DungeonCharacter extends TileObject {
     private DungeonCharacter myTarget;
     private boolean myBattleStatus;
 
+    public BufferedImage getSprite() {
+        switch (direction){
+            case UP -> {
+                return up;
+            }
+            case DOWN -> {
+                return down;
+            }
+            case LEFT -> {
+                return left;
+            }
+            case RIGHT -> {
+                return right;
+            }
+        }
+        return down;
+    }
+
+    public void setDirection(final Direction direction){
+        this.direction = direction;
+    }
+
     public DungeonCharacter(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
                      final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION){
 
@@ -28,6 +49,7 @@ public abstract class DungeonCharacter extends TileObject {
         this.myEvasion = THE_EVASION;
         this.myTarget = null;
         this.myBattleStatus = true;
+        direction = Direction.DOWN;
     }
 
     public int getHP() {
@@ -104,5 +126,6 @@ public abstract class DungeonCharacter extends TileObject {
     public int getMySpecialAttack() {
         return this.mySpecialAttack;
     }
+
 
 }

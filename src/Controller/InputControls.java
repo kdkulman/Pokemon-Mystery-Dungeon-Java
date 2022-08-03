@@ -1,4 +1,5 @@
 package Controller;
+import DungeonCharacter.DungeonCharacter;
 import DungeonCharacter.Enemy.Enemy;
 import FloorGenerator.Floor;
 import TileObjects.*;
@@ -31,7 +32,8 @@ public final class InputControls extends KeyAdapter {
     }
 
     public static Floor move(final Floor theFloor, final int destinationRow,
-                             final int destinationColumn, final String errorMessage){
+                             final int destinationColumn, final String errorMessage,
+                             final DungeonCharacter.Direction direction){
         Floor returnFloor = theFloor;
         if(playerRow != 0 && !(floor[destinationRow][destinationColumn] instanceof Wall) &&
                 !(floor[destinationRow][destinationColumn] instanceof Enemy)) {
@@ -45,29 +47,35 @@ public final class InputControls extends KeyAdapter {
             returnFloor.setPlayerRow(destinationRow);
             returnFloor.setPlayerColumn(destinationColumn);
             returnFloor.setFloorArray(floor);
+            returnFloor.getFloorArray()[destinationRow][destinationColumn].setDirection(direction);
             return returnFloor;
         }
         System.out.println(errorMessage);
-        return theFloor;
+        returnFloor.getFloorArray()[playerRow][playerColumn].setDirection(direction);
+        return returnFloor;
     }
 
     public static Floor moveUp(final Floor theFloor){
         updateFloorFields(theFloor);
-        return move(theFloor, playerRow-1, playerColumn, "Cannot move up!");
+        return move(theFloor, playerRow-1, playerColumn,
+                "Cannot move up!", DungeonCharacter.Direction.UP);
     }
 
     public static Floor moveDown(final Floor theFloor){
         updateFloorFields(theFloor);
-        return move(theFloor, playerRow+1, playerColumn, "Cannot move down!");
+        return move(theFloor, playerRow+1, playerColumn,
+                "Cannot move down!", DungeonCharacter.Direction.DOWN);
     }
 
     public static Floor moveLeft(final Floor theFloor){
         updateFloorFields(theFloor);
-        return move(theFloor, playerRow, playerColumn-1, "Cannot move left!");
+        return move(theFloor, playerRow, playerColumn-1,
+                "Cannot move left!", DungeonCharacter.Direction.LEFT);
     }
 
     public static Floor moveRight(final Floor theFloor){
         updateFloorFields(theFloor);
-        return move(theFloor, playerRow, playerColumn+1, "Cannot move right!");
+        return move(theFloor, playerRow, playerColumn+1,
+                "Cannot move right!", DungeonCharacter.Direction.RIGHT);
     }
 }

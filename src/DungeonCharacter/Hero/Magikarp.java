@@ -17,8 +17,14 @@ public class Magikarp extends Hero {
 
     private void setSprite(){
         try {
-            URL url = this.getClass().getResource("/Sprites/Hero/Magikarp/Magikarp_Down_Idle.png");
-            sprite = ImageIO.read(url);
+            URL url = this.getClass().getResource("/Sprites/Hero/Magikarp/Magikarp_Up_Idle.png");
+            up = ImageIO.read(url);
+            url = this.getClass().getResource("/Sprites/Hero/Magikarp/Magikarp_Down_Idle.png");
+            down = ImageIO.read(url);
+            url = this.getClass().getResource("/Sprites/Hero/Magikarp/Magikarp_Left_Idle.png");
+            left = ImageIO.read(url);
+            url = this.getClass().getResource("/Sprites/Hero/Magikarp/Magikarp_Right_Idle.png");
+            right = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("MAGIKARP file NOT FOUND");
         } catch (IllegalArgumentException e){
