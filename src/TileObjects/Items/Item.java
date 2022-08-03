@@ -9,9 +9,8 @@ import java.io.IOException;
 
 public abstract class Item extends TileObject {
 
-
-    public Item() {
-        super(null, "", "");
+    public Item(String name, String stringRepresentation) {
+        super( "", "");
     }
 }
 

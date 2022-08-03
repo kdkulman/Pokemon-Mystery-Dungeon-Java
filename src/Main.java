@@ -1,3 +1,5 @@
+import DungeonCharacter.Hero.Jirachi;
+import DungeonCharacter.Hero.Snorlax;
 import GameView.*;
 
 import javax.swing.*;
@@ -28,8 +30,8 @@ public class Main {
         //Character Quiz
         //CharacterQuizView characterQuizView = new CharacterQuizView(jFrame);
 
-        //Start Game
-        GameView gameView = new GameView(jFrame);
+        //FOR NOW, PASS THE PLAYER INTO THE VIEW
+        GameView gameView = new GameView(jFrame, new Jirachi());
     }
 
 

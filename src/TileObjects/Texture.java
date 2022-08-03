@@ -2,23 +2,25 @@ package TileObjects;
 
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 public class Texture extends TileObject{
 
     public Texture() throws IOException {
-        //super(ImageIO.read(new File("grassTexture.png")), "Texture", "T");
-        //setSprite();
+        super("Texture", "T");
+        setSprite();
     }
 
-//    private void setSprite(){
-//        try {
-//            InputStream input = classLoader.getResourceAsStream("grassTexture.png");
-//        } catch (IOException e) {
-//            System.out.println("grass file could not be found");
-//        }
-//    }
+    private void setSprite(){
+        try {
+            URL url = this.getClass().getResource("/Sprites/Floor/Textures/Texture_1.png");
+            sprite = ImageIO.read(url);
+        } catch (IOException e) {
+            System.out.println("TEXTURE file NOT FOUND");
+        } catch (IllegalArgumentException e){
+            System.out.println("TEXTURE input MUST BE NULL");
+        }
+    }
 }

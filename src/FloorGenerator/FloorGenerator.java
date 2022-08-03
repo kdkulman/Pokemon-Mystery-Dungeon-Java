@@ -1,4 +1,6 @@
 package FloorGenerator;
+import DungeonCharacter.DungeonCharacter;
+import DungeonCharacter.Hero.Hero;
 import DungeonCharacter.Hero.Magikarp;
 import TileObjects.*;
 import TileObjects.Items.OranBerry;
@@ -19,9 +21,11 @@ public class FloorGenerator {
     private final int maxRoomHeight;
     private int playerRow;
     private int playerColumn;
+    private Hero player;
     private final Random r;
 
-    public FloorGenerator() throws IOException {
+    public FloorGenerator(Hero player) throws IOException {
+        this.player = player;
         r = new Random();
         floor = new TileObject[FLOOR_HEIGHT][FLOOR_WIDTH];
         numberOfRoomsHorizontally = generateFloorLayout();
@@ -37,19 +41,20 @@ public class FloorGenerator {
         //placeTileObject(r.nextInt(8), new Enemy());//place enemies
         placeTileObject(r.nextInt(5), new SpikeTip());//place trap
         placeTileObject(1, new Staircase());//place staircase
-        placePlayer();
+        placePlayer(player);
         fillNullTilesWithWalls();
+        //System.out.println(debugToString());
     }
 
-    private void placePlayer() throws IOException {
+    private void placePlayer(final Hero player) throws IOException {
         int row = r.nextInt(FLOOR_HEIGHT);
         int column = r.nextInt(FLOOR_WIDTH);
         if (floor[row][column] instanceof Texture){ //if it is a texture
-            floor[row][column] = new Magikarp();
+            floor[row][column] = player;
             playerRow = row;
             playerColumn = column;
         } else {
-            placePlayer();
+            placePlayer(player);
         }
     }
 

@@ -1,6 +1,8 @@
 package GameView;
 
 import Controller.InputControls;
+import DungeonCharacter.DungeonCharacter;
+import DungeonCharacter.Hero.Hero;
 import FloorGenerator.FloorGenerator;
 import FloorGenerator.Floor;
 
@@ -11,6 +13,7 @@ import FloorGenerator.Floor;
  * nuances of Java Swing through trial and error.
  *
  */
+import TileObjects.Items.Item;
 import TileObjects.Texture;
 import TileObjects.TileObject;
 import TileObjects.Wall;
@@ -24,7 +27,7 @@ import java.io.IOException;
 
 import static java.lang.Math.round;
 
-public class GameView extends JPanel implements Runnable{
+public final class GameView extends JPanel implements Runnable{
     private final int SCALE = 3;
     private final int BASE_TILE_SIZE = 24;
     private final int TILE_SIZE = BASE_TILE_SIZE * SCALE;
@@ -32,7 +35,7 @@ public class GameView extends JPanel implements Runnable{
     private final int SCREEN_TILE_HEIGHT = 9;
     private final int SCREEN_WIDTH = SCREEN_TILE_WIDTH * TILE_SIZE;
     private final int SCREEN_HEIGHT = SCREEN_TILE_HEIGHT * TILE_SIZE;
-    private final int FPS = 60;
+    private final int FPS = 30;
     private int drawX;
     private int drawY;
     private Thread gameThread;
@@ -45,9 +48,12 @@ public class GameView extends JPanel implements Runnable{
 
     //Model
     private Floor floor;
+    private Hero player;
 
-    public GameView(JFrame jFrame) throws IOException {
-
+    public GameView(JFrame jFrame, Hero player) throws IOException {
+        this.player = player;
+        jFrame.setLocationRelativeTo(null);
+        this.setDoubleBuffered(true);
         jFrame.add(this);
         createFloor(); //Create Model
 
@@ -109,8 +115,10 @@ public class GameView extends JPanel implements Runnable{
         gameThread.start();
     }
 
+    //This needs to be refactored to a different class
+    //Should not be in view class
     private void createFloor() throws IOException {
-        floor = new Floor(new FloorGenerator());
+        floor = new Floor(player);
     }
 
     @Override
@@ -177,8 +185,6 @@ public class GameView extends JPanel implements Runnable{
     //Clamp is used to make sure the camera stays in bounds
     private int clamp(final int value, final int min, final int max){
         int theValue = value;
-//        if(value - 5 < min) theValue += 5;
-//        if(value + 5 > max) theValue -= 5;
         if (min > value) return min;
         if (value > max) return max;
         return theValue;
@@ -191,20 +197,24 @@ public class GameView extends JPanel implements Runnable{
                     int cameraHeight = clamp(floor.getPlayerRow() + row - SCREEN_TILE_HEIGHT/2, 0, floor.getFloorArray().length-1);
                     int cameraWidth = clamp(floor.getPlayerColumn() + column - SCREEN_TILE_WIDTH/2, 0, floor.getFloorArray()[0].length-1);
 
+                    //This prevents out of bounds errors by just spawning walls in out of bound locations
                     if(cameraHeight > floor.getFloorArray().length-1 || cameraWidth > floor.getFloorArray()[0].length-1){
                         draw(row, column,  g2, new Wall().getSprite());
                     } else {
+                        if (floor.getFloorArray()[cameraHeight][cameraWidth] instanceof DungeonCharacter ||
+                                floor.getFloorArray()[cameraHeight][cameraWidth] instanceof Item){
+                            draw(row, column,  g2, new Texture().getSprite());
+                        }
                         draw(row, column,  g2, floor.getFloorArray()[cameraHeight][cameraWidth].getSprite());
                     }
-                    int c = cameraHeight;
-                    int r = cameraWidth;
-                    //System.out.println("Floor[" + c + "][" + r + "].getsprite()");
+//                    int c = cameraHeight;
+//                    int r = cameraWidth;
                 }
             }
         }
     }
 
-    private void draw(final int row, final int column, final Graphics2D g2, final BufferedImage image){
+    private void draw(final int row, final int column, final Graphics2D g2, final BufferedImage image) throws IOException {
         g2.drawImage(image, column*TILE_SIZE,row*TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
 
     }

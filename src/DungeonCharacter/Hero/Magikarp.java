@@ -1,8 +1,8 @@
 package DungeonCharacter.Hero;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class Magikarp extends Hero {
     private double myBigAttackChance;
@@ -10,17 +10,19 @@ public class Magikarp extends Hero {
     public Magikarp() throws IOException {
         super("Magikarp", 60, 60,
                 0, 1, 0,
-                2, 5,
-                ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\MagikarpPlayer.png")));
+                2, 5);
         this.myBigAttackChance = 0.1;
         setSprite();
     }
 
     private void setSprite(){
         try {
-            sprite = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\MagikarpPlayer.png"));
+            URL url = this.getClass().getResource("/Sprites/Hero/Magikarp/Magikarp_Down_Idle.png");
+            sprite = ImageIO.read(url);
         } catch (IOException e) {
-            System.out.println("sprite file could not be found");
+            System.out.println("MAGIKARP file NOT FOUND");
+        } catch (IllegalArgumentException e){
+            System.out.println("MAGIKARP input MUST BE NULL");
         }
     }
 

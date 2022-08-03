@@ -3,19 +3,23 @@ package TileObjects;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class SpikeTip extends TileObject{
 
     public SpikeTip(){
-        //super(null, "SpikeTip", "t");
+        super("SpikeTip", "t");
         setSprite();
     }
 
     private void setSprite(){
         try {
-            this.sprite = ImageIO.read(new File("./src/TileObjects/trap.png"));
+            URL url = this.getClass().getResource("/Sprites/trap.png");
+            sprite = ImageIO.read(url);
         } catch (IOException e) {
-            System.out.println("trap file could not be found");
+            System.out.println("TRAP file NOT FOUND");
+        } catch (IllegalArgumentException e){
+            System.out.println("TRAP input MUST BE NULL");
         }
     }
 

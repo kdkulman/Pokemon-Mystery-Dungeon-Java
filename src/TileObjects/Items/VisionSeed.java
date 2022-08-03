@@ -1,8 +1,10 @@
 package TileObjects.Items;
 
-import TileObjects.Items.Item;
-
 public class VisionSeed extends Item {
+
+    public VisionSeed() {
+        super("Vision Seed", "v");
+    }
 
     private void revealStairs() {}
 }

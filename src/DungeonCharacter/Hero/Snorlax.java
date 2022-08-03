@@ -3,6 +3,7 @@ package DungeonCharacter.Hero;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class Snorlax extends Hero{
     private int mySleepCounter;
@@ -10,10 +11,21 @@ public class Snorlax extends Hero{
     //I made it public because he cannot be accessed out of package unless public -Kevin
     public Snorlax() throws IOException {
         super("Snorlax", 200, 200,15, 20, 0,
-                10, 5, ImageIO.read(new File("./src/DungeonCharacter/SnorlaxPlayer.png")));
+                10, 5);
         this.mySleepCounter = 0;
+        setSprite();
     }
 
+    private void setSprite(){
+        try {
+            URL url = this.getClass().getResource("/Sprites/Hero/Snorlax/Snorlax_Down_Idle.png");
+            sprite = ImageIO.read(url);
+        } catch (IOException e) {
+            System.out.println("SNORLAX file NOT FOUND");
+        } catch (IllegalArgumentException e){
+            System.out.println("SNORLAX input MUST BE NULL");
+        }
+    }
     @Override
     public void specialAttack() {
         heal(this.getMaxHP());

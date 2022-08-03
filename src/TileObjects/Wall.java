@@ -1,21 +1,24 @@
 package TileObjects;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class Wall extends TileObject{
 
     public Wall(){
-        //super(null, "Wall", "W");
+        super("Wall", "W");
         setSprite();
     }
 
     private void setSprite(){
         try {
-            sprite = ImageIO.read(new File("./src/TileObjects/grass_northWall.png"));
+            URL url = this.getClass().getResource("/Sprites/Floor/Walls/Wall_Top.png");
+            sprite = ImageIO.read(url);
         } catch (IOException e) {
-            System.out.println("wall file could not be found");
+            System.out.println("WALL file NOT FOUND");
+        } catch (IllegalArgumentException e){
+            System.out.println("WALL input MUST BE NULL");
         }
     }
 }
