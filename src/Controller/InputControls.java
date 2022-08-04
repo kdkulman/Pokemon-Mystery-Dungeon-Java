@@ -20,6 +20,9 @@ public final class InputControls extends KeyAdapter {
     public static void useOranBerry() {
     }
 
+    public static void useVisionSeed() {
+    }
+
     public static void quitGame() {
     }
 
@@ -47,11 +50,29 @@ public final class InputControls extends KeyAdapter {
             returnFloor.setPlayerRow(destinationRow);
             returnFloor.setPlayerColumn(destinationColumn);
             returnFloor.setFloorArray(floor);
+            returnFloor = updateTileObjectVisibility(returnFloor);
             returnFloor.getFloorArray()[destinationRow][destinationColumn].setDirection(direction);
             return returnFloor;
         }
         System.out.println(errorMessage);
         returnFloor.getFloorArray()[playerRow][playerColumn].setDirection(direction);
+        returnFloor = updateTileObjectVisibility(returnFloor);
+        return returnFloor;
+    }
+
+    private static Floor updateTileObjectVisibility(final Floor floor){
+        Floor returnFloor = floor;
+        playerRow = floor.getPlayerRow();
+        playerColumn = floor.getPlayerColumn();
+        returnFloor.getFloorArray()[playerRow-1][playerColumn-1].setIsVisibleOnDungeonMap(true);
+        returnFloor.getFloorArray()[playerRow-1][playerColumn].setIsVisibleOnDungeonMap(true);
+        returnFloor.getFloorArray()[playerRow-1][playerColumn+1].setIsVisibleOnDungeonMap(true);
+        returnFloor.getFloorArray()[playerRow][playerColumn-1].setIsVisibleOnDungeonMap(true);
+        returnFloor.getFloorArray()[playerRow][playerColumn].setIsVisibleOnDungeonMap(true);
+        returnFloor.getFloorArray()[playerRow][playerColumn+1].setIsVisibleOnDungeonMap(true);
+        returnFloor.getFloorArray()[playerRow+1][playerColumn-1].setIsVisibleOnDungeonMap(true);
+        returnFloor.getFloorArray()[playerRow+1][playerColumn].setIsVisibleOnDungeonMap(true);
+        returnFloor.getFloorArray()[playerRow+1][playerColumn+1].setIsVisibleOnDungeonMap(true);
         return returnFloor;
     }
 

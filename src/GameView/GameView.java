@@ -14,6 +14,7 @@ import FloorGenerator.Floor;
  *
  */
 import TileObjects.Items.Item;
+import TileObjects.Staircase;
 import TileObjects.Texture;
 import TileObjects.TileObject;
 import TileObjects.Wall;
@@ -96,6 +97,10 @@ public final class GameView extends JPanel implements Runnable{
                         System.out.println("USE ORAN BERRY");
                         InputControls.useOranBerry();
                         break;
+                    case KeyEvent.VK_2:
+                        System.out.println("USE VISION SEED");
+                        InputControls.useVisionSeed();
+                        break;
                     case KeyEvent.VK_ESCAPE:
                         System.out.println("QUIT GAME");
                         InputControls.quitGame();
@@ -155,6 +160,7 @@ public final class GameView extends JPanel implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        drawDungeonMap(g2);
 
         g.setColor(new Color(255, 255, 255, 150));
         g.fillRect(SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 4), 0,
@@ -170,7 +176,10 @@ public final class GameView extends JPanel implements Runnable{
         int yy = SCREEN_HEIGHT / 6;
 
         g.setFont(new Font("Serif", Font.PLAIN, 32));
+        TileObject[][] floorArray = floor.getFloorArray();
+        //need to wire in hp somehow
 
+        
         //Create outline around text
         g.setColor(Color.BLACK);
         g.drawString("HP  69/69",xx-textOutlineSize, yy-textOutlineSize);
@@ -204,11 +213,34 @@ public final class GameView extends JPanel implements Runnable{
                         if (floor.getFloorArray()[cameraHeight][cameraWidth] instanceof DungeonCharacter ||
                                 floor.getFloorArray()[cameraHeight][cameraWidth] instanceof Item){
                             draw(row, column,  g2, new Texture().getSprite());
-                        }
+                        };
                         draw(row, column,  g2, floor.getFloorArray()[cameraHeight][cameraWidth].getSprite());
                     }
-//                    int c = cameraHeight;
-//                    int r = cameraWidth;
+
+                }
+            }
+        }
+    }
+
+    private void drawDungeonMap(final Graphics2D g2){
+        int size = 7;
+        int mapSize = 10;
+        for (int row = 0; row < floor.getFloorArray().length; row++) {
+            for (int column = 0; column < floor.getFloorArray()[0].length; column++) {
+                if(floor.getFloorArray()[row][column].getIsVisibleOnDungeonMap()) {
+                    if (floor.getFloorArray()[row][column] instanceof Texture) {
+                        g2.setColor(new Color(255, 255, 255, 150));
+                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                    } else if (floor.getFloorArray()[row][column] instanceof Hero) {
+                        g2.setColor(Color.blue);
+                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                    } else if (floor.getFloorArray()[row][column] instanceof Staircase) {
+                        g2.setColor(Color.yellow);
+                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                    } else if (floor.getFloorArray()[row][column] instanceof Item) {
+                        g2.setColor(Color.CYAN);
+                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                    }
                 }
             }
         }

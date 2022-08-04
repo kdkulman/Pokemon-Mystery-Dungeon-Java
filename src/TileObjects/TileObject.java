@@ -8,6 +8,7 @@ public abstract class TileObject {
     private String name;
     private String message;
     private String stringRepresentation;
+    private boolean isVisibleOnMiniMap;
     protected Direction direction;
     protected BufferedImage sprite, up, down, left, right;
 
@@ -37,6 +38,13 @@ public abstract class TileObject {
 
     public String getMessage() {
         return message;
+    }
+
+    public boolean getIsVisibleOnDungeonMap(){
+        return isVisibleOnMiniMap;
+    }
+    public void setIsVisibleOnDungeonMap(final boolean isVisibleOnMiniMap){
+        this.isVisibleOnMiniMap = isVisibleOnMiniMap;
     }
 
     @Override

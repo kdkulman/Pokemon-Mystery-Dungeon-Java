@@ -32,7 +32,7 @@ public class Main {
         //Character Quiz
         //CharacterQuizView characterQuizView = new CharacterQuizView(jFrame);
 
-        //FOR NOW, PASS THE PLAYER INTO THE VIEW
+        //FOR NOW, PASS THE PLAYER INTO THE VIEW;
         GameView gameView = new GameView(jFrame, new Snorlax());
     }
 
