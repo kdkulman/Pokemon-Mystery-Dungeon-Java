@@ -2,6 +2,7 @@ package GameView;
 
 import Controller.InputControls;
 import DungeonCharacter.DungeonCharacter;
+import DungeonCharacter.Enemy.Enemy;
 import DungeonCharacter.Hero.Hero;
 import FloorGenerator.FloorGenerator;
 import FloorGenerator.Floor;
@@ -13,11 +14,8 @@ import FloorGenerator.Floor;
  * nuances of Java Swing through trial and error.
  *
  */
+import TileObjects.*;
 import TileObjects.Items.Item;
-import TileObjects.Staircase;
-import TileObjects.Texture;
-import TileObjects.TileObject;
-import TileObjects.Wall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,7 +81,7 @@ public final class GameView extends JPanel implements Runnable{
                     case KeyEvent.VK_D:
                         System.out.println("RIGHT");
                         floor = InputControls.moveRight(floor);
-                        viewWidthAnimation = TILE_SIZE;
+                        //viewWidthAnimation = TILE_SIZE;
                         break;
                     case KeyEvent.VK_SPACE:
                         System.out.println("REGULAR ATTACK");
@@ -179,7 +177,7 @@ public final class GameView extends JPanel implements Runnable{
         TileObject[][] floorArray = floor.getFloorArray();
         //need to wire in hp somehow
 
-        
+
         //Create outline around text
         g.setColor(Color.BLACK);
         g.drawString("HP  69/69",xx-textOutlineSize, yy-textOutlineSize);
@@ -228,7 +226,8 @@ public final class GameView extends JPanel implements Runnable{
         for (int row = 0; row < floor.getFloorArray().length; row++) {
             for (int column = 0; column < floor.getFloorArray()[0].length; column++) {
                 if(floor.getFloorArray()[row][column].getIsVisibleOnDungeonMap()) {
-                    if (floor.getFloorArray()[row][column] instanceof Texture) {
+                    if (floor.getFloorArray()[row][column] instanceof Texture ||
+                            floor.getFloorArray()[row][column] instanceof SpikeTip) {
                         g2.setColor(new Color(255, 255, 255, 150));
                         g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     } else if (floor.getFloorArray()[row][column] instanceof Hero) {
@@ -239,6 +238,9 @@ public final class GameView extends JPanel implements Runnable{
                         g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     } else if (floor.getFloorArray()[row][column] instanceof Item) {
                         g2.setColor(Color.CYAN);
+                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                    } else if (floor.getFloorArray()[row][column] instanceof Enemy) {
+                        g2.setColor(Color.RED);
                         g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     }
                 }

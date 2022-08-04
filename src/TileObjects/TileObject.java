@@ -43,8 +43,8 @@ public abstract class TileObject {
     public boolean getIsVisibleOnDungeonMap(){
         return isVisibleOnMiniMap;
     }
-    public void setIsVisibleOnDungeonMap(final boolean isVisibleOnMiniMap){
-        this.isVisibleOnMiniMap = isVisibleOnMiniMap;
+    public void setIsVisibleOnDungeonMap(final boolean isVisible){
+        isVisibleOnMiniMap = isVisible;
     }
 
     @Override

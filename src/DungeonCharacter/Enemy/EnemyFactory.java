@@ -1,6 +1,7 @@
 package DungeonCharacter.Enemy;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class EnemyFactory {
 
@@ -8,8 +9,9 @@ public class EnemyFactory {
 
     }
 
-    public Enemy createEnemy() {
-        if(Math.random() * 100 % 2 == 0) {
+    public static Enemy createEnemy() {
+        Random rand = new Random();
+        if(rand.nextInt(10) % 2 == 0) {
             try {
                 return new DonkeyKong();
             } catch (IOException e) {

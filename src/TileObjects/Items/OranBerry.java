@@ -7,7 +7,6 @@ import java.net.URL;
 public class OranBerry extends Item {
 
     public OranBerry(){
-
         super("Oran Berry", "O");
         setSprite();
     }

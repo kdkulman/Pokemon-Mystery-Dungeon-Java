@@ -1,8 +1,11 @@
 package FloorGenerator;
 import DungeonCharacter.DungeonCharacter;
+import DungeonCharacter.Enemy.Enemy;
+import DungeonCharacter.Enemy.EnemyFactory;
 import DungeonCharacter.Hero.Hero;
 import DungeonCharacter.Hero.Magikarp;
 import TileObjects.*;
+import TileObjects.Items.Item;
 import TileObjects.Items.OranBerry;
 import TileObjects.Items.VisionSeed;
 
@@ -11,8 +14,10 @@ import java.util.Random;
 
 public class FloorGenerator {
     private TileObject[][] floor;
-    private final int FLOOR_WIDTH = 56; //56
-    private final int FLOOR_HEIGHT = 32; //32
+    private final int FLOOR_WIDTH = 56; //56 IS DEFAULT
+    private final int FLOOR_HEIGHT = 32; //32 IS DEFAULT
+    private final int MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN = 2; //2 IS DEFAULT
+    private final int MAX_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN = 6; //6 IS DEFAULT
     private Room[] rooms;
     private final int numberOfRooms;
     private final int numberOfRoomsHorizontally;
@@ -37,8 +42,9 @@ public class FloorGenerator {
         createListOfRooms();
         putRoomsInFloor();
         placeTileObject(r.nextInt(1), new VisionSeed()); //place items
-        placeTileObject(r.nextInt(3), new OranBerry()); //place oran berry
-        //placeTileObject(r.nextInt(8), new Enemy());//place enemies
+        Item item = new OranBerry();
+        placeTileObject(r.nextInt(3), item); //place oran berry
+        placeTileObject(r.nextInt(8), EnemyFactory.createEnemy());//place enemies
         placeTileObject(r.nextInt(5), new SpikeTip());//place trap
         placeTileObject(1, new Staircase());//place staircase
         placePlayer(player);
@@ -63,7 +69,9 @@ public class FloorGenerator {
     }
 
     private int generateFloorLayout(){
-        return 2 + r.nextInt(4);
+        int range = MAX_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN - MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN;
+        if (range < 1) range = 1;
+        return MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN + r.nextInt(range);
     }
 
     private int generateNumberOfRooms(){
