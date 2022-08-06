@@ -13,20 +13,32 @@ public class Enemy extends DungeonCharacter {
 
             super(THE_NAME, THE_HP, THE_MAX_HP, THE_DAMAGE_RANGE, THE_ATTACK, THE_SPECIAL_ATTACK, THE_DEFENSE, THE_EVASION);
 
-//            try {
-//                this.myEnemyTable = new SQLTables();
-//            } catch (SQLException e) {
-//                System.out.println("Error creating enemy table");
-//                System.exit(0);
-//            }
+            try {
+                this.myEnemyTable = new SQLTables();
+            } catch (SQLException e) {
+                System.out.println("Error creating enemy table");
+                System.out.println(e.getMessage());
+                System.exit(0);
+            }
     }
 
-    protected void getTeamRocketGrunt() {
+    public Enemy(final String THE_NAME) {
+        super(THE_NAME);
 
+        try {
+            this.myEnemyTable = new SQLTables();
+        } catch (SQLException e) {
+            System.out.println("Error creating enemy table");
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
     }
 
-    protected void getDonkeyKong() {
-
+    protected String getRequestedInformation(final String theChoice) {
+        return switch (theChoice) {
+            case "DK" -> myEnemyTable.extractDonkeyKongInfo();
+            case "TR" -> myEnemyTable.extractTeamRocketInfo();
+            default -> "";
+        };
     }
-
 }

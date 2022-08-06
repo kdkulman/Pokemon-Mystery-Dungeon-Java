@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.net.URL;
 
 public class DonkeyKong extends Enemy{
+    private String DonkeyKongInfo;
 
-        public DonkeyKong() throws IOException {
-            super("Donkey Kong", 100, 100, 10,
-                    10, 0, 10, 5);
-            setSprite();
-        }
+
+    public DonkeyKong() throws IOException {
+        super("");
+        DonkeyKongInfo = getRequestedInformation("DK");
+        setSprite();
+    }
 
     private void setSprite(){
         try {

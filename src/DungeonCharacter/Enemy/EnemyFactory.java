@@ -1,6 +1,9 @@
 package DungeonCharacter.Enemy;
 
+import SQL.SQLTables;
+
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Random;
 
 public class EnemyFactory {
