@@ -9,8 +9,7 @@ import java.net.URL;
 public class TeamRocketGrunt extends Enemy{
 
     public TeamRocketGrunt() throws IOException {
-        super("Team Rocket Grunt", 100, 100, 10,
-                10, 0, 10, 5);
+        super("Team Rocket Grunt");
         setSprite();
     }
 

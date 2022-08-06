@@ -6,12 +6,10 @@ import java.io.IOException;
 import java.net.URL;
 
 public class DonkeyKong extends Enemy{
-    private String DonkeyKongInfo;
 
 
     public DonkeyKong() throws IOException {
-        super("");
-        DonkeyKongInfo = getRequestedInformation("DK");
+        super("Donkey Kong");
         setSprite();
     }
 
@@ -25,4 +23,5 @@ public class DonkeyKong extends Enemy{
             System.out.println("DONKEY KONG input MUST BE NULL");
         }
     }
+
 }

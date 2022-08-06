@@ -28,8 +28,10 @@ public class FloorGenerator {
     private int playerColumn;
     private Hero player;
     private final Random r;
+    private EnemyFactory enemyFactory;
 
     public FloorGenerator(Hero player) throws IOException {
+        enemyFactory = new EnemyFactory();
         this.player = player;
         r = new Random();
         floor = new TileObject[FLOOR_HEIGHT][FLOOR_WIDTH];
@@ -44,7 +46,7 @@ public class FloorGenerator {
         placeTileObject(r.nextInt(1), new VisionSeed()); //place items
         Item item = new OranBerry();
         placeTileObject(r.nextInt(3), item); //place oran berry
-        placeTileObject(r.nextInt(8), EnemyFactory.createEnemy());//place enemies
+        placeTileObject(r.nextInt(8), enemyFactory.createEnemy());//place enemies
         placeTileObject(r.nextInt(5), new SpikeTip());//place trap
         placeTileObject(1, new Staircase());//place staircase
         placePlayer(player);

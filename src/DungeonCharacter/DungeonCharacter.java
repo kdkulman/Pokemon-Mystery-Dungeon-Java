@@ -123,7 +123,7 @@ public abstract class DungeonCharacter extends TileObject {
         return this.mySpecialAttack;
     }
 
-    protected void setEnemyValues(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
+    public void setEnemyValues(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
                      final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION){
         this.myMaxHP = THE_MAX_HP;
         this.myHP = THE_HP;

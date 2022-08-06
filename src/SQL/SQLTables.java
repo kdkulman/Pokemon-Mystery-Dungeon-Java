@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLTables {
-    final int NUMBER_OF_VALUES = 9;
-
     private SQLiteDataSource enemyTable;
     private Connection connection;
     private Statement statement;
@@ -19,7 +17,6 @@ public class SQLTables {
 
     public SQLTables() throws SQLException {
         createEnemyTable();
-        //createEnemyConnection();
         fillEnemyTable();
     }
 
@@ -49,18 +46,6 @@ public class SQLTables {
 
     }
 
-//    private void createEnemyConnection() {
-//        this.enemyTable.setUrl("jdbc:sqlite:enemy.db");
-//
-//        try {
-//
-//        } catch (SQLException e) {
-//            System.out.println("Error creating connection.");
-//            System.exit(0);
-//        }
-//        System.out.println("Connection created successfully!");
-//    }
-
     private void fillEnemyTable() {
 
         this.query = "INSERT INTO 'enemyDB' ('NAME','HP','MAXHP','DAMAGERANGE','ATTACK','SPECIALATTACK','DEFENSE','EVASION') VALUES" +
@@ -80,19 +65,21 @@ public class SQLTables {
 
     public String extractDonkeyKongInfo() {
         String result = "";
-        this.query = "SELECT rowid, * FROM enemyDB WHERE NAME = 'Donkey Kong'";
+        //this.query = "SELECT * FROM 'enemyDB';";
+        this.query = "SELECT * FROM enemyDB LIMIT 1";
+        //this.query = "SELECT rowid, * FROM enemyDB WHERE NAME = 'Donkey Kong'";
 
         try {
             this.myResultSet = this.statement.executeQuery(this.query);
             while(this.myResultSet.next()) {
                 result += this.myResultSet.getString("NAME") + "\n";
-                result += this.myResultSet.getInt("HP") + "\n";
-                result += this.myResultSet.getInt("MAXHP") + "\n";
-                result += this.myResultSet.getInt("DAMAGERANGE") + "\n";
-                result += this.myResultSet.getInt("ATTACK") + "\n";
-                result += this.myResultSet.getInt("SPECIALATTACK") + "\n";
-                result += this.myResultSet.getInt("DEFENSE") + "\n";
-                result += this.myResultSet.getInt("EVASION");
+                result += this.myResultSet.getString("HP") + "\n";
+                result += this.myResultSet.getString("MAXHP") + "\n";
+                result += this.myResultSet.getString("DAMAGERANGE") + "\n";
+                result += this.myResultSet.getString("ATTACK") + "\n";
+                result += this.myResultSet.getString("SPECIALATTACK") + "\n";
+                result += this.myResultSet.getString("DEFENSE") + "\n";
+                result += this.myResultSet.getString("EVASION");
             }
         } catch (SQLException e) {
             System.out.println("Error retrieving Donkey Kong info from table.");
@@ -105,19 +92,19 @@ public class SQLTables {
 
     public String extractTeamRocketInfo() {
         String result = "";
-        this.query = "SELECT rowid, * FROM enemyDB WHERE NAME = 'Team Rocket Grunt'";
+        this.query = "SELECT * FROM enemyDB LIMIT 1 OFFSET 1";
 
         try {
             this.myResultSet = this.statement.executeQuery(this.query);
             while(this.myResultSet.next()) {
                 result += this.myResultSet.getString("NAME") + "\n";
-                result += this.myResultSet.getInt("HP") + "\n";
-                result += this.myResultSet.getInt("MAXHP") + "\n";
-                result += this.myResultSet.getInt("DAMAGERANGE") + "\n";
-                result += this.myResultSet.getInt("ATTACK") + "\n";
-                result += this.myResultSet.getInt("SPECIALATTACK") + "\n";
-                result += this.myResultSet.getInt("DEFENSE") + "\n";
-                result += this.myResultSet.getInt("EVASION");
+                result += this.myResultSet.getString("HP") + "\n";
+                result += this.myResultSet.getString("MAXHP") + "\n";
+                result += this.myResultSet.getString("DAMAGERANGE") + "\n";
+                result += this.myResultSet.getString("ATTACK") + "\n";
+                result += this.myResultSet.getString("SPECIALATTACK") + "\n";
+                result += this.myResultSet.getString("DEFENSE") + "\n";
+                result += this.myResultSet.getString("EVASION");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
