@@ -266,7 +266,6 @@ public final class GameView extends JPanel implements Runnable{
 
     private void draw(final int row, final int column, final Graphics2D g2, final BufferedImage image) throws IOException {
         g2.drawImage(image, column*TILE_SIZE,row*TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
-
     }
 
 }

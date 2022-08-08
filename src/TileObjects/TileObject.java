@@ -27,7 +27,7 @@ public abstract class TileObject {
     public TileObject(final String name, final String stringRepresentation, final boolean isSolid){
         this.name = name;
         this.stringRepresentation = stringRepresentation;
-        this.isSolid = true;
+        this.isSolid = isSolid;
     }
 
     public BufferedImage getSprite() {

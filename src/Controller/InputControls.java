@@ -45,8 +45,7 @@ public final class InputControls extends KeyAdapter {
                              final DungeonCharacter.Direction direction) throws IOException {
         Floor returnFloor = theFloor;
         Hero hero = theFloor.player;
-        if(playerRow != 0 && !(floor[destinationRow][destinationColumn] instanceof Wall) &&
-                !(floor[destinationRow][destinationColumn] instanceof Enemy)) {
+        if(floor[destinationRow][destinationColumn].getSolid() == false) {
             TileObject playerTemp = floor[playerRow][playerColumn];
             if(floor[destinationRow][destinationColumn] instanceof OranBerry){
                 hero.collectOranBerry();
@@ -60,7 +59,7 @@ public final class InputControls extends KeyAdapter {
                 hero.updateMyCurrentLevel();
                 System.out.println("current level: " + hero.getMyCurrentLevel());
                 returnFloor = getGoodMaze(hero);
-                floor = returnFloor.getFloorArray();
+                return returnFloor;
             }
             try {
                 floor[playerRow][playerColumn] = new Texture();
