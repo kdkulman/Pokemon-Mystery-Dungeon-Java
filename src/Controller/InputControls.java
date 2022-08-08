@@ -23,7 +23,11 @@ public final class InputControls extends KeyAdapter {
     public static void useSpecialAttack() {
     }
 
-    public static void useOranBerry() {
+    public static Floor useOranBerry(final Floor theFloor) {
+        TileObject[][] tempFloor = theFloor.getFloorArray();
+        Hero player = (Hero) tempFloor[playerRow][playerColumn];
+        player.heal(20);
+        return theFloor;
     }
 
     public static void useVisionSeed() {
