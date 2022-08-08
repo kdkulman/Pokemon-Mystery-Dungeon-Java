@@ -5,12 +5,17 @@ import DungeonCharacter.DungeonCharacter;
 import java.awt.image.BufferedImage;
 
 public abstract class TileObject {
+    private boolean isSolid;
     private String name;
     private String message;
     private String stringRepresentation;
     private boolean isVisibleOnMiniMap;
     protected Direction direction;
     protected BufferedImage sprite, up, down, left, right;
+
+    public boolean getSolid() {
+        return isSolid;
+    }
 
     public enum Direction{
         UP,
@@ -19,9 +24,10 @@ public abstract class TileObject {
         RIGHT;
     }
 
-    public TileObject(final String name, final String stringRepresentation){
+    public TileObject(final String name, final String stringRepresentation, final boolean isSolid){
         this.name = name;
         this.stringRepresentation = stringRepresentation;
+        this.isSolid = true;
     }
 
     public BufferedImage getSprite() {

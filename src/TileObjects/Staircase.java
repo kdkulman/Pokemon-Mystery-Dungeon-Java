@@ -8,7 +8,7 @@ import java.net.URL;
 public class Staircase extends TileObject{
 
      public Staircase(){
-         super("Staircase", "s");
+         super("Staircase", "s", false);
          setSprite();
      }
 
