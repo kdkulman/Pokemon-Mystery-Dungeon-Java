@@ -95,12 +95,18 @@ public abstract class DungeonCharacter extends TileObject {
         }
     }
 
-    public void heal(final int THE_HEALING) {
+    public String heal(final int THE_HEALING) {
+        String message = "";
+        int amount = 0;
         if(THE_HEALING + this.myHP > this.myMaxHP) {
             this.myHP = this.myMaxHP;
+            amount += this.myMaxHP - this.myHP;
         } else {
             this.myHP += THE_HEALING;
+            amount += THE_HEALING;
         }
+        message += this.getName() + " healed for " + amount + " HP!";
+        return message;
     }
 
     public void setBattleStatus(boolean THE_SETTING) {

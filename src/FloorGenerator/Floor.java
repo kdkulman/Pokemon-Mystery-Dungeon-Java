@@ -20,9 +20,10 @@ public class Floor {
     public void createFloor() throws IOException {
         //uncomment when FloorTraversal is finished
         FloorGenerator floorGenerator = new FloorGenerator(player);
+        floor = floorGenerator.getFloor();
         playerRow = floorGenerator.getPlayerRow();
         playerColumn = floorGenerator.getPlayerColumn();
-        floor = floorGenerator.getFloor();
+
 //        FloorTraversal testNewFloor = new FloorTraversal(floor, playerRow, playerColumn);
 //        boolean status = testNewFloor.getTraversable();
 //        System.out.println("is the floor traversable: " + status);

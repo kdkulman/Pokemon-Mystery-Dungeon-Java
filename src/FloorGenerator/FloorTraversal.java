@@ -29,7 +29,7 @@ public class FloorTraversal {
         if(currentRow < 0  || currentRow == FLOOR_HEIGHT || currentColumn < 0 || currentColumn == FLOOR_WIDTH) {
             return false;
         }
-        if(this.floor[currentRow][currentColumn] instanceof Texture) { // Staircase
+        if(this.floor[currentRow][currentColumn].toString().equals("s")) { // Staircase
             return true;
         }
         if(memory[currentRow][currentColumn] != -1) {
