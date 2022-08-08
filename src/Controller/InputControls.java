@@ -3,6 +3,11 @@ import DungeonCharacter.DungeonCharacter;
 import DungeonCharacter.Hero.Hero;
 import DungeonCharacter.Hero.Snorlax;
 import FloorGenerator.Floor;
+<<<<<<< HEAD
+=======
+import FloorGenerator.FloorTraversal;
+import GameView.Message;
+>>>>>>> bd90c448e8356c2bdb101a96e514add3c530a112
 import TileObjects.*;
 import TileObjects.Items.OranBerry;
 import TileObjects.Items.VisionSeed;
@@ -23,9 +28,16 @@ public final class InputControls extends KeyAdapter {
 
     public static Floor useOranBerry(final Floor theFloor) {
         TileObject[][] tempFloor = theFloor.getFloorArray();
+        setPlayerPos(theFloor);
         Hero player = (Hero) tempFloor[playerRow][playerColumn];
-        player.heal(20);
+        String message = player.heal(20);
+        Message.setMessage(message);
         return theFloor;
+    }
+
+    private static void setPlayerPos(final Floor theFloor) {
+        playerRow = theFloor.getPlayerRow();
+        playerColumn = theFloor.getPlayerColumn();
     }
 
     public static void useVisionSeed() {
