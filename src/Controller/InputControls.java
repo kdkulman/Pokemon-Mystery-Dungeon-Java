@@ -60,19 +60,19 @@ public final class InputControls extends KeyAdapter {
         return returnFloor;
     }
 
-    private static Floor updateTileObjectVisibility(final Floor floor){
-        Floor returnFloor = floor;
-        playerRow = floor.getPlayerRow();
-        playerColumn = floor.getPlayerColumn();
-        returnFloor.getFloorArray()[playerRow-1][playerColumn-1].setIsVisibleOnDungeonMap(true);
-        returnFloor.getFloorArray()[playerRow-1][playerColumn].setIsVisibleOnDungeonMap(true);
-        returnFloor.getFloorArray()[playerRow-1][playerColumn+1].setIsVisibleOnDungeonMap(true);
-        returnFloor.getFloorArray()[playerRow][playerColumn-1].setIsVisibleOnDungeonMap(true);
-        returnFloor.getFloorArray()[playerRow][playerColumn].setIsVisibleOnDungeonMap(true);
-        returnFloor.getFloorArray()[playerRow][playerColumn+1].setIsVisibleOnDungeonMap(true);
-        returnFloor.getFloorArray()[playerRow+1][playerColumn-1].setIsVisibleOnDungeonMap(true);
-        returnFloor.getFloorArray()[playerRow+1][playerColumn].setIsVisibleOnDungeonMap(true);
-        returnFloor.getFloorArray()[playerRow+1][playerColumn+1].setIsVisibleOnDungeonMap(true);
+    private static Floor updateTileObjectVisibility(final Floor theFloor){
+        updateFloorFields(theFloor);
+        floor[playerRow-1][playerColumn-1].setIsVisibleOnDungeonMap(true);
+        floor[playerRow-1][playerColumn].setIsVisibleOnDungeonMap(true);
+        floor[playerRow-1][playerColumn+1].setIsVisibleOnDungeonMap(true);
+        floor[playerRow][playerColumn-1].setIsVisibleOnDungeonMap(true);
+        floor[playerRow][playerColumn].setIsVisibleOnDungeonMap(true);
+        floor[playerRow][playerColumn+1].setIsVisibleOnDungeonMap(true);
+        floor[playerRow+1][playerColumn-1].setIsVisibleOnDungeonMap(true);
+        floor[playerRow+1][playerColumn].setIsVisibleOnDungeonMap(true);
+        floor[playerRow+1][playerColumn+1].setIsVisibleOnDungeonMap(true);
+        Floor returnFloor = theFloor;
+        returnFloor.setFloorArray(floor);
         return returnFloor;
     }
 

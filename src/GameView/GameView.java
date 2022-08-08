@@ -4,7 +4,6 @@ import Controller.InputControls;
 import DungeonCharacter.DungeonCharacter;
 import DungeonCharacter.Enemy.Enemy;
 import DungeonCharacter.Hero.Hero;
-import FloorGenerator.FloorGenerator;
 import FloorGenerator.Floor;
 
 /*
@@ -53,6 +52,7 @@ public final class GameView extends JPanel implements Runnable{
         this.player = player;
         jFrame.setLocationRelativeTo(null);
         this.setDoubleBuffered(true);
+        jFrame.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         jFrame.add(this);
         createFloor(); //Create Model
 
@@ -221,7 +221,7 @@ public final class GameView extends JPanel implements Runnable{
     }
 
     private void drawDungeonMap(final Graphics2D g2){
-        int size = 7;
+        int size = 2*SCALE+1;
         int mapSize = 10;
         for (int row = 0; row < floor.getFloorArray().length; row++) {
             for (int column = 0; column < floor.getFloorArray()[0].length; column++) {
