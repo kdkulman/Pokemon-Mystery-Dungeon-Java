@@ -18,7 +18,7 @@ public abstract class Hero extends DungeonCharacter {
     }
 
     public BufferedImage getSprite() {
-        switch (direction){
+        switch (this.getMyDirection()){
             case UP -> {
                 return up;
             }
