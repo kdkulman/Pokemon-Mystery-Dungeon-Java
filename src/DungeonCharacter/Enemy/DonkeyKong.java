@@ -15,7 +15,7 @@ public class DonkeyKong extends Enemy{
     private void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Enemy/DonkeyKong/DonkeyKong_Down_Idle.png");
-            defaultSprite = ImageIO.read(url);
+            sprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("DONKEY KONG file NOT FOUND");
         } catch (IllegalArgumentException e){
