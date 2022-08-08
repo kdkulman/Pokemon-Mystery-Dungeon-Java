@@ -7,7 +7,7 @@ import java.net.URL;
 public class SpikeTip extends TileObject{
 
     public SpikeTip(){
-        super("SpikeTip", "t");
+        super("SpikeTip", "t", false);
         setSprite();
     }
 

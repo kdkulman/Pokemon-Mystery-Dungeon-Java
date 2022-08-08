@@ -7,8 +7,9 @@ import java.net.URL;
 public class Wall extends TileObject{
 
     public Wall(){
-        super("Wall", "W");
+        super("Wall", "W", true);
         setSprite();
+
     }
 
     private void setSprite(){

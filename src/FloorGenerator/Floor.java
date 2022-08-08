@@ -10,7 +10,7 @@ public class Floor {
     private TileObject[][] floor;
     private int playerRow;
     private int playerColumn;
-    private Hero player;
+    public Hero player;
 
     public Floor(final Hero player) throws IOException {
         this.player = player;
@@ -23,9 +23,12 @@ public class Floor {
         playerRow = floorGenerator.getPlayerRow();
         playerColumn = floorGenerator.getPlayerColumn();
         floor = floorGenerator.getFloor();
-        //FloorTraversal traversal = new FloorTraversal(floor.getFloor());
-        //if (traversal.getTraversable == true) return floor.getFloor();
-        //return createFloor();
+//        FloorTraversal testNewFloor = new FloorTraversal(floor, playerRow, playerColumn);
+//        boolean status = testNewFloor.getTraversable();
+//        System.out.println("is the floor traversable: " + status);
+//        if (!status){
+//            createFloor();
+//        }
     }
 
     public int getPlayerRow(){

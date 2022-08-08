@@ -5,8 +5,9 @@ import DungeonCharacter.DungeonCharacter;
 import java.awt.image.BufferedImage;
 
 public abstract class Hero extends DungeonCharacter {
-    private int myOranBerryCount;
-    private int myVisionSeeds;
+    private static int myOranBerryCount;
+    private static int myVisionSeeds;
+    private int myCurrentLevel = 1;
 
     public Hero(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE, final int THE_ATTACK,
          final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION){
@@ -43,19 +44,23 @@ public abstract class Hero extends DungeonCharacter {
         return result;
     }
 
-    public void collectOranBerry() {
-        this.myOranBerryCount++;
+    public static void collectOranBerry() {
+        myOranBerryCount++;
     }
 
-    public void collectVisionSeeds() {
-        this.myVisionSeeds++;
+    public static void collectVisionSeeds() {
+        myVisionSeeds++;
     }
 
-    public int getBerryCount() {
-        return this.myOranBerryCount;
+    public static int getBerryCount() {
+        return myOranBerryCount;
     }
 
-    public int getSeedCount() {
-        return this.myVisionSeeds;
+    public static int getSeedCount() {
+        return myVisionSeeds;
     }
+
+    public void updateMyCurrentLevel() { this.myCurrentLevel++; }
+
+    public int getMyCurrentLevel() { return this.myCurrentLevel; }
 }
