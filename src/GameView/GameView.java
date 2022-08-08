@@ -109,7 +109,7 @@ public final class GameView extends JPanel implements Runnable{
                         break;
                     case KeyEvent.VK_1:
                         System.out.println("USE ORAN BERRY");
-                        InputControls.useOranBerry();
+                        floor = InputControls.useOranBerry(floor);
                         break;
                     case KeyEvent.VK_2:
                         System.out.println("USE VISION SEED");

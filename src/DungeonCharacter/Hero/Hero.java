@@ -36,6 +36,10 @@ public abstract class Hero extends DungeonCharacter {
     }
 
     public String toString() {
+        return "P";
+    }
+
+    public String hudToString() {
         String result = "";
         result += "Name: " + super.getName() + "\n";
         result += "HP: " + super.getHP() + "\n";

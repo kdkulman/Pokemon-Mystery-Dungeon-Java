@@ -51,7 +51,9 @@ public class FloorGenerator {
         placeTileObject(1, new Staircase());//place staircase
         placePlayer(player);
         fillNullTilesWithWalls();
-        //System.out.println(debugToString());
+        System.out.println();
+        System.out.println(debugToString());
+        System.out.println();
     }
 
     private void placePlayer(final Hero player) throws IOException {
