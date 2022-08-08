@@ -138,6 +138,7 @@ public final class GameView extends JPanel implements Runnable{
     //Should not be in view class
     private void createFloor() throws IOException {
         floor = new Floor(player);
+
     }
 
     @Override
@@ -175,34 +176,38 @@ public final class GameView extends JPanel implements Runnable{
             e.printStackTrace();
         }
         drawDungeonMap(g2);
-
-        g.setColor(new Color(255, 255, 255, 150));
-        g.fillRect(SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 4), 0,
-                SCREEN_WIDTH/3, SCREEN_HEIGHT / 3);
-
-        displayPlayerHp(g);
+        drawHud(g);
 
     }
 
-    private void displayPlayerHp(Graphics g){
+    private void drawHud(final Graphics g){
+        g.setColor(new Color(255, 255, 255, 150));
+        g.fillRect(SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 5), 0,
+                SCREEN_WIDTH/4, SCREEN_HEIGHT / 4);
+
         int textOutlineSize = 1;
-        int xx = SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 5);
-        int yy = SCREEN_HEIGHT / 6;
-
-        g.setFont(new Font("Serif", Font.PLAIN, 32));
+        int xx = SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 6);
+        int yy = 20;
+        int lineBreak = 30;
         TileObject[][] floorArray = floor.getFloorArray();
-        //need to wire in hp somehow
+        Hero player = (Hero) floorArray[floor.getPlayerRow()][floor.getPlayerColumn()];
 
+        drawStringWithOutline(g, player.getName(),xx, yy);
+        drawStringWithOutline(g, "HP " + player.getHP(),xx, yy+lineBreak);
+        drawStringWithOutline(g, "Vision Seeds " + player.getSeedCount(),xx, yy+lineBreak*2);
+        drawStringWithOutline(g, "Oran Berries " + player.getBerryCount(),xx, yy+lineBreak*3);
+        drawStringWithOutline(g, "Floor " + player.getMyFloorLevel(),xx, yy+lineBreak*4);
+    }
 
-        //Create outline around text
+    private void drawStringWithOutline(final Graphics g, final String string, final int x, final int y){
+        g.setFont(new Font("Serif", Font.PLAIN, 20));
         g.setColor(Color.BLACK);
-        g.drawString("HP  69/69",xx-textOutlineSize, yy-textOutlineSize);
-        g.drawString("HP  69/69",xx+textOutlineSize, yy+textOutlineSize);
-        g.drawString("HP  69/69",xx+textOutlineSize, yy-textOutlineSize);
-        g.drawString("HP  69/69",xx-textOutlineSize, yy+textOutlineSize);
-
-        g.setColor(Color.CYAN);
-        g.drawString("HP  69/69", xx, yy);
+        g.drawString(string, x, y);
+//        g.setColor(Color.CYAN);
+//        g.drawString(string,x-1, y-1);
+//        g.drawString(string,x-1, y+1);
+//        g.drawString(string,x+1, y-1);
+//        g.drawString(string,x+1, y+1);
     }
 
     //Clamp is used to make sure the camera stays in bounds

@@ -1,10 +1,8 @@
 package Controller;
 import DungeonCharacter.DungeonCharacter;
-import DungeonCharacter.Enemy.Enemy;
 import DungeonCharacter.Hero.Hero;
 import DungeonCharacter.Hero.Snorlax;
 import FloorGenerator.Floor;
-import FloorGenerator.FloorTraversal;
 import TileObjects.*;
 import TileObjects.Items.OranBerry;
 import TileObjects.Items.VisionSeed;
@@ -61,7 +59,7 @@ public final class InputControls extends KeyAdapter {
             }
             if(floor[destinationRow][destinationColumn] instanceof Staircase){
                 hero.updateMyCurrentLevel();
-                System.out.println("current level: " + hero.getMyCurrentLevel());
+                System.out.println("current level: " + hero.getMyFloorLevel());
                 returnFloor = getGoodMaze(hero);
                 return returnFloor;
             }
