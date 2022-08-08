@@ -26,12 +26,16 @@ public final class InputControls extends KeyAdapter {
 
     public static Floor useOranBerry(final Floor theFloor) {
         TileObject[][] tempFloor = theFloor.getFloorArray();
-        playerRow = theFloor.getPlayerRow();
-        playerColumn = theFloor.getPlayerColumn();
+        setPlayerPos(theFloor);
         Hero player = (Hero) tempFloor[playerRow][playerColumn];
         String message = player.heal(20);
         Message.setMessage(message);
         return theFloor;
+    }
+
+    private static void setPlayerPos(final Floor theFloor) {
+        playerRow = theFloor.getPlayerRow();
+        playerColumn = theFloor.getPlayerColumn();
     }
 
     public static void useVisionSeed() {

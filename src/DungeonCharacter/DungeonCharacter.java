@@ -14,9 +14,6 @@ public abstract class DungeonCharacter extends TileObject {
     private DungeonCharacter myTarget;
     private boolean myBattleStatus;
 
-    public void setDirection(final Direction direction){
-        this.direction = direction;
-    }
 
     public DungeonCharacter(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
                      final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION){
@@ -31,7 +28,6 @@ public abstract class DungeonCharacter extends TileObject {
         this.myEvasion = THE_EVASION;
         this.myTarget = null;
         this.myBattleStatus = true;
-        direction = Direction.DOWN;
     }
 
     public DungeonCharacter(final String THE_NAME) {
@@ -45,7 +41,6 @@ public abstract class DungeonCharacter extends TileObject {
         this.myEvasion = 1;
         this.myTarget = null;
         this.myBattleStatus = true;
-        direction = Direction.DOWN;
     }
 
     public int getHP() {

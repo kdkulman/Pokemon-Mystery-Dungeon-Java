@@ -10,7 +10,7 @@ public abstract class TileObject {
     private String message;
     private String stringRepresentation;
     private boolean isVisibleOnMiniMap;
-    protected Direction direction;
+    private Direction myDirection;
     protected BufferedImage sprite, up, down, left, right;
 
     public boolean getSolid() {
@@ -28,6 +28,7 @@ public abstract class TileObject {
         this.name = name;
         this.stringRepresentation = stringRepresentation;
         this.isSolid = isSolid;
+        this.myDirection = Direction.DOWN;
     }
 
     public BufferedImage getSprite() {
@@ -35,7 +36,11 @@ public abstract class TileObject {
     }
 
     public void setDirection(final Direction direction){
-        if(this instanceof DungeonCharacter) this.direction = direction;
+        if(this instanceof DungeonCharacter) this.myDirection = direction;
+    }
+
+    public Direction getMyDirection() {
+        return this.myDirection;
     }
 
     public String getName() {
