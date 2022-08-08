@@ -8,7 +8,7 @@ import java.net.URL;
 public class Texture extends TileObject{
 
     public Texture() throws IOException {
-        super("Texture", "T");
+        super("Texture", "T", false);
         setSprite();
     }
 

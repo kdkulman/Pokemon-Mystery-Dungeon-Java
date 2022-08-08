@@ -68,19 +68,35 @@ public final class GameView extends JPanel implements Runnable{
                 switch (keyCode){
                     case KeyEvent.VK_W:
                         System.out.println("UP");
-                        floor = InputControls.moveUp(floor);
+                        try {
+                            floor = InputControls.moveUp(floor);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         break;
                     case KeyEvent.VK_S:
                         System.out.println("DOWN");
-                        floor = InputControls.moveDown(floor);
+                        try {
+                            floor = InputControls.moveDown(floor);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         break;
                     case KeyEvent.VK_A:
                         System.out.println("LEFT");
-                        floor = InputControls.moveLeft(floor);
+                        try {
+                            floor = InputControls.moveLeft(floor);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         break;
                     case KeyEvent.VK_D:
                         System.out.println("RIGHT");
-                        floor = InputControls.moveRight(floor);
+                        try {
+                            floor = InputControls.moveRight(floor);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         //viewWidthAnimation = TILE_SIZE;
                         break;
                     case KeyEvent.VK_SPACE:
