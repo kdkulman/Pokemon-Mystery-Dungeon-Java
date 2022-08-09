@@ -26,24 +26,37 @@ public class FloorTraversal {
     }
 
     private boolean isFloorTraversable(int currentRow, int currentColumn, int[][] memory) {
-        if(currentRow < 0  || currentRow == FLOOR_HEIGHT || currentColumn < 0 || currentColumn == FLOOR_WIDTH) {
-            return false;
-        }
-        if(this.floor[currentRow][currentColumn].toString().equals("s")) { // Staircase
-            return true;
-        }
-        if(memory[currentRow][currentColumn] != -1) {
-            return (memory[currentRow][currentColumn] > 0);
-        }
-        if(floor[currentRow][currentColumn].getSolid()){
-            return false;
-        }
-        boolean result =    (isFloorTraversable(currentRow + 1, currentColumn, memory) ||
-                isFloorTraversable(currentRow - 1, currentColumn, memory) ||
-                isFloorTraversable(currentRow, currentColumn + 1, memory) ||
-                isFloorTraversable(currentRow, currentColumn - 1, memory));
-        memory[currentRow][currentColumn] = result ? 1 : 0;
-        return result;
+        memory[currentRow][currentColumn] = 3 ;
+        System.out.println( currentRow + " - " + currentColumn );
+        System.out.println("you are on : "+ floor[currentRow][currentColumn].getName());
+        if(currentRow > 0  && currentRow <FLOOR_HEIGHT && currentColumn> 0 && currentColumn <  FLOOR_WIDTH)  {
+            if(floor[currentRow][currentColumn].getName()=="Staircase" ) { // Staircase
+//                System.out.println("YOU WON  !!!!! the staris  x:" +currentRow+" y: " +currentColumn ) ;
+                return true;
+            }
+
+            boolean result = false;
+
+            if(!result &&(!floor[currentRow -1 ][currentColumn].getSolid() ) && memory[currentRow-1][currentColumn]!=3 ){
+//                System.out.println("direction DOWN");
+                result = isFloorTraversable(currentRow - 1, currentColumn, memory) ;
+            }
+            if(!result && !floor[currentRow ][currentColumn-1].getSolid()&& memory[currentRow][currentColumn-1]!=3)  {
+//                System.out.println("direction LEFT");
+                result = isFloorTraversable(currentRow , currentColumn - 1, memory) ;
+            }
+            if(!result && (!floor[currentRow +1 ][currentColumn].getSolid()) && memory[currentRow+1][currentColumn]!=3 ){
+//                System.out.println("direction TOP");
+                result = isFloorTraversable(currentRow + 1, currentColumn, memory) ;
+            }
+
+            if(!result&& !floor[currentRow ][currentColumn+1].getSolid() && memory[currentRow][currentColumn+1]!=3){
+//                System.out.println("direction RIGHT");
+                result = isFloorTraversable(currentRow , currentColumn + 1, memory) ;
+            }
+
+            if(result) return true;    }
+        return false;
     }
 
     public void setTraversable() {
@@ -57,6 +70,8 @@ public class FloorTraversal {
     }
 
     public boolean getTraversable() {
+        //    this.setTraversable();
+
         return this.isTraversable;
     }
 }

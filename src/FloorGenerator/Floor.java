@@ -20,16 +20,17 @@ public class Floor {
     public void createFloor() throws IOException {
         //uncomment when FloorTraversal is finished
         FloorGenerator floorGenerator = new FloorGenerator(player);
-        floor = floorGenerator.getFloor();
         playerRow = floorGenerator.getPlayerRow();
         playerColumn = floorGenerator.getPlayerColumn();
+        floor = floorGenerator.getFloor();
+        System.out.println(" playerRow: " + playerRow  + ' ' +playerColumn );
 
-//        FloorTraversal testNewFloor = new FloorTraversal(floor, playerRow, playerColumn);
-//        boolean status = testNewFloor.getTraversable();
-//        System.out.println("is the floor traversable: " + status);
-//        if (!status){
-//            createFloor();
-//        }
+        FloorTraversal testNewFloor = new FloorTraversal(floor, playerRow, playerColumn);
+        boolean status = testNewFloor.getTraversable();
+        System.out.println("is the floor traversable: " + status);
+        if (!status){
+            createFloor();
+        }
     }
 
     public int getPlayerRow(){
@@ -56,3 +57,4 @@ public class Floor {
         return floor;
     }
 }
+
