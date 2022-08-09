@@ -21,6 +21,4 @@ public class OranBerry extends Item {
             System.out.println("ORAN BERRY input MUST BE NULL");
         }
     }
-
-    private void heal() {}
 }

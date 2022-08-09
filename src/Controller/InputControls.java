@@ -3,11 +3,8 @@ import DungeonCharacter.DungeonCharacter;
 import DungeonCharacter.Hero.Hero;
 import DungeonCharacter.Hero.Snorlax;
 import FloorGenerator.Floor;
-<<<<<<< HEAD
-=======
-import FloorGenerator.FloorTraversal;
+
 import GameView.Message;
->>>>>>> bd90c448e8356c2bdb101a96e514add3c530a112
 import TileObjects.*;
 import TileObjects.Items.OranBerry;
 import TileObjects.Items.VisionSeed;
@@ -26,21 +23,34 @@ public final class InputControls extends KeyAdapter {
     public static void useSpecialAttack() {
     }
 
+    //I think we may need to return an updated version of Floor - Kevin
+    //see useVisionSeed method
+    //also check if theres an oran berry in inventory to use
     public static Floor useOranBerry(final Floor theFloor) {
         TileObject[][] tempFloor = theFloor.getFloorArray();
-        setPlayerPos(theFloor);
+        updateFloorFields(theFloor);
         Hero player = (Hero) tempFloor[playerRow][playerColumn];
         String message = player.heal(20);
         Message.setMessage(message);
         return theFloor;
     }
 
-    private static void setPlayerPos(final Floor theFloor) {
-        playerRow = theFloor.getPlayerRow();
-        playerColumn = theFloor.getPlayerColumn();
-    }
-
-    public static void useVisionSeed() {
+    public static Floor useVisionSeed(final Floor theFloor) {
+        updateFloorFields(theFloor);
+        Floor returnFloor = theFloor;
+        Hero player = (Hero) floor[playerRow][playerColumn];
+        if (player.getSeedCount() > 0){
+            player.setSeedCount(player.getSeedCount()-1);
+            for (int row = 0; row < floor.length; row++){
+                for (int column = 0; column < floor[0].length; column++){
+                    floor[row][column].setVisibleOnMiniMap();
+                }
+            }
+            returnFloor.setFloorArray(floor);
+            return returnFloor;
+        }
+        System.out.println("NO SEEDS IN INVENTORY TO USE");
+        return returnFloor;
     }
 
     public static void quitGame() {
@@ -105,15 +115,16 @@ public final class InputControls extends KeyAdapter {
 
     private static Floor updateTileObjectVisibility(final Floor theFloor){
         updateFloorFields(theFloor);
-        floor[playerRow-1][playerColumn-1].setIsVisibleOnDungeonMap(true);
-        floor[playerRow-1][playerColumn].setIsVisibleOnDungeonMap(true);
-        floor[playerRow-1][playerColumn+1].setIsVisibleOnDungeonMap(true);
-        floor[playerRow][playerColumn-1].setIsVisibleOnDungeonMap(true);
-        floor[playerRow][playerColumn].setIsVisibleOnDungeonMap(true);
-        floor[playerRow][playerColumn+1].setIsVisibleOnDungeonMap(true);
-        floor[playerRow+1][playerColumn-1].setIsVisibleOnDungeonMap(true);
-        floor[playerRow+1][playerColumn].setIsVisibleOnDungeonMap(true);
-        floor[playerRow+1][playerColumn+1].setIsVisibleOnDungeonMap(true);
+        floor[playerRow-1][playerColumn-1].setVisibleOnMiniMap();
+        floor[playerRow-1][playerColumn].setVisibleOnMiniMap();
+        floor[playerRow-1][playerColumn+1].setVisibleOnMiniMap();
+        floor[playerRow][playerColumn-1].setVisibleOnMiniMap();
+        floor[playerRow][playerColumn].setVisibleOnMiniMap();
+
+        floor[playerRow][playerColumn+1].setVisibleOnMiniMap();
+        floor[playerRow+1][playerColumn-1].setVisibleOnMiniMap();
+        floor[playerRow+1][playerColumn].setVisibleOnMiniMap();
+        floor[playerRow+1][playerColumn+1].setVisibleOnMiniMap();
         Floor returnFloor = theFloor;
         returnFloor.setFloorArray(floor);
         return returnFloor;

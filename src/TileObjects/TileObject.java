@@ -29,6 +29,7 @@ public abstract class TileObject {
         this.stringRepresentation = stringRepresentation;
         this.isSolid = isSolid;
         this.myDirection = Direction.DOWN;
+        this.isVisibleOnMiniMap = false;
     }
 
     public BufferedImage getSprite() {
@@ -54,14 +55,12 @@ public abstract class TileObject {
     public boolean getIsVisibleOnDungeonMap(){
         return isVisibleOnMiniMap;
     }
-    public void setIsVisibleOnDungeonMap(final boolean isVisible){
-        isVisibleOnMiniMap = isVisible;
+    public void setVisibleOnMiniMap(){
+        this.isVisibleOnMiniMap = true;
     }
 
     @Override
     public String toString(){
         return stringRepresentation;
     }
-
-
 }

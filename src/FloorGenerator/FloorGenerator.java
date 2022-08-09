@@ -43,9 +43,8 @@ public class FloorGenerator {
         maxRoomHeight = (FLOOR_HEIGHT / numberOfRoomsVertically);
         createListOfRooms();
         putRoomsInFloor();
-        placeTileObject(r.nextInt(1), new VisionSeed()); //place items
-        Item item = new OranBerry();
-        placeTileObject(r.nextInt(3), item); //place oran berry
+        placeTileObject(r.nextInt(3), new VisionSeed()); //place items
+        placeTileObject(r.nextInt(3), new OranBerry()); //place oran berry
         placeTileObject(r.nextInt(8), enemyFactory.createEnemy());//place enemies
         placeTileObject(r.nextInt(5), new SpikeTip());//place trap
         placeTileObject(1, new Staircase());//place staircase

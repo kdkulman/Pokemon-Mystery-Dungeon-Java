@@ -55,6 +55,14 @@ public abstract class Hero extends DungeonCharacter {
         return myVisionSeeds;
     }
 
+    public static void setBerryCount(final int count) {
+        myOranBerryCount = count;
+    }
+
+    public static void setSeedCount(final int count) {
+        myVisionSeeds = count;
+    }
+
     public void updateMyCurrentLevel() { this.myFloorLevel++; }
 
     public int getMyFloorLevel() { return this.myFloorLevel; }

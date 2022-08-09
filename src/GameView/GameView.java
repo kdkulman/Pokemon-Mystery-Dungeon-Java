@@ -16,14 +16,14 @@ import FloorGenerator.Floor;
 import TileObjects.*;
 import TileObjects.Items.Item;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
-import static java.lang.Math.round;
+import java.net.URL;
 
 public final class GameView extends JPanel implements Runnable{
     private final int SCALE = 3;
@@ -113,7 +113,7 @@ public final class GameView extends JPanel implements Runnable{
                         break;
                     case KeyEvent.VK_2:
                         System.out.println("USE VISION SEED");
-                        InputControls.useVisionSeed();
+                        floor = InputControls.useVisionSeed(floor);
                         break;
                     case KeyEvent.VK_ESCAPE:
                         System.out.println("QUIT GAME");
@@ -165,8 +165,6 @@ public final class GameView extends JPanel implements Runnable{
 
     }
 
-
-
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -176,34 +174,60 @@ public final class GameView extends JPanel implements Runnable{
             e.printStackTrace();
         }
         drawDungeonMap(g2);
-        drawHud(g);
+        try {
+            drawHud(g2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private void drawHud(final Graphics g){
-        g.setColor(new Color(255, 255, 255, 150));
-        g.fillRect(SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 5), 0,
-                SCREEN_WIDTH/4, SCREEN_HEIGHT / 4);
-
-        int textOutlineSize = 1;
-        int xx = SCREEN_WIDTH - (int) round(SCREEN_WIDTH / 6);
-        int yy = 20;
-        int lineBreak = 30;
+    private void drawHud(final Graphics2D g) throws IOException {
+        int xx = 5*SCALE;
+        int yy = SCREEN_HEIGHT/12;
         TileObject[][] floorArray = floor.getFloorArray();
         Hero player = (Hero) floorArray[floor.getPlayerRow()][floor.getPlayerColumn()];
 
-        drawStringWithOutline(g, player.getName(),xx, yy);
-        drawStringWithOutline(g, "HP " + player.getHP(),xx, yy+lineBreak);
-        drawStringWithOutline(g, "Vision Seeds " + player.getSeedCount(),xx, yy+lineBreak*2);
-        drawStringWithOutline(g, "Oran Berries " + player.getBerryCount(),xx, yy+lineBreak*3);
-        drawStringWithOutline(g, "Floor " + player.getMyFloorLevel(),xx, yy+lineBreak*4);
+        //Floor Display
+        drawStringWithOutline(g, "" + player.getMyFloorLevel() + "F", xx, yy);
+        drawHpBar(g, 18*SCALE, yy/2, player);
+        drawStringWithOutline(g, "" + player.getHP(), SCREEN_WIDTH/3, yy);
+        drawInventory(g, 22*SCALE, -3, player);
+    }
+
+    private void drawInventory(final Graphics2D g, final int x, final int y, final Hero player) throws IOException {
+        //DRAW ORAN BERRYS
+        int numberOfOranBerries = player.getBerryCount();
+        int numberOfVisionSeeds = player.getSeedCount();
+        int totalInventoryCount = numberOfOranBerries + numberOfVisionSeeds;
+        URL url = this.getClass().getResource("/Sprites/TileObjects/Items/Oran_Berry.png");
+        BufferedImage oranBerrySprite = ImageIO.read(url);
+        for(int i = 0; i < numberOfOranBerries; i++)
+            g.drawImage(oranBerrySprite, x+(10*i*SCALE), y, TILE_SIZE/2, TILE_SIZE/2, null);
+
+        //DRAW VISION SEEDS
+        url = this.getClass().getResource("/Sprites/TileObjects/Items/Vision_Seed.png");
+        BufferedImage visionSeedSprite = ImageIO.read(url);
+        for(int i = numberOfOranBerries; i < totalInventoryCount; i++)
+            g.drawImage(visionSeedSprite, x+(10*i*SCALE), y, TILE_SIZE/2, TILE_SIZE/2, null);
+
+    }
+    private void drawHpBar(final Graphics g, final int x, final int y, final Hero player){
+        g.setColor(Color.WHITE);
+        g.fillRect(x-1, y-1, SCREEN_WIDTH/4+2, SCREEN_HEIGHT/20+2);
+        g.setColor(Color.BLACK);
+        g.fillRect(x, y, SCREEN_WIDTH/4, SCREEN_HEIGHT/20);
+        g.setColor(Color.GREEN);
+        g.fillRect(x, y, (SCREEN_WIDTH/4)*(player.getHP()/player.getMaxHP()), SCREEN_HEIGHT/20);
+
+
     }
 
     private void drawStringWithOutline(final Graphics g, final String string, final int x, final int y){
-        g.setFont(new Font("Serif", Font.PLAIN, 20));
-        g.setColor(Color.BLACK);
+        g.setFont(new Font("Serif", Font.PLAIN, 10*SCALE));
+        g.setColor(Color.WHITE);
         g.drawString(string, x, y);
-//        g.setColor(Color.CYAN);
+        g.setColor(Color.BLACK);
 //        g.drawString(string,x-1, y-1);
 //        g.drawString(string,x-1, y+1);
 //        g.drawString(string,x+1, y-1);
@@ -246,21 +270,21 @@ public final class GameView extends JPanel implements Runnable{
         int mapSize = 10;
         for (int row = 0; row < floor.getFloorArray().length; row++) {
             for (int column = 0; column < floor.getFloorArray()[0].length; column++) {
-                if(floor.getFloorArray()[row][column].getIsVisibleOnDungeonMap()) {
-                    if (floor.getFloorArray()[row][column] instanceof Texture ||
-                            floor.getFloorArray()[row][column] instanceof SpikeTip) {
+                TileObject tile = floor.getFloorArray()[row][column];
+                if(tile.getIsVisibleOnDungeonMap() == true) {
+                    if (tile instanceof Texture || tile instanceof SpikeTip) {
                         g2.setColor(new Color(255, 255, 255, 150));
                         g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
-                    } else if (floor.getFloorArray()[row][column] instanceof Hero) {
+                    } else if (tile instanceof Hero) {
                         g2.setColor(Color.blue);
                         g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
-                    } else if (floor.getFloorArray()[row][column] instanceof Staircase) {
+                    } else if (tile instanceof Staircase) {
                         g2.setColor(Color.yellow);
                         g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
-                    } else if (floor.getFloorArray()[row][column] instanceof Item) {
+                    } else if (tile instanceof Item) {
                         g2.setColor(Color.CYAN);
                         g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
-                    } else if (floor.getFloorArray()[row][column] instanceof Enemy) {
+                    } else if (tile instanceof Enemy) {
                         g2.setColor(Color.RED);
                         g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     }
