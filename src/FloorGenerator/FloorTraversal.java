@@ -25,53 +25,77 @@ public class FloorTraversal {
         this.setTraversable();
     }
 
-    private boolean isFloorTraversable(int currentRow, int currentColumn, int[][] memory) {
-        memory[currentRow][currentColumn] = 3 ;
-        System.out.println( currentRow + " - " + currentColumn );
-        System.out.println("you are on : "+ floor[currentRow][currentColumn].getName());
-        if(currentRow > 0  && currentRow <FLOOR_HEIGHT && currentColumn> 0 && currentColumn <  FLOOR_WIDTH)  {
-            if(floor[currentRow][currentColumn].getName()=="Staircase" ) { // Staircase
-//                System.out.println("YOU WON  !!!!! the staris  x:" +currentRow+" y: " +currentColumn ) ;
-                return true;
-            }
+    private boolean isFloorTraversable(int currentRow, int currentColumn, boolean[][] memory){
+        //check if out of bounds
+        if(currentRow < 0  || currentRow == FLOOR_HEIGHT || currentColumn < 0 || currentColumn == FLOOR_WIDTH) {
+            return false;
+        }
+        //check if already visited this tile
+        if(memory[currentRow][currentColumn]){
+            return false;
+        }
 
-            boolean result = false;
+        //set this tile as visited
+        memory[currentRow][currentColumn] = true;
 
-            if(!result &&(!floor[currentRow -1 ][currentColumn].getSolid() ) && memory[currentRow-1][currentColumn]!=3 ){
-//                System.out.println("direction DOWN");
-                result = isFloorTraversable(currentRow - 1, currentColumn, memory) ;
-            }
-            if(!result && !floor[currentRow ][currentColumn-1].getSolid()&& memory[currentRow][currentColumn-1]!=3)  {
-//                System.out.println("direction LEFT");
-                result = isFloorTraversable(currentRow , currentColumn - 1, memory) ;
-            }
-            if(!result && (!floor[currentRow +1 ][currentColumn].getSolid()) && memory[currentRow+1][currentColumn]!=3 ){
-//                System.out.println("direction TOP");
-                result = isFloorTraversable(currentRow + 1, currentColumn, memory) ;
-            }
+        //check if tile is staircase
+        if(this.floor[currentRow][currentColumn].toString().equals("s")){
+            return true; //found staircase
+        }
 
-            if(!result&& !floor[currentRow ][currentColumn+1].getSolid() && memory[currentRow][currentColumn+1]!=3){
-//                System.out.println("direction RIGHT");
-                result = isFloorTraversable(currentRow , currentColumn + 1, memory) ;
-            }
+        //check if tile is a wall
+        if(floor[currentRow][currentColumn].toString().equals("W")){
+            return false;
+        }
 
-            if(result) return true;    }
-        return false;
+        //check adjacent tiles
+        boolean result =    (isFloorTraversable(currentRow + 1, currentColumn, memory) ||
+                isFloorTraversable(currentRow - 1, currentColumn, memory) ||
+                isFloorTraversable(currentRow, currentColumn + 1, memory) ||
+                isFloorTraversable(currentRow, currentColumn - 1, memory));
+
+        return result;
+    }
+
+    //DEBUG: prints the entire floor and shows where the DFS visited
+    private void printFloor(int currR, int currC, boolean[][] memory){
+        StringBuilder output = new StringBuilder();
+        for(int r = 0; r < FLOOR_HEIGHT; r++){
+            for(int c = 0; c < FLOOR_WIDTH; c++){
+                if(r == currR && c == currC){
+                    output.append('+');//player's location
+                    continue;
+                }
+
+                if(floor[r][c].toString().equals("s")){
+                    output.append('S');//staircase
+                }
+                else if(floor[r][c].toString().equals("t")){
+                    output.append('^');//spiketip
+                }
+                else if(floor[r][c].toString().equals("W")){
+                    output.append('X');//wall
+                }
+                else if(floor[r][c].toString().equals("T")){
+                    if(memory[r][c]) output.append('*');
+                    else output.append('.');//floor
+                }
+                else{
+                    output.append('%');//anything else, typically enemies
+                }
+            }
+            output.append('\n');
+        }
+        System.out.println(output.toString());
     }
 
     public void setTraversable() {
-        int[][] memory = new int [FLOOR_HEIGHT][FLOOR_WIDTH];
-        for(int i = 0; i < FLOOR_HEIGHT; i++) {
-            for(int j = 0; j < FLOOR_WIDTH; j++) {
-                memory[i][j] = -1;
-            }
-        }
-        this.isTraversable = isFloorTraversable(this.playerRow, this.playerColumn, memory);
+        boolean[][] memory = new boolean [FLOOR_HEIGHT][FLOOR_WIDTH];
+
+        this.isTraversable = isFloorTraversable(playerRow, playerColumn, memory);
     }
 
     public boolean getTraversable() {
-        //    this.setTraversable();
-
         return this.isTraversable;
     }
 }
