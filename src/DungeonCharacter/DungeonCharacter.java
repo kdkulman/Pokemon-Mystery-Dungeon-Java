@@ -43,6 +43,10 @@ public abstract class DungeonCharacter extends TileObject {
         this.myBattleStatus = true;
     }
 
+    public void clearTarget() {
+        this.myTarget = null;
+    }
+
     public int getHP() {
         return this.myHP;
     }

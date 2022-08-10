@@ -1,5 +1,6 @@
 package Controller;
 import DungeonCharacter.DungeonCharacter;
+import DungeonCharacter.Enemy.Enemy;
 import DungeonCharacter.Hero.Hero;
 import DungeonCharacter.Hero.Snorlax;
 import FloorGenerator.Floor;
@@ -21,15 +22,27 @@ public final class InputControls extends KeyAdapter {
         TileObject[][] tempFloor = theFloor.getFloorArray();
         updateFloorFields(theFloor);
         Hero player = (Hero) tempFloor[playerRow][playerColumn];
-        String message = "";
+        String message;
         if(checkAttackDirection(theFloor)) {
             switch(player.getMyDirection()) {
                 case UP:
-
+                    player.setTarget((Enemy) tempFloor[playerRow - 1][playerColumn]);
+                    message = player.attack();
+                    player.clearTarget();
                 case RIGHT:
+                    player.setTarget((Enemy) tempFloor[playerRow][playerColumn + 1]);
+                    message = player.attack();
+                    player.clearTarget();
                 case DOWN:
+                    player.setTarget((Enemy) tempFloor[playerRow + 1][playerColumn]);
+                    message = player.attack();
+                    player.clearTarget();
                 case LEFT:
+                    player.setTarget((Enemy) tempFloor[playerRow][playerColumn - 1]);
+                    message = player.attack();
+                    player.clearTarget();
                 default:
+                    message = "Attack switch default chosen. Fix?";
             }
 
         } else {
