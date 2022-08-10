@@ -43,6 +43,7 @@ public class InputControls extends KeyAdapter {
         floor = theFloor.getFloorArray();
     }
 
+<<<<<<< Updated upstream
     public static Floor moveUp(final Floor theFloor){
         updateFloorFields(theFloor);
         Floor returnFloor = theFloor;
@@ -61,6 +62,16 @@ public class InputControls extends KeyAdapter {
         }
         System.out.println("Cannot move up!");
         return theFloor;
+=======
+ public static Floor getGoodMaze(final Hero hero) throws IOException {
+        Floor returnFloor = new Floor(hero);
+        return returnFloor;
+    }
+
+    public void collectOranBerry() throws IOException {
+        Hero updateOranBerry = new Snorlax();
+        updateOranBerry.collectOranBerry();
+>>>>>>> Stashed changes
     }
 
     public static Floor moveDown(final Floor theFloor){
@@ -149,4 +160,44 @@ public class InputControls extends KeyAdapter {
             System.out.println("The left arrow key is released");
         }
     }
+    public static Floor move(final Floor theFloor, final int destinationRow,
+                             final int destinationColumn, final String errorMessage,
+                             final DungeonCharacter.Direction direction) throws IOException {
+        Floor returnFloor = theFloor;
+        Hero hero = theFloor.player;
+        if(floor[destinationRow][destinationColumn].getSolid() == false) {
+            TileObject playerTemp = floor[playerRow][playerColumn];
+            if(floor[destinationRow][destinationColumn] instanceof OranBerry){
+                hero.collectOranBerry();
+                System.out.println("berry count: " + hero.getBerryCount());
+            }
+            if(floor[destinationRow][destinationColumn] instanceof VisionSeed){
+                hero.collectVisionSeeds();
+                System.out.println("seed count: " + hero.getSeedCount());
+            }
+            if(floor[destinationRow][destinationColumn] instanceof Staircase){
+                hero.updateMyCurrentLevel();
+                System.out.println("current level: " + hero.getMyFloorLevel());
+                returnFloor = getGoodMaze(hero);
+                return returnFloor;
+            }
+            try {
+                floor[playerRow][playerColumn] = new Texture();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            floor[destinationRow][destinationColumn] = playerTemp;
+            returnFloor.setPlayerRow(destinationRow);
+            returnFloor.setPlayerColumn(destinationColumn);
+            returnFloor.setFloorArray(floor);
+            returnFloor = updateTileObjectVisibility(returnFloor);
+            returnFloor.getFloorArray()[destinationRow][destinationColumn].setDirection(direction);
+            return returnFloor;
+        }
+        System.out.println(errorMessage);
+        returnFloor.getFloorArray()[playerRow][playerColumn].setDirection(direction);
+        returnFloor = updateTileObjectVisibility(returnFloor);
+        return returnFloor;
+    }
+
 }
