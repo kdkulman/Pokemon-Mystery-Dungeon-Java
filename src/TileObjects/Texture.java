@@ -2,22 +2,24 @@ package TileObjects;
 
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class Texture extends TileObject{
 
     public Texture() throws IOException {
-        //super(ImageIO.read(new File("grassTexture.png")), "Texture", "T");
+        super("Texture", "T", false);
         setSprite();
     }
 
     private void setSprite(){
         try {
-            sprite = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\TileObjects\\grassTexture.png"));
+            URL url = this.getClass().getResource("/Sprites/TileObjects/Textures/Texture_1.png");
+            sprite = ImageIO.read(url);
         } catch (IOException e) {
-            System.out.println("sprite file could not be found");
+            System.out.println("TEXTURE file NOT FOUND");
+        } catch (IllegalArgumentException e){
+            System.out.println("TEXTURE input MUST BE NULL");
         }
     }
 }

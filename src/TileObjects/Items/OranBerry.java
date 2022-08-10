@@ -1,24 +1,24 @@
 package TileObjects.Items;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class OranBerry extends Item {
 
     public OranBerry(){
-
-        //super(null, "Texture", "T");
+        super("Oran Berry", "O");
         setSprite();
     }
 
     private void setSprite(){
         try {
-            sprite = ImageIO.read(new File("C:\\Users\\Reset\\OneDrive\\Documents\\GitHub\\Pokemon-Mystery-Dungeon-Java\\src\\TileObjects\\oranBerry.png"));
+            URL url = this.getClass().getResource("/Sprites/TileObjects/Items/Oran_Berry.png");
+            sprite = ImageIO.read(url);
         } catch (IOException e) {
-            System.out.println("sprite file could not be found");
+            System.out.println("ORAN BERRY file NOT FOUND");
+        } catch (IllegalArgumentException e){
+            System.out.println("ORAN BERRY input MUST BE NULL");
         }
     }
-
-    private void heal() {}
 }

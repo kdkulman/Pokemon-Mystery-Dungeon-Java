@@ -1,5 +1,4 @@
 package DungeonCharacter;
-
 import TileObjects.TileObject;
 
 import java.awt.image.BufferedImage;
@@ -15,11 +14,11 @@ public abstract class DungeonCharacter extends TileObject {
     private DungeonCharacter myTarget;
     private boolean myBattleStatus;
 
-    public DungeonCharacter(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
-                     final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION,
-                     final BufferedImage THE_SPRITE){
 
-        super(THE_SPRITE, THE_NAME,"");
+    public DungeonCharacter(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
+                     final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION){
+
+        super(THE_NAME,"", true);
         this.myMaxHP = THE_MAX_HP;
         this.myHP = THE_HP;
         this.myDamageRange = THE_DAMAGE_RANGE;
@@ -27,6 +26,19 @@ public abstract class DungeonCharacter extends TileObject {
         this.mySpecialAttack = THE_SPECIAL_ATTACK;
         this.myDefense = THE_DEFENSE;
         this.myEvasion = THE_EVASION;
+        this.myTarget = null;
+        this.myBattleStatus = true;
+    }
+
+    public DungeonCharacter(final String THE_NAME) {
+        super(THE_NAME, "", true);
+        this.myMaxHP = 1;
+        this.myHP = 1;
+        this.myDamageRange = 1;
+        this.myAttack = 1;
+        this.mySpecialAttack = 1;
+        this.myDefense = 1;
+        this.myEvasion = 1;
         this.myTarget = null;
         this.myBattleStatus = true;
     }
@@ -78,12 +90,18 @@ public abstract class DungeonCharacter extends TileObject {
         }
     }
 
-    public void heal(final int THE_HEALING) {
+    public String heal(final int THE_HEALING) {
+        String message = "";
+        int amount = 0;
         if(THE_HEALING + this.myHP > this.myMaxHP) {
             this.myHP = this.myMaxHP;
+            amount += this.myMaxHP - this.myHP;
         } else {
             this.myHP += THE_HEALING;
+            amount += THE_HEALING;
         }
+        message += this.getName() + " healed for " + amount + " HP!";
+        return message;
     }
 
     public void setBattleStatus(boolean THE_SETTING) {
@@ -105,5 +123,17 @@ public abstract class DungeonCharacter extends TileObject {
     public int getMySpecialAttack() {
         return this.mySpecialAttack;
     }
+
+    public void setEnemyValues(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
+                     final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION){
+        this.myMaxHP = THE_MAX_HP;
+        this.myHP = THE_HP;
+        this.myDamageRange = THE_DAMAGE_RANGE;
+        this.myAttack = THE_ATTACK;
+        this.mySpecialAttack = THE_SPECIAL_ATTACK;
+        this.myDefense = THE_DEFENSE;
+        this.myEvasion = THE_EVASION;
+    }
+
 
 }

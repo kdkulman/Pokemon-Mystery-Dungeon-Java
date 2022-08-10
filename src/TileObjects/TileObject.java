@@ -1,52 +1,66 @@
 package TileObjects;
 
+import DungeonCharacter.DungeonCharacter;
+
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public abstract class TileObject {
-    protected BufferedImage sprite;
+    private boolean isSolid;
     private String name;
     private String message;
-    public String string;
+    private String stringRepresentation;
+    private boolean isVisibleOnMiniMap;
+    private Direction myDirection;
+    protected BufferedImage sprite, up, down, left, right;
 
-    public TileObject(final BufferedImage sprite, final String name, final String string){
-        //this.sprite = setSprite();
-        this.name = name;
-        this.string = string;
+    public boolean getSolid() {
+        return isSolid;
     }
 
-    public TileObject(){
-        this.name = name;
-        this.string = string;
-        this.sprite = sprite;
+    public enum Direction{
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
     }
 
-    public TileObject(String the_name, BufferedImage the_sprite) {
-
+    public TileObject(final String name, final String stringRepresentation, final boolean isSolid){
+        this.name = name;
+        this.stringRepresentation = stringRepresentation;
+        this.isSolid = isSolid;
+        this.myDirection = Direction.DOWN;
+        this.isVisibleOnMiniMap = false;
     }
 
     public BufferedImage getSprite() {
         return sprite;
     }
 
+    public void setDirection(final Direction direction){
+        if(this instanceof DungeonCharacter) this.myDirection = direction;
+    }
+
+    public Direction getMyDirection() {
+        return this.myDirection;
+    }
 
     public String getName() {
         return name;
     }
 
-
     public String getMessage() {
         return message;
     }
 
-    private BufferedImage setSprite(){
-        return null;
+    public boolean getIsVisibleOnDungeonMap(){
+        return isVisibleOnMiniMap;
+    }
+    public void setVisibleOnMiniMap(){
+        this.isVisibleOnMiniMap = true;
     }
 
     @Override
     public String toString(){
-        return string;
+        return stringRepresentation;
     }
-
-
 }
