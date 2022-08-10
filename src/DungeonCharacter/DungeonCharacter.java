@@ -63,15 +63,19 @@ public abstract class DungeonCharacter extends TileObject {
         this.myTarget = THE_ENEMY;
     }
 
-    public void attack() {
-        this.myTarget.takeDamage(this.myAttack);
+    public String attack() {
+        String damage = this.myTarget.takeDamage(this.myAttack);
+        String message = "You did " + damage + " damage to enemy " + this.myTarget.getName() + "!";
+        return message;
     }
 
-    public void specialAttack() {
-        this.myTarget.takeDamage(this.mySpecialAttack);
+    public String specialAttack() {
+        String damage = this.myTarget.takeDamage(this.mySpecialAttack);
+        String message = "You did " + damage + " damage to enemy " + this.myTarget.getName() + "!";
+        return message;
     }
 
-    public void takeDamage(final int THE_DAMAGE) {
+    public String takeDamage(final int THE_DAMAGE) {
         int finalDamage = THE_DAMAGE - this.myDefense;
         if (finalDamage < 0) {
             finalDamage = 0;
@@ -79,6 +83,7 @@ public abstract class DungeonCharacter extends TileObject {
         if(characterIsHit()) {
             this.myHP -= finalDamage;
         }
+        return String.valueOf(finalDamage);
     }
 
 

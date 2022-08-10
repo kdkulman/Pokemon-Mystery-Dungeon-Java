@@ -17,10 +17,54 @@ public final class InputControls extends KeyAdapter {
     private static int playerColumn;
     private static TileObject[][] floor;
 
-    public static void useRegularAttack() {
+    public static String useRegularAttack(final Floor theFloor) {
+        TileObject[][] tempFloor = theFloor.getFloorArray();
+        updateFloorFields(theFloor);
+        Hero player = (Hero) tempFloor[playerRow][playerColumn];
+        String message = "";
+        if(checkAttackDirection(theFloor)) {
+            switch(player.getMyDirection()) {
+                case UP:
+
+                case RIGHT:
+                case DOWN:
+                case LEFT:
+                default:
+            }
+
+        } else {
+            message = "Nothing to attack in that direction!";
+        }
+        return message;
     }
 
     public static void useSpecialAttack() {
+    }
+
+    private static boolean checkAttackDirection(final Floor theFloor) {
+        TileObject[][] tempFloor = theFloor.getFloorArray();
+        updateFloorFields(theFloor);
+        Hero player = (Hero) tempFloor[playerRow][playerColumn];
+        switch(player.getMyDirection()) {
+            case UP:
+                if(tempFloor[playerRow - 1][playerColumn].getMyEnemyStatus()) {
+                    return true;
+                }
+            case RIGHT:
+                if(tempFloor[playerRow][playerColumn + 1].getMyEnemyStatus()) {
+                    return true;
+                }
+            case DOWN:
+                if(tempFloor[playerRow + 1][playerColumn].getMyEnemyStatus()) {
+                    return true;
+                }
+            case LEFT:
+                if(tempFloor[playerRow][playerColumn - 1].getMyEnemyStatus()) {
+                    return true;
+                }
+            default:
+                return false;
+        }
     }
 
     //I think we may need to return an updated version of Floor - Kevin
@@ -54,6 +98,7 @@ public final class InputControls extends KeyAdapter {
     }
 
     public static void quitGame() {
+        System.exit(0);
     }
 
     //This method exists for readability - shorthanding these fields

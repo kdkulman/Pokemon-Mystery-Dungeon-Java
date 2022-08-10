@@ -34,11 +34,13 @@ public class Magikarp extends Hero {
 
 
     @Override
-    public void specialAttack() {
+    public String specialAttack() {
         if(this.myBigAttackChance < Math.random()) {
             this.getTarget().takeDamage(this.getTarget().getMaxHP());
             this.myBigAttackChance += 0.05;
             this.heal(this.getMaxHP());
+        } else {
+            return "Your special attack missed!";
         }
     }
 

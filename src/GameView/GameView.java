@@ -101,7 +101,7 @@ public final class GameView extends JPanel implements Runnable{
                         break;
                     case KeyEvent.VK_SPACE:
                         System.out.println("REGULAR ATTACK");
-                        InputControls.useRegularAttack();
+                        InputControls.useRegularAttack(floor);
                         break;
                     case KeyEvent.VK_SHIFT:
                         System.out.println("SPECIAL ATTACK");

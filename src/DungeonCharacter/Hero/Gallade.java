@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Gallade extends Hero{
-    private final double SELF_INFLICTION = 12;
+    private final int SELF_INFLICTION = 12;
 
     public Gallade() throws IOException {
         super("Gallade", 100, 100,30, 20, 30,
@@ -31,8 +31,11 @@ public class Gallade extends Hero{
     }
 
     @Override
-    public void specialAttack() {
-        this.getTarget().takeDamage(this.getMySpecialAttack());
-        this.takeDamage((int)SELF_INFLICTION);
+    public String specialAttack() {
+        String damage = this.getTarget().takeDamage((int) this.getAttack());
+        this.takeDamage(SELF_INFLICTION);
+        String message = "You did " + damage + " damage to enemy " + this.getTarget().getName() + "! \n";
+        message += "You did " + SELF_INFLICTION + " damage to yourself!";
+        return message;
     }
 }

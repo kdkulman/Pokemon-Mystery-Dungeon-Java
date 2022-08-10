@@ -12,6 +12,7 @@ public abstract class TileObject {
     private boolean isVisibleOnMiniMap;
     private Direction myDirection;
     protected BufferedImage sprite, up, down, left, right;
+    private boolean myEnemyStatus;
 
     public boolean getSolid() {
         return isSolid;
@@ -30,10 +31,19 @@ public abstract class TileObject {
         this.isSolid = isSolid;
         this.myDirection = Direction.DOWN;
         this.isVisibleOnMiniMap = false;
+        this.myEnemyStatus = false;
     }
 
     public BufferedImage getSprite() {
         return sprite;
+    }
+
+    public void setMyEnemyStatus(final boolean theStatus) {
+        this.myEnemyStatus = theStatus;
+    }
+
+    public boolean getMyEnemyStatus() {
+        return this.myEnemyStatus;
     }
 
     public void setDirection(final Direction direction){

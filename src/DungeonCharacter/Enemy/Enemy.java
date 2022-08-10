@@ -9,5 +9,6 @@ public class Enemy extends DungeonCharacter {
 
     public Enemy(final String THE_NAME) {
         super(THE_NAME);
+        setMyEnemyStatus(true);
     }
 }

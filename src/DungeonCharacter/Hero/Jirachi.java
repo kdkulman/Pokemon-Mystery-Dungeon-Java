@@ -30,7 +30,9 @@ public class Jirachi extends Hero{
     }
 
     @Override
-    public void specialAttack() {
-        this.getTarget().takeDamage((int)this.getTarget().getHP() / 2);
+    public String specialAttack() {
+        String damage = this.getTarget().takeDamage(this.getTarget().getHP() / 2);
+        String message = "You did " + damage + " damage to enemy " + this.getTarget().getName() + "!";
+        return message;
     }
 }
