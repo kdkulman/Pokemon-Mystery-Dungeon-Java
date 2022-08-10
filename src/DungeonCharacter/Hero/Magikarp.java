@@ -39,6 +39,7 @@ public class Magikarp extends Hero {
             this.getTarget().takeDamage(this.getTarget().getMaxHP());
             this.myBigAttackChance += 0.05;
             this.heal(this.getMaxHP());
+            return "Your target is defeated! You feel yourself growing stronger!";
         } else {
             return "Your special attack missed!";
         }

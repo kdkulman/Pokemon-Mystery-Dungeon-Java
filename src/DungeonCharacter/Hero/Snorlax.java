@@ -33,9 +33,9 @@ public class Snorlax extends Hero{
         }
     }
     @Override
-    public void specialAttack() {
-        heal(this.getMaxHP());
-        this.setBattleStatus(false);
+    public String specialAttack() {
+        String heal = heal(this.getMaxHP());
+        return "You snoozed and healed for " + heal + " HP!";
     }
 
     public void sleepCounter() {
