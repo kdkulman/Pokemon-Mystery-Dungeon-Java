@@ -4,7 +4,7 @@ import DungeonCharacter.Hero.Hero;
 import DungeonCharacter.Hero.Snorlax;
 import FloorGenerator.Floor;
 
-import GameView.Message;
+import Views.Message;
 import TileObjects.*;
 import TileObjects.Items.OranBerry;
 import TileObjects.Items.VisionSeed;
