@@ -158,9 +158,5 @@ public class CharacterSelectQuiz {
         arrayOfQuestions[6] = question7;
         arrayOfQuestions[7] = question8;
         arrayOfQuestions[8] = question9;
-
-
     }
-
-
 }

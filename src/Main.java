@@ -8,7 +8,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         GameManager gameManager = GameManager.getInstance();
-
     }
 
 
