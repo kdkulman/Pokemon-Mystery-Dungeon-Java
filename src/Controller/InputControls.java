@@ -97,6 +97,8 @@ public final class InputControls extends KeyAdapter {
         Floor returnFloor = theFloor;
         Hero player = (Hero) floor[playerRow][playerColumn];
         if (player.getSeedCount() > 0){
+            Message.setMessage(player.getName() + " used the Vision Seed.");
+            Message.setMessage("The whole floor was revealed!");
             player.setSeedCount(player.getSeedCount()-1);
             for (int row = 0; row < floor.length; row++){
                 for (int column = 0; column < floor[0].length; column++){
@@ -106,7 +108,6 @@ public final class InputControls extends KeyAdapter {
             returnFloor.setFloorArray(floor);
             return returnFloor;
         }
-        System.out.println("NO SEEDS IN INVENTORY TO USE");
         return returnFloor;
     }
 

@@ -23,6 +23,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public final class GameView extends JPanel implements Runnable{
@@ -47,8 +48,9 @@ public final class GameView extends JPanel implements Runnable{
     //Model
     private Floor floor;
     private Hero player;
-
+    private Message message;
     public GameView(JFrame jFrame, Hero player) throws IOException {
+        this.message = Message.getInstance();
         this.player = player;
         jFrame.setLocationRelativeTo(null);
         this.setDoubleBuffered(true);
@@ -97,10 +99,9 @@ public final class GameView extends JPanel implements Runnable{
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
-                        //viewWidthAnimation = TILE_SIZE;
                         break;
                     case KeyEvent.VK_SPACE:
-                        System.out.println(InputControls.useRegularAttack(floor));
+                        Message.setMessage(InputControls.useRegularAttack(floor));
                         break;
                     case KeyEvent.VK_SHIFT:
                         System.out.println("SPECIAL ATTACK");
@@ -169,16 +170,28 @@ public final class GameView extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
         try {
             drawFloor(g2);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        drawDungeonMap(g2);
-        try {
+            drawDungeonMap(g2);
             drawHud(g2);
+            drawMessage(g2);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private void drawMessage(final Graphics2D g2) throws IOException {
+        URL url = this.getClass().getResource("/Sprites/Text_Box.png");
+        BufferedImage sprite = ImageIO.read(url);
+        String message = Message.getMessage();
+        String previousMessage = Message.getPreviousMessage();
+        int x = this.getWidth()/4;
+        int y = this.getHeight()-this.getHeight()/5;
+        if (Message.getVisible()) {
+            g2.drawImage(sprite, x, y, sprite.getWidth() * 2, sprite.getHeight() * 2, null);
+            g2.setFont(new Font("Serif", Font.PLAIN, 9 * SCALE));
+            g2.setColor(Color.white);
+            g2.drawString(previousMessage, x+9*SCALE, y + 13*SCALE);
+            g2.drawString(message, x+9*SCALE, y + 25*SCALE);
+        }
     }
 
     private void drawHud(final Graphics2D g) throws IOException {
