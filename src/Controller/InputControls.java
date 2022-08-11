@@ -75,7 +75,7 @@ public final class InputControls extends KeyAdapter {
                 Enemy foe = (Enemy) tempFloor[playerRow - 1][playerColumn];
                 foe.setTarget(player);
                 player.setTarget(foe);
-                message += player.attack() + " " + foe.enemyDecision();
+                message += player.specialAttack() + " " + foe.enemyDecision();
                 player.clearTarget();
                 foe.clearTarget();
             } else if (player.getMyDirection() == TileObject.Direction.RIGHT) {
@@ -83,7 +83,7 @@ public final class InputControls extends KeyAdapter {
                 Enemy foe = (Enemy) tempFloor[playerRow][playerColumn + 1];
                 foe.setTarget(player);
                 player.setTarget(foe);
-                message += player.attack() + " " + foe.enemyDecision();
+                message += player.specialAttack() + " " + foe.enemyDecision();
                 player.clearTarget();
                 foe.clearTarget();
             } else if (player.getMyDirection() == TileObject.Direction.DOWN) {
@@ -91,7 +91,7 @@ public final class InputControls extends KeyAdapter {
                 Enemy foe = (Enemy) tempFloor[playerRow + 1][playerColumn];
                 foe.setTarget(player);
                 player.setTarget(foe);
-                message += player.attack() + " " + foe.enemyDecision();
+                message += player.specialAttack() + " " + foe.enemyDecision();
                 player.clearTarget();
                 foe.clearTarget();
             } else if (player.getMyDirection() == TileObject.Direction.LEFT) {
@@ -99,7 +99,7 @@ public final class InputControls extends KeyAdapter {
                 Enemy foe = (Enemy) tempFloor[playerRow][playerColumn - 1];
                 foe.setTarget(player);
                 player.setTarget(foe);
-                message += player.attack() + " " + foe.enemyDecision();
+                message += player.specialAttack() + " " + foe.enemyDecision();
                 player.clearTarget();
                 foe.clearTarget();
             }

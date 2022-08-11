@@ -36,7 +36,8 @@ public class Snorlax extends Hero{
     public String specialAttack() {
         if(mySleepCounter > 0) {
             String heal = heal(this.getMaxHP());
-            return "Snorlax snoozed and healed for " + heal + " HP!";
+            mySleepCounter--;
+            return "Snorlax snoozed and healed for " + heal;
         } else {
             return "Snorlax is no longer tired!";
         }

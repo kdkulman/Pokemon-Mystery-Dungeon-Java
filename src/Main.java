@@ -17,7 +17,7 @@ public class Main {
         //CHARACTER SELECT VIEW - NOT FINISHED YET
         //CharacterQuizView characterQuizView = new CharacterQuizView(jFrame);
 
-        GameView gameView = new GameView(jFrame, new Snorlax());
+        GameView gameView = new GameView(jFrame, new Gallade());
     }
 
     private static void createJFrame(){
