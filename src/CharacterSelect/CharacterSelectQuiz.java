@@ -12,7 +12,7 @@ public class CharacterSelectQuiz {
     private static CharacterSelectQuiz instance;
 
 
-    private static final int NUMBER_OF_QUESTIONS = 6;
+    private static final int NUMBER_OF_QUESTIONS = 9;
     private static int currentQuestionIndex;
 
     public static boolean isQuizCompleted() {
@@ -107,7 +107,7 @@ public class CharacterSelectQuiz {
                 CharacterSelectQuestion.Points.GALLADE);
 
         CharacterSelectQuestion question3 = new CharacterSelectQuestion(
-                "You see someone being bullied, what do you do?", "Pretend I don't see anything",
+                "You see someone being bullied, what do you do?", "Don't get involved",
                 "Kick their ass", "Send thoughts and prayers", "Try to help but get beat up",
                 CharacterSelectQuestion.Points.SNORLAX, CharacterSelectQuestion.Points.GALLADE,
                 CharacterSelectQuestion.Points.JIRACHI, CharacterSelectQuestion.Points.MAGIKARP
@@ -131,12 +131,34 @@ public class CharacterSelectQuiz {
               "Cringe", CharacterSelectQuestion.Points.JIRACHI, CharacterSelectQuestion.Points.GALLADE,
               CharacterSelectQuestion.Points.SNORLAX, CharacterSelectQuestion.Points.MAGIKARP
       );
+      CharacterSelectQuestion question7 = new CharacterSelectQuestion(
+                "What do you do with your money?", "Spend it!",
+                "Save it!", "Spend half, save half",
+                "I don't have money", CharacterSelectQuestion.Points.GALLADE, CharacterSelectQuestion.Points.JIRACHI,
+                CharacterSelectQuestion.Points.SNORLAX, CharacterSelectQuestion.Points.MAGIKARP
+      );
+        CharacterSelectQuestion question8 = new CharacterSelectQuestion(
+                "Do you state your opinion even if people don't like it?", "Yes",
+                "No", "Empty head",
+                "Too lazy to socialize", CharacterSelectQuestion.Points.GALLADE, CharacterSelectQuestion.Points.JIRACHI,
+                CharacterSelectQuestion.Points.MAGIKARP, CharacterSelectQuestion.Points.SNORLAX
+        );
+        CharacterSelectQuestion question9 = new CharacterSelectQuestion(
+                "Does the end justify the means?", "Yes",
+                "No", "If the end benefits all, yes",
+                "Violence is wrong", CharacterSelectQuestion.Points.JIRACHI, CharacterSelectQuestion.Points.SNORLAX,
+                CharacterSelectQuestion.Points.GALLADE, CharacterSelectQuestion.Points.MAGIKARP
+        );
         arrayOfQuestions[0] = question1;
         arrayOfQuestions[1] = question2;
         arrayOfQuestions[2] = question3;
         arrayOfQuestions[3] = question4;
         arrayOfQuestions[4] = question5;
         arrayOfQuestions[5] = question6;
+        arrayOfQuestions[6] = question7;
+        arrayOfQuestions[7] = question8;
+        arrayOfQuestions[8] = question9;
+
 
     }
 
