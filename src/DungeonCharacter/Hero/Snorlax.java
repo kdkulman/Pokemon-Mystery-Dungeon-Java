@@ -12,7 +12,7 @@ public class Snorlax extends Hero{
     public Snorlax() throws IOException {
         super("Snorlax", 200, 200,15, 20, 0,
                 10, 5);
-        this.mySleepCounter = 0;
+        this.mySleepCounter = 1;
         setSprite();
     }
 
@@ -34,8 +34,13 @@ public class Snorlax extends Hero{
     }
     @Override
     public String specialAttack() {
-        String heal = heal(this.getMaxHP());
-        return "You snoozed and healed for " + heal + " HP!";
+        if(mySleepCounter > 0) {
+            String heal = heal(this.getMaxHP());
+            return "Snorlax snoozed and healed for " + heal + " HP!";
+        } else {
+            return "Snorlax is no longer tired!";
+        }
+
     }
 
     public void sleepCounter() {
