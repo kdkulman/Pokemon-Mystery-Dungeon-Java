@@ -69,7 +69,8 @@ public abstract class DungeonCharacter extends TileObject {
 
     public String attack() {
         String damage = this.myTarget.takeDamage(this.myAttack);
-        String message = this.getName() + " did " + damage + " damage to " + this.myTarget.getName() + "!";
+        String message = this.getName() + " did " + damage + " damage to " + this.myTarget.getName() + "!" +
+                "(" + this.myTarget.getHP() + " HP remaining)";
         return message;
     }
 

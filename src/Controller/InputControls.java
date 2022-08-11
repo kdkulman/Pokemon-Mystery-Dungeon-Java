@@ -28,26 +28,34 @@ public final class InputControls extends KeyAdapter {
                 System.out.println("Attack UP chosen.");
                 Enemy foe = (Enemy) tempFloor[playerRow - 1][playerColumn];
                 foe.setTarget(player);
-                player.setTarget((Enemy) tempFloor[playerRow - 1][playerColumn]);
-                message += player.attack() + "\n";
-                message += foe.enemyDecision();
+                player.setTarget(foe);
+                message += player.attack() + " " + foe.enemyDecision();
                 player.clearTarget();
                 foe.clearTarget();
             } else if (player.getMyDirection() == TileObject.Direction.RIGHT) {
                 System.out.println("Attack RIGHT chosen.");
-                player.setTarget((Enemy) tempFloor[playerRow][playerColumn + 1]);
-                message = player.attack();
+                Enemy foe = (Enemy) tempFloor[playerRow][playerColumn + 1];
+                foe.setTarget(player);
+                player.setTarget(foe);
+                message += player.attack() + " " + foe.enemyDecision();
                 player.clearTarget();
+                foe.clearTarget();
             } else if (player.getMyDirection() == TileObject.Direction.DOWN) {
                 System.out.println("Attack DOWN chosen.");
-                player.setTarget((Enemy) tempFloor[playerRow + 1][playerColumn]);
-                message = player.attack();
+                Enemy foe = (Enemy) tempFloor[playerRow + 1][playerColumn];
+                foe.setTarget(player);
+                player.setTarget(foe);
+                message += player.attack() + " " + foe.enemyDecision();
                 player.clearTarget();
+                foe.clearTarget();
             } else if (player.getMyDirection() == TileObject.Direction.LEFT) {
                 System.out.println("Attack LEFT chosen.");
-                player.setTarget((Enemy) tempFloor[playerRow][playerColumn - 1]);
-                message = player.attack();
+                Enemy foe = (Enemy) tempFloor[playerRow][playerColumn - 1];
+                foe.setTarget(player);
+                player.setTarget(foe);
+                message += player.attack() + " " + foe.enemyDecision();
                 player.clearTarget();
+                foe.clearTarget();
             }
         } else {
             message = "You can't attack that direction.";
@@ -57,8 +65,49 @@ public final class InputControls extends KeyAdapter {
     }
 
     public static String useSpecialAttack(final Floor theFloor) {
+        TileObject[][] tempFloor = theFloor.getFloorArray();
+        updateFloorFields(theFloor);
+        Hero player = (Hero) tempFloor[playerRow][playerColumn];
+        String message = "";
+        if (checkAttackDirection(theFloor)) {
+            if (player.getMyDirection() == TileObject.Direction.UP) {
+                System.out.println("Attack UP chosen.");
+                Enemy foe = (Enemy) tempFloor[playerRow - 1][playerColumn];
+                foe.setTarget(player);
+                player.setTarget(foe);
+                message += player.attack() + " " + foe.enemyDecision();
+                player.clearTarget();
+                foe.clearTarget();
+            } else if (player.getMyDirection() == TileObject.Direction.RIGHT) {
+                System.out.println("Attack RIGHT chosen.");
+                Enemy foe = (Enemy) tempFloor[playerRow][playerColumn + 1];
+                foe.setTarget(player);
+                player.setTarget(foe);
+                message += player.attack() + " " + foe.enemyDecision();
+                player.clearTarget();
+                foe.clearTarget();
+            } else if (player.getMyDirection() == TileObject.Direction.DOWN) {
+                System.out.println("Attack DOWN chosen.");
+                Enemy foe = (Enemy) tempFloor[playerRow + 1][playerColumn];
+                foe.setTarget(player);
+                player.setTarget(foe);
+                message += player.attack() + " " + foe.enemyDecision();
+                player.clearTarget();
+                foe.clearTarget();
+            } else if (player.getMyDirection() == TileObject.Direction.LEFT) {
+                System.out.println("Attack LEFT chosen.");
+                Enemy foe = (Enemy) tempFloor[playerRow][playerColumn - 1];
+                foe.setTarget(player);
+                player.setTarget(foe);
+                message += player.attack() + " " + foe.enemyDecision();
+                player.clearTarget();
+                foe.clearTarget();
+            }
+        } else {
+            message = "You can't attack that direction.";
+        }
 
-        return "Placeholder Special Attack Message";
+        return message;
     }
 
     private static boolean checkAttackDirection(final Floor theFloor) {

@@ -16,18 +16,19 @@ public class Enemy extends DungeonCharacter {
 
     public String enemyDecision() {
         String message = "";
+        double chance = Math.random();
 
-        if(MY_CHANCE_TO_HEAL > Math.random()) {
+        if(MY_CHANCE_TO_HEAL > chance) {
             System.out.println("Enemy is healing.");
             message += this.getName() + " healed!";
             this.heal(10);
-        } else if(MY_CHANCE_TO_SPECIAL > Math.random()) {
+        } else if(MY_CHANCE_TO_SPECIAL > chance && MY_CHANCE_TO_HEAL < chance) {
             System.out.println("Enemy is special attacking.");
-            message += this.getName() + " special attacked " + this.getTarget() + "!";
+            message += this.getName() + " special attacked " + this.getTarget().getName() + "!";
             this.specialAttack();
         } else {
             System.out.println("Enemy is attacking.");
-            message += this.getName() + " attacked " + this.getTarget() + "!";
+            message += this.getName() + " attacked " + this.getTarget().getName() + "!";
             this.attack();
         }
         return message;
