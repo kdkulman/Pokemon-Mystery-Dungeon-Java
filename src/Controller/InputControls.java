@@ -26,9 +26,13 @@ public final class InputControls extends KeyAdapter {
         if (checkAttackDirection(theFloor)) {
             if (player.getMyDirection() == TileObject.Direction.UP) {
                 System.out.println("Attack UP chosen.");
+                Enemy foe = (Enemy) tempFloor[playerRow - 1][playerColumn];
+                foe.setTarget(player);
                 player.setTarget((Enemy) tempFloor[playerRow - 1][playerColumn]);
-                message = player.attack();
+                message += player.attack() + "\n";
+                message += foe.enemyDecision();
                 player.clearTarget();
+                foe.clearTarget();
             } else if (player.getMyDirection() == TileObject.Direction.RIGHT) {
                 System.out.println("Attack RIGHT chosen.");
                 player.setTarget((Enemy) tempFloor[playerRow][playerColumn + 1]);
@@ -52,20 +56,26 @@ public final class InputControls extends KeyAdapter {
         return message;
     }
 
-    public static void useSpecialAttack() {
+    public static String useSpecialAttack(final Floor theFloor) {
+
+        return "Placeholder Special Attack Message";
     }
 
     private static boolean checkAttackDirection(final Floor theFloor) {
         TileObject[][] tempFloor = theFloor.getFloorArray();
         Hero player = (Hero) tempFloor[playerRow][playerColumn];
         updateFloorFields(theFloor);
-        if(player.getMyDirection() == TileObject.Direction.UP && tempFloor[playerRow - 1][playerColumn] instanceof Enemy) {
+        if(player.getMyDirection() == TileObject.Direction.UP &&
+                tempFloor[playerRow - 1][playerColumn] instanceof Enemy) {
             return true;
-        } else if(player.getMyDirection() == TileObject.Direction.RIGHT && tempFloor[playerRow][playerColumn + 1] instanceof Enemy) {
+        } else if(player.getMyDirection() == TileObject.Direction.RIGHT &&
+                    tempFloor[playerRow][playerColumn + 1] instanceof Enemy) {
             return true;
-        } else if(player.getMyDirection() == TileObject.Direction.DOWN && tempFloor[playerRow + 1][playerColumn] instanceof Enemy) {
+        } else if(player.getMyDirection() == TileObject.Direction.DOWN &&
+                    tempFloor[playerRow + 1][playerColumn] instanceof Enemy) {
             return true;
-        } else if(player.getMyDirection() == TileObject.Direction.LEFT && tempFloor[playerRow][playerColumn - 1] instanceof Enemy) {
+        } else if(player.getMyDirection() == TileObject.Direction.LEFT &&
+                    tempFloor[playerRow][playerColumn - 1] instanceof Enemy) {
             return true;
         } else {
             return false;

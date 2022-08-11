@@ -104,8 +104,7 @@ public final class GameView extends JPanel implements Runnable{
                         Message.setMessage(InputControls.useRegularAttack(floor));
                         break;
                     case KeyEvent.VK_SHIFT:
-                        System.out.println("SPECIAL ATTACK");
-                        InputControls.useSpecialAttack();
+                        Message.setMessage(InputControls.useSpecialAttack(floor));
                         break;
                     case KeyEvent.VK_1:
                         System.out.println("USE ORAN BERRY");
