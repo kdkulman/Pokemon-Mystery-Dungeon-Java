@@ -1,33 +1,13 @@
-import DungeonCharacter.Hero.Jirachi;
-import DungeonCharacter.Hero.Magikarp;
-import DungeonCharacter.Hero.Snorlax;
-import DungeonCharacter.Hero.Gallade;
-import GameView.*;
+import Controller.GameManager;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
 public class Main {
 
-    private static JFrame jFrame;
 
-    public static void main(String[] args) throws IOException {
-        createJFrame();
-        //CHARACTER SELECT VIEW - NOT FINISHED YET
-        //CharacterQuizView characterQuizView = new CharacterQuizView(jFrame);
-
-        GameView gameView = new GameView(jFrame, new Gallade());
-    }
-
-    private static void createJFrame(){
-        jFrame = new JFrame();
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setResizable(false);
-        jFrame.setTitle("Pokemon Mystery Dungeon Java");
-        jFrame.setBackground(Color.BLACK);
-        jFrame.isDoubleBuffered();
-        jFrame.setLocationRelativeTo(null);
-        jFrame.setVisible(true);
+    public static void main(String[] args) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        GameManager gameManager = GameManager.getInstance();
     }
 }

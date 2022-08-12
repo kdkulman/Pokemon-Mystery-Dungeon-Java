@@ -5,7 +5,7 @@ import DungeonCharacter.Hero.Hero;
 import DungeonCharacter.Hero.Snorlax;
 import FloorGenerator.Floor;
 
-import GameView.Message;
+import Views.Message;
 import TileObjects.*;
 import TileObjects.Items.OranBerry;
 import TileObjects.Items.VisionSeed;
@@ -174,46 +174,6 @@ public final class InputControls extends KeyAdapter {
         floor = theFloor.getFloorArray();
     }
 
-    public static Floor move(final Floor theFloor, final int destinationRow,
-                             final int destinationColumn, final String errorMessage,
-                             final DungeonCharacter.Direction direction) throws IOException {
-        Floor returnFloor = theFloor;
-        Hero hero = theFloor.player;
-        if(floor[destinationRow][destinationColumn].getSolid() == false) {
-            TileObject playerTemp = floor[playerRow][playerColumn];
-            if(floor[destinationRow][destinationColumn] instanceof OranBerry){
-                hero.collectOranBerry();
-                System.out.println("berry count: " + hero.getBerryCount());
-            }
-            if(floor[destinationRow][destinationColumn] instanceof VisionSeed){
-                hero.collectVisionSeeds();
-                System.out.println("seed count: " + hero.getSeedCount());
-            }
-            if(floor[destinationRow][destinationColumn] instanceof Staircase){
-                hero.updateMyCurrentLevel();
-                System.out.println("current level: " + hero.getMyFloorLevel());
-                returnFloor = getGoodMaze(hero);
-                return returnFloor;
-            }
-            try {
-                floor[playerRow][playerColumn] = new Texture();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            floor[destinationRow][destinationColumn] = playerTemp;
-            returnFloor.setPlayerRow(destinationRow);
-            returnFloor.setPlayerColumn(destinationColumn);
-            returnFloor.setFloorArray(floor);
-            returnFloor = updateTileObjectVisibility(returnFloor);
-            returnFloor.getFloorArray()[destinationRow][destinationColumn].setDirection(direction);
-            System.out.println("Player now facing " + playerTemp.getMyDirection() + " direction.");
-            return returnFloor;
-        }
-        System.out.println(errorMessage);
-        returnFloor.getFloorArray()[playerRow][playerColumn].setDirection(direction);
-        returnFloor = updateTileObjectVisibility(returnFloor);
-        return returnFloor;
-    }
     public static Floor getGoodMaze(final Hero hero) throws IOException {
         Floor returnFloor = new Floor(hero);
         return returnFloor;
@@ -264,4 +224,44 @@ public final class InputControls extends KeyAdapter {
         return move(theFloor, playerRow, playerColumn+1,
                 "Cannot move right!", DungeonCharacter.Direction.RIGHT);
     }
+
+    public static Floor move(final Floor theFloor, final int destinationRow,
+                             final int destinationColumn, final String errorMessage,
+                             final DungeonCharacter.Direction direction) throws IOException {
+        Floor returnFloor = theFloor;
+        Hero hero = theFloor.player;
+        if (floor[destinationRow][destinationColumn].getSolid() == false) {
+            TileObject playerTemp = floor[playerRow][playerColumn];
+            if (floor[destinationRow][destinationColumn] instanceof OranBerry) {
+                hero.collectOranBerry();
+                System.out.println("berry count: " + hero.getBerryCount());
+            }
+            if (floor[destinationRow][destinationColumn] instanceof VisionSeed) {
+                hero.collectVisionSeeds();
+                System.out.println("seed count: " + hero.getSeedCount());
+            }
+            if (floor[destinationRow][destinationColumn] instanceof Staircase) {
+                hero.updateMyCurrentLevel();
+                System.out.println("current level: " + hero.getMyFloorLevel());
+                returnFloor = getGoodMaze(hero);
+                return returnFloor;
+            }
+            try {
+                floor[playerRow][playerColumn] = new Texture();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            floor[destinationRow][destinationColumn] = playerTemp;
+            returnFloor.setPlayerRow(destinationRow);
+            returnFloor.setPlayerColumn(destinationColumn);
+            returnFloor.setFloorArray(floor);
+            returnFloor = updateTileObjectVisibility(returnFloor);
+            returnFloor.getFloorArray()[destinationRow][destinationColumn].setDirection(direction);
+            System.out.println("Player now facing " + playerTemp.getMyDirection() + " direction.");
+            return returnFloor;
+        }
+        System.out.println("Cannot move up!");
+        return theFloor;
+    }
+
 }
