@@ -29,9 +29,11 @@ public final class GameView extends JPanel implements Runnable, View {
     private static Floor floor;
     private Hero player;
     private Thread gameThread;
+    private Message message;
 
 
     public GameView(final Hero player) throws IOException {
+        this.message = Message.getInstance();
         this.player = player;
         createFloor(); //Create Model
         jFrame.addKeyListener(new KeyListener() {
@@ -80,7 +82,7 @@ public final class GameView extends JPanel implements Runnable, View {
                         Message.setMessage(InputControls.useRegularAttack(floor));
                         break;
                     case KeyEvent.VK_SHIFT:
-                        Message.setMessage(InputControls.useSpecialAttack(floor));
+                        floor = InputControls.useSpecialAttack(floor);
                         break;
                     case KeyEvent.VK_1:
                         System.out.println("USE ORAN BERRY");
@@ -104,7 +106,6 @@ public final class GameView extends JPanel implements Runnable, View {
 
             }
         });
-        jFrame.pack();
         gameThread = new Thread(this);
         gameThread.start();
         jFrame.pack();
@@ -161,13 +162,13 @@ public final class GameView extends JPanel implements Runnable, View {
         String previousMessage = Message.getPreviousMessage();
         int x = this.getWidth()/7;
         int y = this.getHeight()-this.getHeight()/5;
-        if (Message.getVisible()) {
+//        if (Message.getVisible()) {
             g2.drawImage(sprite, x, y, sprite.getWidth() * 3, sprite.getHeight() * 2, null);
             g2.setFont(new Font("Serif", Font.PLAIN, 5 * SCALE));
             g2.setColor(Color.white);
             g2.drawString(previousMessage, x+9*SCALE, y + 13*SCALE);
             g2.drawString(message, x+9*SCALE, y + 25*SCALE);
-        }
+//        }
     }
 
     private static void drawHud(final Graphics2D g) throws IOException {
@@ -179,7 +180,7 @@ public final class GameView extends JPanel implements Runnable, View {
         //Floor Display
         drawStringWithOutline(g, "" + player.getMyFloorLevel() + "F", xx, yy);
         drawHpBar(g, 18*SCALE, yy/2, player);
-        drawStringWithOutline(g, "" + player.getHP(), SCREEN_WIDTH/3, yy);
+        drawStringWithOutline(g, "" + player.getHP() + " / " + player.getMaxHP(), SCREEN_WIDTH/3, yy);
         drawInventory(g, 22*SCALE, -3, player);
     }
 
@@ -206,9 +207,10 @@ public final class GameView extends JPanel implements Runnable, View {
         g.setColor(Color.BLACK);
         g.fillRect(x, y, SCREEN_WIDTH/4, SCREEN_HEIGHT/20);
         g.setColor(Color.GREEN);
-        g.fillRect(x, y, (SCREEN_WIDTH/4)*(player.getHP()/player.getMaxHP()), SCREEN_HEIGHT/20);
-
-
+        //FillRect only takes in integers so must calculate the width using double division
+        double hpBarWidthDouble = 1.0* player.getHP()/player.getMaxHP()*SCREEN_WIDTH/4.0;
+        int hpBarWidth = (int) Math.round(hpBarWidthDouble);
+        g.fillRect(x, y, hpBarWidth, SCREEN_HEIGHT/20);
     }
 
     private static void drawStringWithOutline(final Graphics g, final String string, final int x, final int y){
