@@ -1,5 +1,6 @@
 package DungeonCharacter;
 import TileObjects.TileObject;
+import Views.Message;
 
 import java.awt.image.BufferedImage;
 
@@ -69,8 +70,7 @@ public abstract class DungeonCharacter extends TileObject {
 
     public String attack() {
         String damage = this.myTarget.takeDamage(this.myAttack);
-        String message = this.getName() + " did " + damage + " damage to " + this.myTarget.getName() + "!" +
-                "(" + this.myTarget.getHP() + " HP remaining)";
+        String message = this.getName() + " attacked! (-" + damage + "HP)";
         return message;
     }
 
@@ -103,7 +103,7 @@ public abstract class DungeonCharacter extends TileObject {
         }
     }
 
-    public String heal(final int THE_HEALING) {
+    public void heal(final int THE_HEALING) {
         String message = "";
         int amount = 0;
         if(THE_HEALING + this.myHP > this.myMaxHP) {
@@ -113,8 +113,8 @@ public abstract class DungeonCharacter extends TileObject {
             this.myHP += THE_HEALING;
             amount += THE_HEALING;
         }
-        message += this.getName() + " healed for " + amount + " HP!";
-        return message;
+        message += this.getName() + " healed " + amount + " HP!";
+        Message.setMessage(message);
     }
 
     public void setBattleStatus(boolean THE_SETTING) {

@@ -4,6 +4,7 @@ import DungeonCharacter.DungeonCharacter;
 import java.sql.SQLException;
 
 import SQL.SQLTables;
+import Views.Message;
 
 public class Enemy extends DungeonCharacter {
     private final double MY_CHANCE_TO_HEAL = 0.05;
@@ -14,7 +15,7 @@ public class Enemy extends DungeonCharacter {
         setMyEnemyStatus(true);
     }
 
-    public String enemyDecision() {
+    public void enemyDecision() {
         String message = "";
         double chance = Math.random();
 
@@ -24,14 +25,12 @@ public class Enemy extends DungeonCharacter {
             this.heal(10);
         } else if(MY_CHANCE_TO_SPECIAL > chance && MY_CHANCE_TO_HEAL < chance) {
             System.out.println("Enemy is special attacking.");
-            message += this.getName() + " special attacked " + this.getTarget().getName() + " for " + this.attack() + " damage!";
-            this.specialAttack();
+            message += this.specialAttack();
         } else {
             System.out.println("Enemy is attacking.");
-            message += this.getName() + " attacked " + this.getTarget().getName() + " for " + this.attack() + " damage!";
-            this.attack();
+            message += this.attack();
         }
-        return message;
+        Message.setMessage(message);
     }
 
 }
