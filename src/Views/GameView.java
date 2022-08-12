@@ -22,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Scanner;
 
 import static Controller.GameManager.jFrame;
 
@@ -79,10 +80,12 @@ public final class GameView extends JPanel implements Runnable, View {
                         }
                         break;
                     case KeyEvent.VK_SPACE:
-                        Message.setMessage(InputControls.useRegularAttack(floor));
+                        System.out.println("Regular Attack");
+                        floor = InputControls.useRegularAttack(floor);
                         break;
                     case KeyEvent.VK_SHIFT:
-                        Message.setMessage(InputControls.useSpecialAttack(floor));
+                        System.out.println("Special Attack");
+                        floor = InputControls.useSpecialAttack(floor);
                         break;
                     case KeyEvent.VK_1:
                         System.out.println("USE ORAN BERRY");
@@ -99,6 +102,7 @@ public final class GameView extends JPanel implements Runnable, View {
                     default:
                         break;
                 }
+                gameOverCheck();
             }
 
             @Override
@@ -152,6 +156,14 @@ public final class GameView extends JPanel implements Runnable, View {
             drawMessage(g2);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void gameOverCheck() {
+        if(player.getHP() < 1) {
+            Message.setMessage(player.getName() + " fainted! Game over!");
+            Scanner in = new Scanner(System.in);
+            System.exit(0);
         }
     }
 

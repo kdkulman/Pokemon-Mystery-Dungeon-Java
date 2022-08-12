@@ -113,7 +113,7 @@ public abstract class DungeonCharacter extends TileObject {
             this.myHP += THE_HEALING;
             amount += THE_HEALING;
         }
-        message += this.getName() + " healed for " + amount + " HP!";
+        message += this.getName() + " healed for " + amount + " HP! " + "(" + this.getHP() + " HP remaining)";
         return message;
     }
 

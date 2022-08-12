@@ -20,16 +20,13 @@ public class Enemy extends DungeonCharacter {
 
         if(MY_CHANCE_TO_HEAL > chance) {
             System.out.println("Enemy is healing.");
-            message += this.getName() + " healed!";
-            this.heal(10);
+            message += this.heal(10);
         } else if(MY_CHANCE_TO_SPECIAL > chance && MY_CHANCE_TO_HEAL < chance) {
             System.out.println("Enemy is special attacking.");
-            message += this.getName() + " special attacked " + this.getTarget().getName() + " for " + this.attack() + " damage!";
-            this.specialAttack();
+            message += this.specialAttack();
         } else {
             System.out.println("Enemy is attacking.");
-            message += this.getName() + " attacked " + this.getTarget().getName() + " for " + this.attack() + " damage!";
-            this.attack();
+            message += this.attack();
         }
         return message;
     }
