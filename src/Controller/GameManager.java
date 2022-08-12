@@ -1,11 +1,10 @@
 package Controller;
 
 import DungeonCharacter.Hero.Hero;
-import DungeonCharacter.Hero.Snorlax;
 import Music.Music;
-import TileObjects.TileObject;
 import Views.CharacterSelectView;
 import Views.GameView;
+import Views.TitleScreenView;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -22,14 +21,11 @@ public class GameManager {
     private static Hero selectedHero;
     private static JPanel jPanelCharacterSelectView;
     private static JPanel jPanelGameView;
-
+    private static JPanel jPanelTitleScreenView;
 
     private GameManager() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         createJFrame();
         createTitleScreenView();
-        createCharacterSelectView();
-//        selectedHero = new Snorlax(); //FOR TESTING PURPOSES
-//        createGameView();
     }
 
     public static GameManager getInstance() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
@@ -45,24 +41,34 @@ public class GameManager {
 
 
 
-    private static void createTitleScreenView() {
-
-    }
-
-    public static void createCharacterSelectView() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        //jFrame.remove(jPanel);
-        jPanelCharacterSelectView = new CharacterSelectView();
-        jFrame.add(jPanelCharacterSelectView);
-        Music.playCharacterSelectViewMusic();
+    private static void createTitleScreenView() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        jPanelTitleScreenView = new TitleScreenView();
+        jFrame.add(jPanelTitleScreenView);
+        Music.playMusic(Music.Song.TITLE_SCREEN);
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
     }
 
-    public static void createGameView() throws IOException {
-        jFrame.remove(jPanelCharacterSelectView);
+    public static void createCharacterSelectView() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        jFrame.remove(jPanelTitleScreenView);
+        jPanelCharacterSelectView = new CharacterSelectView();
+        jFrame.add(jPanelCharacterSelectView);
+        Music.playMusic(Music.Song.CHARACTER_SELECT_QUIZ);
+        jFrame.pack();
+        jFrame.setLocationRelativeTo(null);
+    }
+
+    public static void createGameView() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        jFrame.remove(jPanelTitleScreenView);
         jPanelGameView = new GameView(selectedHero);
         jFrame.add(jPanelGameView);
+        Music.playMusic(Music.Song.GAMEPLAY);
         jFrame.pack();
+    }
+
+    public static void loadGame(){
+        //If this is needed to load a game, just call GameManager.loadGame()
+        //from he TitleScreenView loadButton ActionListener
     }
 
     private static void createJFrame(){

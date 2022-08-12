@@ -5,6 +5,8 @@ import CharacterSelect.*;
 import Controller.GameManager;
 import DungeonCharacter.Hero.*;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,11 +23,8 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
 
     public CharacterSelectView() throws IOException {
         setLayout(null);
-        //manuallySelectCharacter();
         characterSelectQuiz = CharacterSelectQuiz.getInstance();
         createQuestion();
-
-//        selectedHero = null;
         characterSelectViewThread = new Thread(this);
         characterSelectViewThread.start();
     }
@@ -131,7 +130,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         proceedButton.addActionListener(e -> {
             try {
                 GameManager.createGameView();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
             }
         });
@@ -139,7 +138,6 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
     }
 
     private void createBackground(final Graphics2D g2) throws IOException {
-        //Image backgroundGif = ImageIO.read(CharacterSelectView.class.getResource("/Sprites/CharacterSelectScreen_Background.gif"));
         ImageIcon backgroundGif = new ImageIcon(CharacterSelectView.class.getResource("/Sprites/CharacterSelectScreen_Background.gif"));
         g2.drawImage(backgroundGif.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
         g2.setColor(Color.BLACK);
@@ -170,7 +168,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
             try {
                 GameManager.setSelectedHero(new Snorlax());
                 GameManager.createGameView();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
                 System.out.println("Could not create GameView after selecting Snorlax");
             }
@@ -181,7 +179,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
             try {
                 GameManager.setSelectedHero(new Jirachi());
                 GameManager.createGameView();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
                 System.out.println("Could not create GameView after selecting Jirachi");
             }
@@ -191,7 +189,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
             try {
                 GameManager.setSelectedHero(new Gallade());
                 GameManager.createGameView();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
                 System.out.println("Could not create GameView after selecting Gallade");
             }
@@ -201,7 +199,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
             try {
                 GameManager.setSelectedHero(new Magikarp());
                 GameManager.createGameView();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
                 System.out.println("Could not create GameView after selecting Magikarp");
             }
