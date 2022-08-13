@@ -81,11 +81,19 @@ public final class GameView extends JPanel implements Runnable, View {
                         break;
                     case KeyEvent.VK_SPACE:
                         System.out.println("Regular Attack");
-                        floor = InputControls.useRegularAttack(floor);
+                        try {
+                            floor = InputControls.useRegularAttack(floor);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         break;
                     case KeyEvent.VK_SHIFT:
                         System.out.println("Special Attack");
-                        floor = InputControls.useSpecialAttack(floor);
+                        try {
+                            floor = InputControls.useSpecialAttack(floor);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         break;
                     case KeyEvent.VK_1:
                         System.out.println("USE ORAN BERRY");

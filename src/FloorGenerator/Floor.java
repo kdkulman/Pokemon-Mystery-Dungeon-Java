@@ -17,6 +17,13 @@ public class Floor {
         createFloor();
     }
 
+    public Floor(final TileObject[][] theFloorArray, final int thePlayerRow, final int thePlayerCol, final Hero thePlayer) {
+        this.floor = theFloorArray;
+        this.playerRow = thePlayerRow;
+        this.playerColumn = thePlayerCol;
+        this.player = thePlayer;
+    }
+
     public void createFloor() throws IOException {
         //uncomment when FloorTraversal is finished
         FloorGenerator floorGenerator = new FloorGenerator(player);
