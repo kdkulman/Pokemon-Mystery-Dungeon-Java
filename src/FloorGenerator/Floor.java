@@ -4,8 +4,9 @@ import DungeonCharacter.Hero.Hero;
 import TileObjects.TileObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Floor {
+public class Floor implements Serializable {
 
     private TileObject[][] floor;
     private int playerRow;

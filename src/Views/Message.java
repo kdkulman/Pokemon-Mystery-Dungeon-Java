@@ -12,7 +12,7 @@ public class Message {
     private Message(){
         myMessage = "";
         myPreviousMessage = "";
-        isVisible = false;
+        isVisible = true;
     }
 
     public static void setMessage(final String THE_MESSAGE) {

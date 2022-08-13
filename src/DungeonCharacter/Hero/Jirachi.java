@@ -12,7 +12,7 @@ public class Jirachi extends Hero{
         setSprite();
     }
 
-    private void setSprite(){
+    protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Hero/Jirachi/Jirachi_Up_Idle.png");
             up = ImageIO.read(url);

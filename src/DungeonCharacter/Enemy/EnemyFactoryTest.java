@@ -8,7 +8,7 @@ class EnemyFactoryTest {
 
     @Test
     void createEnemy() {
-        EnemyFactory enemyFactory = EnemyFactory.getInstance();
+        EnemyFactory enemyFactory = new EnemyFactory();
         Enemy[] eArray = new Enemy[100];
         for(int i = 0; i < eArray.length; i++) {
             eArray[i] = enemyFactory.createEnemy();
