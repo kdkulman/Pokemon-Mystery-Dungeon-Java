@@ -148,16 +148,18 @@ public final class InputControls extends KeyAdapter {
         }
     }
 
-    //I think we may need to return an updated version of Floor - Kevin
-    //see useVisionSeed method
-    //also check if theres an oran berry in inventory to use
     public static Floor useOranBerry(final Floor theFloor) {
-        TileObject[][] tempFloor = theFloor.getFloorArray();
         updateFloorFields(theFloor);
-        Hero player = (Hero) tempFloor[playerRow][playerColumn];
-        String message = player.heal(20);
-        Message.setMessage(message);
-        return theFloor;
+        Floor returnFloor = theFloor;
+        Hero player = (Hero) floor[playerRow][playerColumn];
+        if(player.getBerryCount() > 0) {
+            Message.setMessage(player.getName() + " used an Oran Berry!");
+            player.heal(20);
+            player.setBerryCount(player.getBerryCount() - 1);
+        } else {
+            Message.setMessage("You don't have any Oran Berries!");
+        }
+        return returnFloor;
     }
 
     public static Floor useVisionSeed(final Floor theFloor) {
