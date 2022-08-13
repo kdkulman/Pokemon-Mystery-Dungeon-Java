@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class EnemyFactory {
-    private SQLTables myEnemyTable;
+    private static SQLTables myEnemyTable;
 
     public EnemyFactory() {
         try {

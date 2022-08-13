@@ -28,10 +28,11 @@ public class FloorGenerator {
     private int playerColumn;
     private Hero player;
     private final Random r;
-    private EnemyFactory enemyFactory;
+    private EnemyFactory myEnemyFactory;
+    private Enemy[] myEnemyArray = new Enemy[8];
 
     public FloorGenerator(Hero player) throws IOException {
-        enemyFactory = new EnemyFactory();
+        myEnemyFactory = new EnemyFactory();
         this.player = player;
         r = new Random();
         floor = new TileObject[FLOOR_HEIGHT][FLOOR_WIDTH];
@@ -45,7 +46,14 @@ public class FloorGenerator {
         putRoomsInFloor();
         placeTileObject(r.nextInt(3), new VisionSeed()); //place items
         placeTileObject(r.nextInt(3), new OranBerry()); //place oran berry
-        placeTileObject(r.nextInt(8), (Enemy) enemyFactory.createEnemy());//place enemies
+        for(int i = 0; i < myEnemyArray.length; i++) {
+            myEnemyArray[i] = myEnemyFactory.createEnemy();
+        }
+        for(int i = 0; i < myEnemyArray.length; i++) {
+            System.out.println(myEnemyArray[i].getName());
+        }
+        placeEnemyObject(r.nextInt(8));
+        //placeTileObject(r.nextInt(8), myEnemyFactory.createEnemy());//place enemies
         placeTileObject(r.nextInt(5), new SpikeTip());//place trap
         placeTileObject(1, new Staircase());//place staircase
         placePlayer(player);
@@ -140,6 +148,19 @@ public class FloorGenerator {
             int column = r.nextInt(FLOOR_WIDTH);
             if (floor[row][column] instanceof Texture){ //if it is a texture
                 floor[row][column] = tile;
+                count--;
+            }
+        }
+    }
+
+    private void placeEnemyObject(final int number) {
+        System.out.println("Number of enemies: " + number);
+        int count = 8;
+        while(count > 0) {
+            int row = r.nextInt(FLOOR_HEIGHT);
+            int column = r.nextInt(FLOOR_WIDTH);
+            if (floor[row][column] instanceof Texture){ //if it is a texture
+                floor[row][column] = myEnemyArray[count-1];
                 count--;
             }
         }
