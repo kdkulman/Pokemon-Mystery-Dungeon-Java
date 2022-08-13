@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class FloorGenerator {
     private TileObject[][] floor;
-    private final int FLOOR_WIDTH = 56; //56 IS DEFAULT
+    private final int FLOOR_WIDTH = 42; //56 IS DEFAULT
     private final int FLOOR_HEIGHT = 32; //32 IS DEFAULT
     private final int MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN = 2; //2 IS DEFAULT
     private final int MAX_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN = 6; //6 IS DEFAULT
@@ -28,11 +28,10 @@ public class FloorGenerator {
     private int playerColumn;
     private Hero player;
     private final Random r;
-    private EnemyFactory myEnemyFactory;
-    private Enemy[] myEnemyArray = new Enemy[8];
+    private static EnemyFactory enemyFactory;
 
     public FloorGenerator(Hero player) throws IOException {
-        myEnemyFactory = new EnemyFactory();
+        enemyFactory = EnemyFactory.getInstance();
         this.player = player;
         r = new Random();
         floor = new TileObject[FLOOR_HEIGHT][FLOOR_WIDTH];
@@ -44,23 +43,11 @@ public class FloorGenerator {
         maxRoomHeight = (FLOOR_HEIGHT / numberOfRoomsVertically);
         createListOfRooms();
         putRoomsInFloor();
-        placeTileObject(r.nextInt(3), new VisionSeed()); //place items
-        placeTileObject(r.nextInt(3), new OranBerry()); //place oran berry
-        for(int i = 0; i < myEnemyArray.length; i++) {
-            myEnemyArray[i] = myEnemyFactory.createEnemy();
-        }
-        for(int i = 0; i < myEnemyArray.length; i++) {
-            System.out.println(myEnemyArray[i].getName());
-        }
-        placeEnemyObject(r.nextInt(8));
-        //placeTileObject(r.nextInt(8), myEnemyFactory.createEnemy());//place enemies
-        placeTileObject(r.nextInt(5), new SpikeTip());//place trap
-        placeTileObject(1, new Staircase());//place staircase
+        placeEnemies();
+        placeItems();
+        placeTileObject(new Staircase());//place staircase
         placePlayer(player);
         fillNullTilesWithWalls();
-        System.out.println();
-        System.out.println(debugToString());
-        System.out.println();
     }
 
     private void placePlayer(final Hero player) throws IOException {
@@ -141,28 +128,34 @@ public class FloorGenerator {
         }
     }
 
-    private void placeTileObject(final int number, final TileObject tile){
-        int count = number;
-        while(count > 0) {
-            int row = r.nextInt(FLOOR_HEIGHT);
-            int column = r.nextInt(FLOOR_WIDTH);
-            if (floor[row][column] instanceof Texture){ //if it is a texture
-                floor[row][column] = tile;
-                count--;
-            }
+    private void placeTileObject(final TileObject tile){
+        int row = r.nextInt(FLOOR_HEIGHT);
+        int column = r.nextInt(FLOOR_WIDTH);
+        if (floor[row][column] instanceof Texture) { //if it is a texture
+            floor[row][column] = tile;
+        } else {
+            placeTileObject(tile);
         }
     }
 
-    private void placeEnemyObject(final int number) {
-        System.out.println("Number of enemies: " + number);
-        int count = 8;
-        while(count > 0) {
-            int row = r.nextInt(FLOOR_HEIGHT);
-            int column = r.nextInt(FLOOR_WIDTH);
-            if (floor[row][column] instanceof Texture){ //if it is a texture
-                floor[row][column] = myEnemyArray[count-1];
-                count--;
-            }
+    private void placeEnemies() {
+        int enemiesToCreate = r.nextInt(8);
+        for(int i = 0; i < enemiesToCreate; i++){
+            TileObject enemy = EnemyFactory.createEnemy();
+            placeTileObject(enemy);
+        }
+    }
+
+    private void placeItems(){
+        int berriesToCreate = r.nextInt(3);
+        for(int i = 0; i < berriesToCreate; i++){
+            TileObject oranBerry = new OranBerry();
+            placeTileObject(oranBerry);
+        }
+        int seedsToCreate = r.nextInt(1);
+        for(int i = 0; i < seedsToCreate; i++){
+            TileObject seed = new VisionSeed();
+            placeTileObject(seed);
         }
     }
 
@@ -196,7 +189,7 @@ public class FloorGenerator {
         }
     }
 
-    private void placeHorizontalTileObjects(final int start, final int end, final int row, final TileObject tile){
+    private void placeHorizontalTileObjects(final int start, final int end, final int row, final TileObject tile) throws IOException {
         int theEnd = 0;
         if (end >= FLOOR_WIDTH){
             theEnd = FLOOR_WIDTH -1;
@@ -204,12 +197,18 @@ public class FloorGenerator {
             theEnd = end;
         }
         for(int i = start; i < theEnd; i++){
-
-            if( !(floor[row][i] instanceof Texture) ) floor[row][i] = tile;
+            TileObject newTile = tileObjectFactory(tile);
+            if( !(floor[row][i] instanceof Texture) ) floor[row][i] = newTile;
         }
     }
 
-    private void placeVerticalTileObjects(final int start, final int end, final int column, final TileObject tile){
+    private TileObject tileObjectFactory(final TileObject tile) throws IOException {
+        if (tile instanceof Texture) return new Texture();
+        if (tile instanceof Wall) return new Wall();
+        return new Wall();
+    }
+
+    private void placeVerticalTileObjects(final int start, final int end, final int column, final TileObject tile) throws IOException {
         int theEnd = 0;
         if (end >= FLOOR_HEIGHT){
             theEnd = FLOOR_HEIGHT -1;
@@ -217,7 +216,8 @@ public class FloorGenerator {
             theEnd = end;
         }
         for(int i = start; i < theEnd; i++){
-            if( !(floor[i][column] instanceof Texture) ) floor[i][column] = tile;
+            TileObject newTile = tileObjectFactory(tile);
+            if( !(floor[i][column] instanceof Texture) ) floor[i][column] = newTile;
         }
     }
 

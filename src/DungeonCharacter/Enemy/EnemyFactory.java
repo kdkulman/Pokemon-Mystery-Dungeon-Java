@@ -8,9 +8,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class EnemyFactory {
+
+    private static EnemyFactory instance;
     private static SQLTables myEnemyTable;
 
-    public EnemyFactory() {
+    private EnemyFactory() {
         try {
             this.myEnemyTable = new SQLTables();
         } catch (SQLException e) {
@@ -20,7 +22,12 @@ public class EnemyFactory {
         }
     }
 
-    public Enemy createEnemy() {
+    public static EnemyFactory getInstance(){
+        if (instance == null) return new EnemyFactory();
+        return instance;
+    }
+
+    public static Enemy createEnemy() {
         Random rand = new Random();
         if(rand.nextInt(10) % 2 == 0) {
             try {
@@ -48,7 +55,7 @@ public class EnemyFactory {
         return null;
     }
 
-    public void setEnemyValues(final Enemy THE_ENEMY, final String THE_TYPE) {
+    public static void setEnemyValues(final Enemy THE_ENEMY, final String THE_TYPE) {
         String values = null;
         Scanner valueScan = null;
         switch(THE_TYPE) {

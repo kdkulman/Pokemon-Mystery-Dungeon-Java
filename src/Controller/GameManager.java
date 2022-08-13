@@ -40,7 +40,6 @@ public class GameManager {
     }
 
 
-
     private static void createTitleScreenView() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         jPanelTitleScreenView = new TitleScreenView();
         jFrame.add(jPanelTitleScreenView);
@@ -59,7 +58,11 @@ public class GameManager {
     }
 
     public static void createGameView() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        jFrame.remove(jPanelTitleScreenView);
+        if (jPanelCharacterSelectView == null) {
+            jFrame.remove(jPanelTitleScreenView);
+        } else {
+            jFrame.remove(jPanelCharacterSelectView);
+        }
         jPanelGameView = new GameView(selectedHero);
         jFrame.add(jPanelGameView);
         Music.playMusic(Music.Song.GAMEPLAY);
