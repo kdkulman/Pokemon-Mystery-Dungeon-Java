@@ -66,9 +66,15 @@ public class GameManager {
         jFrame.pack();
     }
 
-    public static void loadGame(){
+    public static void loadGame(SaveState state) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         //If this is needed to load a game, just call GameManager.loadGame()
         //from he TitleScreenView loadButton ActionListener
+        jFrame.remove(jPanelTitleScreenView);
+        selectedHero = state.hero;
+        jPanelGameView = new GameView(state.hero, state.floor);
+        jFrame.add(jPanelGameView);
+        Music.playMusic(Music.Song.GAMEPLAY);
+        jFrame.pack();
     }
 
     private static void createJFrame(){
