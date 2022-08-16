@@ -1,6 +1,7 @@
 # Pokemon-Mystery-Dungeon-Java
-Pokemon Mystery Dungeon Java is a 2D dungeon crawler game made in Java from the ground up
-It uses assets from the Pokemon Mystery Dungeon game series.
+* Pokemon Mystery Dungeon Java is a 2D dungeon crawler game made in Java from the ground up
+* It uses existing art from the Pokemon Mystery Dungeon game series.
+* This game is for personal and educational use only.
 
 # Project Goal
 * Recreate a demo of Pokemon Mystery Dungeon in a small team within six weeks using Agile methodologies 
@@ -39,4 +40,8 @@ Keyboard Controls
 Version 1.0.0 August 15th, 2022
 * Created the README document with basic information
 
+#Credits
+* Kevin Kulman
+* Stephen Vanluven
+* Anthony Owens
 
