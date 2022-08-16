@@ -33,10 +33,10 @@ public final class GameView extends JPanel implements Runnable, View {
     private Message message;
 
 
-    public GameView(final Hero player, final Floor f) throws IOException {
+    public GameView(final Hero player) throws IOException {
         this.message = Message.getInstance();
         this.player = player;
-        this.floor = f;
+        createFloor(); //Create Model
         jFrame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -121,10 +121,6 @@ public final class GameView extends JPanel implements Runnable, View {
         gameThread = new Thread(this);
         gameThread.start();
         jFrame.pack();
-    }
-
-    public GameView(final Hero player) throws IOException {
-        this(player, new Floor(player));
     }
 
     //This needs to be refactored to a different class
