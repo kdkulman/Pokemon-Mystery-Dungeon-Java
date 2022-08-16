@@ -11,7 +11,7 @@ public class SpikeTip extends TileObject{
         setSprite();
     }
 
-    protected void setSprite(){
+    private void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/trap.png");
             sprite = ImageIO.read(url);

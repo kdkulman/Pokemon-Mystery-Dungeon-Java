@@ -13,7 +13,7 @@ public class TeamRocketGrunt extends Enemy{
         setSprite();
     }
 
-    protected void setSprite(){
+    private void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Enemy/TeamRocketGrunt/TeamRocketGrunt_Down_Idle.png");
             sprite = ImageIO.read(url);

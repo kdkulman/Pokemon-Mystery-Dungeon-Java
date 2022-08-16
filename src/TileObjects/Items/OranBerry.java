@@ -11,7 +11,7 @@ public class OranBerry extends Item {
         setSprite();
     }
 
-    protected void setSprite(){
+    private void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Items/Oran_Berry.png");
             sprite = ImageIO.read(url);

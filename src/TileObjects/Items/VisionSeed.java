@@ -12,7 +12,7 @@ public class VisionSeed extends Item {
         setSprite();
     }
 
-    protected void setSprite(){
+    private void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Items/Vision_Seed.png");
             sprite = ImageIO.read(url);

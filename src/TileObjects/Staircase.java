@@ -12,7 +12,7 @@ public class Staircase extends TileObject{
          setSprite();
      }
 
-     protected void setSprite(){
+    private void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Staircase.png");
             sprite = ImageIO.read(url);

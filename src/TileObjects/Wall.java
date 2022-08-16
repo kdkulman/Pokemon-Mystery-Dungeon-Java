@@ -12,7 +12,7 @@ public class Wall extends TileObject{
 
     }
 
-    protected void setSprite(){
+    private void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Walls/Wall_Top.png");
             sprite = ImageIO.read(url);

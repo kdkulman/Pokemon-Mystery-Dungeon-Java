@@ -16,7 +16,7 @@ public class Snorlax extends Hero{
         setSprite();
     }
 
-    protected void setSprite(){
+    private void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Hero/Snorlax/Snorlax_Up_Idle.png");
             up = ImageIO.read(url);

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import SQL.SQLTables;
 
-public abstract class Enemy extends DungeonCharacter {
+public class Enemy extends DungeonCharacter {
     private final double MY_CHANCE_TO_HEAL = 0.05;
     private final double MY_CHANCE_TO_SPECIAL = 0.10;
 

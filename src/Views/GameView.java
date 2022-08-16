@@ -7,8 +7,6 @@ package Views;
  *
  */
 import Controller.InputControls;
-import Controller.SaveManager;
-import Controller.SaveState;
 import DungeonCharacter.DungeonCharacter;
 import DungeonCharacter.Enemy.Enemy;
 import DungeonCharacter.Hero.Hero;
@@ -109,10 +107,6 @@ public final class GameView extends JPanel implements Runnable, View {
                         System.out.println("QUIT GAME");
                         InputControls.quitGame();
                         break;
-
-                    case KeyEvent.VK_P:
-                        InputControls.saveGame(floor);
-                        break;
                     default:
                         break;
                 }
@@ -186,19 +180,19 @@ public final class GameView extends JPanel implements Runnable, View {
     }
 
     private void drawMessage(final Graphics2D g2) throws IOException {
-        URL url = this.getClass().getResource("/Sprites/Text_Box.png");
-        BufferedImage sprite = ImageIO.read(url);
-        String message = Message.getMessage();
-        String previousMessage = Message.getPreviousMessage();
-        int x = this.getWidth()/7;
-        int y = this.getHeight()-this.getHeight()/5;
-//        if (Message.getVisible()) {
+        if (Message.getVisible()) {
+            URL url = this.getClass().getResource("/Sprites/Text_Box.png");
+            BufferedImage sprite = ImageIO.read(url);
+            String message = Message.getMessage();
+            String previousMessage = Message.getPreviousMessage();
+            int x = this.getWidth()/7;
+            int y = this.getHeight()-this.getHeight()/5;
             g2.drawImage(sprite, x, y, sprite.getWidth() * 3, sprite.getHeight() * 2, null);
             g2.setFont(new Font("Serif", Font.PLAIN, 5 * SCALE));
             g2.setColor(Color.white);
             g2.drawString(previousMessage, x+9*SCALE, y + 13*SCALE);
             g2.drawString(message, x+9*SCALE, y + 25*SCALE);
-//        }
+        }
     }
 
     private static void drawHud(final Graphics2D g) throws IOException {
