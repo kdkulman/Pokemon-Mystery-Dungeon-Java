@@ -247,8 +247,10 @@ public final class InputControls extends KeyAdapter {
     public static Floor move(final Floor theFloor, final int destinationRow,
                              final int destinationColumn, final String errorMessage,
                              final DungeonCharacter.Direction direction) throws IOException {
+        Message.setIsVisible(false);
         Floor returnFloor = theFloor;
         Hero hero = theFloor.player;
+        returnFloor.getFloorArray()[playerRow][playerColumn].setDirection(direction);
         if (floor[destinationRow][destinationColumn].getSolid() == false) {
             TileObject playerTemp = floor[playerRow][playerColumn];
             if (floor[destinationRow][destinationColumn] instanceof OranBerry) {
@@ -275,7 +277,6 @@ public final class InputControls extends KeyAdapter {
             returnFloor.setPlayerColumn(destinationColumn);
             returnFloor.setFloorArray(floor);
             returnFloor = updateTileObjectVisibility(returnFloor);
-            returnFloor.getFloorArray()[destinationRow][destinationColumn].setDirection(direction);
             return returnFloor;
         }
         System.out.println("Cannot move up!");

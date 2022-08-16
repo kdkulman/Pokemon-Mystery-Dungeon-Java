@@ -48,9 +48,10 @@ public class SQLTables {
 
     private void fillEnemyTable() {
 
-        this.query = "INSERT INTO 'enemyDB' ('NAME','HP','MAXHP','DAMAGERANGE','ATTACK','SPECIALATTACK','DEFENSE','EVASION') VALUES" +
-                "('DONKEY KONG', '100','100','0','20','10','5','5')," +
-                "('TEAM ROCKET GRUNT', '100','100','0','20','10','5','5');";
+        this.query = "INSERT INTO 'enemyDB' " +
+                "('NAME','HP','MAXHP','DAMAGERANGE','ATTACK','SPECIALATTACK','DEFENSE','EVASION') VALUES" +
+                "('DONKEY KONG', '70','70','0','20','10','5','5')," +
+                "('TEAM ROCKET GRUNT', '50','50','0','20','10','5','5');";
 
         try {
             returnValue = statement.executeUpdate( query );

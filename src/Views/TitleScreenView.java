@@ -1,8 +1,6 @@
 package Views;
 
 import Controller.GameManager;
-import Controller.SaveManager;
-import Controller.SaveState;
 import DungeonCharacter.Hero.Gallade;
 import DungeonCharacter.Hero.Jirachi;
 import DungeonCharacter.Hero.Magikarp;
@@ -78,19 +76,6 @@ public class TitleScreenView extends JPanel implements Runnable, View {
         });
         loadButton.addActionListener(e -> {
             //LOAD GAME WOO
-            SaveState loadedState = null;
-            try{
-                loadedState = SaveManager.getSavedGameState();
-            }
-            catch(IOException | ClassNotFoundException  err) {err.printStackTrace();}
-
-            if(loadedState != null){
-                try {
-                    GameManager.loadGame(loadedState);
-                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException err) {
-                    err.printStackTrace();
-                }
-            }
         });
         int x = 10*SCALE;
         int y = 90*SCALE;

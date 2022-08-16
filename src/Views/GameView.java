@@ -193,11 +193,11 @@ public final class GameView extends JPanel implements Runnable, View {
         int x = this.getWidth()/7;
         int y = this.getHeight()-this.getHeight()/5;
 //        if (Message.getVisible()) {
-            g2.drawImage(sprite, x, y, sprite.getWidth() * 3, sprite.getHeight() * 2, null);
-            g2.setFont(new Font("Serif", Font.PLAIN, 5 * SCALE));
-            g2.setColor(Color.white);
-            g2.drawString(previousMessage, x+9*SCALE, y + 13*SCALE);
-            g2.drawString(message, x+9*SCALE, y + 25*SCALE);
+        g2.drawImage(sprite, x, y, sprite.getWidth() * 3, sprite.getHeight() * 2, null);
+        g2.setFont(new Font("Serif", Font.PLAIN, 5 * SCALE));
+        g2.setColor(Color.white);
+        g2.drawString(previousMessage, x+9*SCALE, y + 13*SCALE);
+        g2.drawString(message, x+9*SCALE, y + 25*SCALE);
 //        }
     }
 
