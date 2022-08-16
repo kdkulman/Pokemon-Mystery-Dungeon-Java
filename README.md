@@ -40,7 +40,7 @@ Keyboard Controls
 Version 1.0.0 August 15th, 2022
 * Created the README document with basic information
 
-#Credits
+# Credits
 * Kevin Kulman
 * Stephen Vanluven
 * Anthony Owens
