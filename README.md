@@ -6,7 +6,7 @@ It uses assets from the Pokemon Mystery Dungeon game series.
 * Recreate a demo of Pokemon Mystery Dungeon in a small team within six weeks using Agile methodologies 
 
 # Game Objective
-* Find the stairs on each dungeon floor and reach the end!
+* Find the stairs on each dungeon floor and reach the end of the dungeon
 
 # How to Play
 Keyboard Controls
@@ -29,7 +29,7 @@ Keyboard Controls
 ***
 # What did we learn
 * Creating UML diagrams for MVC design
-* Sesign patterns such as singleton, factory, builder, and template methods
+* Design patterns such as singleton, factory, builder, and template methods
 * Use of Pivotal Tracker
 * Serialization in Java
 * SQLite in Java
