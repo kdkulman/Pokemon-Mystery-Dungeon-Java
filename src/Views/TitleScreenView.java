@@ -1,6 +1,8 @@
 package Views;
 
 import Controller.GameManager;
+import Controller.SaveManager;
+import Controller.SaveState;
 import DungeonCharacter.Hero.Gallade;
 import DungeonCharacter.Hero.Jirachi;
 import DungeonCharacter.Hero.Magikarp;
