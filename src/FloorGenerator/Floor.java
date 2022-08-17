@@ -4,8 +4,9 @@ import DungeonCharacter.Hero.Hero;
 import TileObjects.TileObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Floor {
+public class Floor implements Serializable {
 
     private TileObject[][] floor;
     private int playerRow;
@@ -25,16 +26,13 @@ public class Floor {
     }
 
     public void createFloor() throws IOException {
-        //uncomment when FloorTraversal is finished
         FloorGenerator floorGenerator = new FloorGenerator(player);
         playerRow = floorGenerator.getPlayerRow();
         playerColumn = floorGenerator.getPlayerColumn();
         floor = floorGenerator.getFloor();
-        System.out.println(" playerRow: " + playerRow  + ' ' +playerColumn );
-
         FloorTraversal testNewFloor = new FloorTraversal(floor, playerRow, playerColumn);
         boolean status = testNewFloor.getTraversable();
-        System.out.println("is the floor traversable: " + status);
+        //System.out.println("is the floor traversable: " + status);
         if (!status){
             createFloor();
         }

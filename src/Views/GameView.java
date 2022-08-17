@@ -11,6 +11,8 @@ import DungeonCharacter.DungeonCharacter;
 import DungeonCharacter.Enemy.Enemy;
 import DungeonCharacter.Hero.Hero;
 import FloorGenerator.Floor;
+import Controller.SaveManager;
+import Controller.SaveState;
 import TileObjects.*;
 import TileObjects.Items.Item;
 import javax.imageio.ImageIO;
@@ -32,11 +34,14 @@ public final class GameView extends JPanel implements Runnable, View {
     private Thread gameThread;
     private Message message;
 
-
     public GameView(final Hero player) throws IOException {
+        this(player, new Floor(player));
+    }
+
+    public GameView(final Hero player, final Floor f) throws IOException {
         this.message = Message.getInstance();
         this.player = player;
-        createFloor(); //Create Model
+        this.floor = f;
         jFrame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {

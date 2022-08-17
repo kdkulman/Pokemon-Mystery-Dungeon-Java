@@ -12,7 +12,7 @@ public class Texture extends TileObject{
         setSprite();
     }
 
-    private void setSprite(){
+    protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Textures/Texture_1.png");
             sprite = ImageIO.read(url);

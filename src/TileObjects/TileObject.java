@@ -3,8 +3,12 @@ package TileObjects;
 import DungeonCharacter.DungeonCharacter;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public abstract class TileObject {
+public abstract class TileObject implements Serializable {
     private boolean isSolid;
     private String name;
     private String message;
@@ -36,6 +40,26 @@ public abstract class TileObject {
 
     public BufferedImage getSprite() {
         return sprite;
+    }
+
+    abstract protected void setSprite();
+
+    //Methods for custom serialization of TileObjects, allows Textures to reload
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+        isSolid = ois.readBoolean();
+        name = ois.readUTF();
+        stringRepresentation = ois.readUTF();
+        isVisibleOnMiniMap = ois.readBoolean();
+        myDirection = Direction.values()[ois.readInt()];
+        setSprite();
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.writeBoolean(isSolid);
+        oos.writeUTF(name);
+        oos.writeUTF(stringRepresentation);
+        oos.writeBoolean(isVisibleOnMiniMap);
+        oos.writeInt(myDirection.ordinal());
     }
 
     public void setMyEnemyStatus(final boolean theStatus) {

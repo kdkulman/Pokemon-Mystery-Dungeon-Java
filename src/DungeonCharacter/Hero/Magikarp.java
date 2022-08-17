@@ -15,7 +15,7 @@ public class Magikarp extends Hero {
         setSprite();
     }
 
-    private void setSprite(){
+    protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Hero/Magikarp/Magikarp_Up_Idle.png");
             up = ImageIO.read(url);

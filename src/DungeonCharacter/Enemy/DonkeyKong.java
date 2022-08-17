@@ -12,7 +12,7 @@ public class DonkeyKong extends Enemy{
         setSprite();
     }
 
-    private void setSprite(){
+    protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Enemy/DonkeyKong/DonkeyKong_Down_Idle.png");
             sprite = ImageIO.read(url);
