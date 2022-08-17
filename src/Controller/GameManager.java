@@ -69,7 +69,7 @@ public class GameManager {
         jFrame.pack();
     }
 
-    public static void loadGame(){
+    public static void loadGame(SaveState state) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         //If this is needed to load a game, just call GameManager.loadGame()
         //from he TitleScreenView loadButton ActionListener
     }

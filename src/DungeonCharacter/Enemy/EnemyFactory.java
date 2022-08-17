@@ -16,20 +16,18 @@ public class EnemyFactory {
         try {
             this.myEnemyTable = new SQLTables();
         } catch (SQLException e) {
-            System.out.println("Error creating enemy table");
-            System.out.println(e.getMessage());
-            System.exit(0);
         }
     }
 
-    public static EnemyFactory getInstance(){
+
+    public static EnemyFactory getInstance() {
         if (instance == null) return new EnemyFactory();
         return instance;
     }
 
     public static Enemy createEnemy() {
         Random rand = new Random();
-        if(rand.nextInt(10) % 2 == 0) {
+        if (rand.nextInt(10) % 2 == 0) {
             try {
                 Enemy newDK = new DonkeyKong();
                 setEnemyValues(newDK, "DK");
@@ -55,27 +53,27 @@ public class EnemyFactory {
         return null;
     }
 
-    public static void setEnemyValues(final Enemy THE_ENEMY, final String THE_TYPE) {
+
+
+    public static void setEnemyValues( final Enemy THE_ENEMY, final String THE_TYPE){
         String values = null;
         Scanner valueScan = null;
-        switch(THE_TYPE) {
+        switch (THE_TYPE) {
             case "DK":
                 values = myEnemyTable.extractDonkeyKongInfo();
-                valueScan = new Scanner (values);
-                THE_ENEMY.setEnemyValues(valueScan.nextLine(),valueScan.nextInt(),valueScan.nextInt(),
-                                         valueScan.nextInt(),valueScan.nextInt(),valueScan.nextInt(),
-                                         valueScan.nextInt(),valueScan.nextInt());
+                valueScan = new Scanner(values);
+                THE_ENEMY.setEnemyValues(valueScan.nextLine(), valueScan.nextInt(), valueScan.nextInt(),
+                        valueScan.nextInt(), valueScan.nextInt(), valueScan.nextInt(),
+                        valueScan.nextInt(), valueScan.nextInt());
             case "TRG":
                 values = myEnemyTable.extractTeamRocketInfo();
-                valueScan = new Scanner (values);
-                THE_ENEMY.setEnemyValues(valueScan.nextLine(),valueScan.nextInt(),valueScan.nextInt(),
-                        valueScan.nextInt(),valueScan.nextInt(),valueScan.nextInt(),
-                        valueScan.nextInt(),valueScan.nextInt());
+                valueScan = new Scanner(values);
+                THE_ENEMY.setEnemyValues(valueScan.nextLine(), valueScan.nextInt(), valueScan.nextInt(),
+                        valueScan.nextInt(), valueScan.nextInt(), valueScan.nextInt(),
+                        valueScan.nextInt(), valueScan.nextInt());
             default:
                 break;
         }
     }
-
-
 
 }
