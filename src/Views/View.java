@@ -13,5 +13,16 @@ public interface View {
     int SCREEN_HEIGHT = SCREEN_TILE_HEIGHT * TILE_SIZE;
     int FPS = 30;
     Font font = new Font("Dialog", Font.PLAIN, 8*SCALE);
+    Font messageFont = new Font("Dialog", Font.PLAIN, 7*SCALE);
 
+
+    public default void drawStringWithOutline(final Graphics g, final String string, final int x, final int y){
+        g.setColor(Color.BLACK);
+        g.drawString(string,x-1, y-1);
+        g.drawString(string,x-1, y+1);
+        g.drawString(string,x+1, y-1);
+        g.drawString(string,x+1, y+1);
+        g.setColor(Color.WHITE);
+        g.drawString(string, x, y);
+    }
 }

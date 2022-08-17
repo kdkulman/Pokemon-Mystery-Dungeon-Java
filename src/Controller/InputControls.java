@@ -285,6 +285,7 @@ public final class InputControls extends KeyAdapter {
         try{
             SaveManager.saveCurrentGameState(theFloor);
             System.out.println("Saved game");
+            Message.setMessage("Game saved.");
         }
         catch(IOException err){
             err.printStackTrace();

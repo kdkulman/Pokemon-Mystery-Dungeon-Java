@@ -132,12 +132,23 @@ public class TitleScreenView extends JPanel implements Runnable, View {
         int yPadding = SCALE * 15;
         g2.setColor(Color.BLACK);
         g2.setFont(new Font(Font.SERIF, Font.BOLD, 12*SCALE));
-        g2.drawString("Developed by", yPadding/2, this.getHeight()/15);
-        g2.drawString("Select your Pokemon", yPadding/2, this.getHeight()/2 - yPadding);
-        g2.drawString("Load game", yPadding/2, this.getHeight()/2 + this.getHeight()/3);
+        drawStringWithOutline(g2,"Developed by", yPadding/2, this.getHeight()/15);
+        drawStringWithOutline(g2,"Select your Pokemon", yPadding/2, this.getHeight()/2 - yPadding);
+        drawStringWithOutline(g2,"Load game", yPadding/2, this.getHeight()/2 + this.getHeight()/3);
         g2.setFont(new Font(Font.SERIF, Font.PLAIN, 10*SCALE));
-        g2.drawString("Kevin Kulman", yPadding, this.getHeight()/8);
-        g2.drawString("Stephen Vanluven", yPadding, this.getHeight()/8 + yPadding);
-        g2.drawString("Anthony Owens", yPadding, this.getHeight()/8 + yPadding*2);
+        drawStringWithOutline(g2,"Kevin Kulman", yPadding, this.getHeight()/8);
+        drawStringWithOutline(g2,"Stephen Vanluven", yPadding, this.getHeight()/8 + yPadding);
+        drawStringWithOutline(g2,"Anthony Owens", yPadding, this.getHeight()/8 + yPadding*2);
+    }
+
+    @Override
+    public void drawStringWithOutline(Graphics g, String string, int x, int y) {
+        g.setColor(Color.WHITE);
+        g.drawString(string,x-1, y-1);
+        g.drawString(string,x-1, y+1);
+        g.drawString(string,x+1, y-1);
+        g.drawString(string,x+1, y+1);
+        g.setColor(Color.BLACK);
+        g.drawString(string, x, y);
     }
 }

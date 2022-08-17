@@ -132,10 +132,9 @@ public final class GameView extends JPanel implements Runnable, View {
     }
 
     //This needs to be refactored to a different class
-    //Should not be in view class
+    //Should not be in view class, but oh well for now
     private void createFloor() throws IOException {
         floor = new Floor(player);
-
     }
 
     @Override
@@ -192,23 +191,22 @@ public final class GameView extends JPanel implements Runnable, View {
             int x = this.getWidth()/7;
             int y = this.getHeight()-this.getHeight()/5;
             g2.drawImage(sprite, x, y, sprite.getWidth() * 3, sprite.getHeight() * 2, null);
-            g2.setFont(new Font("Serif", Font.PLAIN, 5 * SCALE));
+            g2.setFont(messageFont);
             g2.setColor(Color.white);
-            g2.drawString(previousMessage, x+9*SCALE, y + 13*SCALE);
-            g2.drawString(message, x+9*SCALE, y + 25*SCALE);
+            drawStringWithOutline(g2, previousMessage, x+9*SCALE, y + 13*SCALE);
+            drawStringWithOutline(g2, message, x+9*SCALE, y + 25*SCALE);
         }
     }
 
-    private static void drawHud(final Graphics2D g) throws IOException {
+    private void drawHud(final Graphics2D g) throws IOException {
         int xx = 5*SCALE;
         int yy = SCREEN_HEIGHT/12;
         TileObject[][] floorArray = floor.getFloorArray();
         Hero player = (Hero) floorArray[floor.getPlayerRow()][floor.getPlayerColumn()];
-
-        //Floor Display
+        g.setFont(font);
         drawStringWithOutline(g, "" + player.getMyFloorLevel() + "F", xx, yy);
         drawHpBar(g, 18*SCALE, yy/2, player);
-        drawStringWithOutline(g, "" + player.getHP() + " / " + player.getMaxHP(), SCREEN_WIDTH/3, yy);
+        drawStringWithOutline(g, "" + player.getHP() + "HP", SCREEN_WIDTH/3, yy);
         drawInventory(g, 22*SCALE, -3, player);
     }
 
@@ -230,26 +228,15 @@ public final class GameView extends JPanel implements Runnable, View {
 
     }
     private static void drawHpBar(final Graphics g, final int x, final int y, final Hero player){
-        g.setColor(Color.WHITE);
-        g.fillRect(x-1, y-1, SCREEN_WIDTH/4+2, SCREEN_HEIGHT/20+2);
         g.setColor(Color.BLACK);
+        g.fillRect(x-2, y-2, SCREEN_WIDTH/4+4, SCREEN_HEIGHT/20+4);
+        g.setColor(Color.LIGHT_GRAY);
         g.fillRect(x, y, SCREEN_WIDTH/4, SCREEN_HEIGHT/20);
-        g.setColor(Color.GREEN);
+        g.setColor(Color.CYAN);
         //FillRect only takes in integers so must calculate the width using double division
         double hpBarWidthDouble = 1.0* player.getHP()/player.getMaxHP()*SCREEN_WIDTH/4.0;
         int hpBarWidth = (int) Math.round(hpBarWidthDouble);
         g.fillRect(x, y, hpBarWidth, SCREEN_HEIGHT/20);
-    }
-
-    private static void drawStringWithOutline(final Graphics g, final String string, final int x, final int y){
-        g.setFont(font);
-        g.setColor(Color.WHITE);
-        g.drawString(string, x, y);
-        g.setColor(Color.BLACK);
-//        g.drawString(string,x-1, y-1);
-//        g.drawString(string,x-1, y+1);
-//        g.drawString(string,x+1, y-1);
-//        g.drawString(string,x+1, y+1);
     }
 
     //Clamp is used to make sure the camera stays in bounds

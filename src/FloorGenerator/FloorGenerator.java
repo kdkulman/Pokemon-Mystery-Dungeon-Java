@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class FloorGenerator {
     private TileObject[][] floor;
-    private final int FLOOR_WIDTH = 42; //56 IS DEFAULT
+    private final int FLOOR_WIDTH = 32; //56 IS DEFAULT
     private final int FLOOR_HEIGHT = 32; //32 IS DEFAULT
     private final int MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN = 2; //2 IS DEFAULT
     private final int MAX_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN = 6; //6 IS DEFAULT
