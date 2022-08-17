@@ -107,6 +107,9 @@ public final class GameView extends JPanel implements Runnable, View {
                         System.out.println("QUIT GAME");
                         InputControls.quitGame();
                         break;
+                    case KeyEvent.VK_P:
+                        InputControls.saveGame(floor);
+                        break;
                     default:
                         break;
                 }

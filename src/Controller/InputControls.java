@@ -281,5 +281,14 @@ public final class InputControls extends KeyAdapter {
         System.out.println("Cannot move up!");
         return theFloor;
     }
+    public static void saveGame(final Floor theFloor){
+        try{
+            SaveManager.saveCurrentGameState(theFloor);
+            System.out.println("Saved game");
+        }
+        catch(IOException err){
+            err.printStackTrace();
+        }
+    }
 
 }
