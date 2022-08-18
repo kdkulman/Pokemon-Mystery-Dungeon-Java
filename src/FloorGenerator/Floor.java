@@ -31,7 +31,7 @@ public class Floor implements Serializable {
         playerColumn = floorGenerator.getPlayerColumn();
         floor = floorGenerator.getFloor();
         FloorTraversal testNewFloor = new FloorTraversal(floor, playerRow, playerColumn);
-        boolean status = testNewFloor.getTraversable();
+        boolean status = testNewFloor.getMyTraversableBoolean();
         //System.out.println("is the floor traversable: " + status);
         if (!status){
             createFloor();

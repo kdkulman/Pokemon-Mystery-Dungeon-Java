@@ -7,7 +7,7 @@
 * Recreate a demo of Pokemon Mystery Dungeon in a small team within six weeks using Agile methodologies 
 
 # Game Objective
-* Find the stairs on each dungeon floor and reach the end of the dungeon
+* Find the stairs on each dungeon myFloor and reach the end of the dungeon
 
 # How to Play
 Keyboard Controls

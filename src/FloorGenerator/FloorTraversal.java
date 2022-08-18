@@ -1,33 +1,28 @@
 package FloorGenerator;
 
-import DungeonCharacter.Enemy.Enemy;
-import DungeonCharacter.Hero.Hero;
-import TileObjects.Staircase;
-import TileObjects.Texture;
 import TileObjects.TileObject;
-import TileObjects.Wall;
 
 public class FloorTraversal {
-    private final TileObject[][] floor;
-    private boolean isTraversable;
-    private final int playerRow;
-    private final int playerColumn;
+    private final TileObject[][] myFloor;
+    private boolean myTraversableBoolean;
+    private final int myPlayerRow;
+    private final int myPlayerColumn;
 
-    private final int FLOOR_HEIGHT;
-    private final int FLOOR_WIDTH;
+    private final int myFloorHeight;
+    private final int myFloorWidth;
 
-    public FloorTraversal(TileObject[][] floor, int playerRow, int playerColumn) {
-        this.floor = floor;
-        FLOOR_HEIGHT = floor.length;
-        FLOOR_WIDTH = floor[0].length;
-        this.playerColumn = playerColumn;
-        this.playerRow = playerRow;
+    public FloorTraversal(final TileObject[][] myFloor, final int myPlayerRow, final int myPlayerColumn) {
+        this.myFloor = myFloor;
+        myFloorHeight = myFloor.length;
+        myFloorWidth = myFloor[0].length;
+        this.myPlayerColumn = myPlayerColumn;
+        this.myPlayerRow = myPlayerRow;
         this.setTraversable();
     }
 
-    private boolean isFloorTraversable(int currentRow, int currentColumn, boolean[][] memory){
+    private boolean isFloorTraversable(final int currentRow, final int currentColumn, final boolean[][] memory){
         //check if out of bounds
-        if(currentRow < 0  || currentRow == FLOOR_HEIGHT || currentColumn < 0 || currentColumn == FLOOR_WIDTH) {
+        if(currentRow < 0  || currentRow == myFloorHeight || currentColumn < 0 || currentColumn == myFloorWidth) {
             return false;
         }
         //check if already visited this tile
@@ -39,12 +34,12 @@ public class FloorTraversal {
         memory[currentRow][currentColumn] = true;
 
         //check if tile is staircase
-        if(this.floor[currentRow][currentColumn].toString().equals("s")){
+        if(this.myFloor[currentRow][currentColumn].toString().equals("s")){
             return true; //found staircase
         }
 
         //check if tile is a wall
-        if(floor[currentRow][currentColumn].toString().equals("W")){
+        if(myFloor[currentRow][currentColumn].toString().equals("W")){
             return false;
         }
 
@@ -57,28 +52,28 @@ public class FloorTraversal {
         return result;
     }
 
-    //DEBUG: prints the entire floor and shows where the DFS visited
-    private void printFloor(int currR, int currC, boolean[][] memory){
+    //DEBUG: prints the entire myFloor and shows where the DFS visited
+    private void printFloor(final int currR, final int currC, final boolean[][] memory){
         StringBuilder output = new StringBuilder();
-        for(int r = 0; r < FLOOR_HEIGHT; r++){
-            for(int c = 0; c < FLOOR_WIDTH; c++){
+        for(int r = 0; r < myFloorHeight; r++){
+            for(int c = 0; c < myFloorWidth; c++){
                 if(r == currR && c == currC){
                     output.append('+');//player's location
                     continue;
                 }
 
-                if(floor[r][c].toString().equals("s")){
+                if(myFloor[r][c].toString().equals("s")){
                     output.append('S');//staircase
                 }
-                else if(floor[r][c].toString().equals("t")){
+                else if(myFloor[r][c].toString().equals("t")){
                     output.append('^');//spiketip
                 }
-                else if(floor[r][c].toString().equals("W")){
+                else if(myFloor[r][c].toString().equals("W")){
                     output.append('X');//wall
                 }
-                else if(floor[r][c].toString().equals("T")){
+                else if(myFloor[r][c].toString().equals("T")){
                     if(memory[r][c]) output.append('*');
-                    else output.append('.');//floor
+                    else output.append('.');//myFloor
                 }
                 else{
                     output.append('%');//anything else, typically enemies
@@ -90,12 +85,12 @@ public class FloorTraversal {
     }
 
     public void setTraversable() {
-        boolean[][] memory = new boolean [FLOOR_HEIGHT][FLOOR_WIDTH];
+        boolean[][] memory = new boolean [myFloorHeight][myFloorWidth];
 
-        this.isTraversable = isFloorTraversable(playerRow, playerColumn, memory);
+        this.myTraversableBoolean = isFloorTraversable(myPlayerRow, myPlayerColumn, memory);
     }
 
-    public boolean getTraversable() {
-        return this.isTraversable;
+    public boolean getMyTraversableBoolean() {
+        return this.myTraversableBoolean;
     }
 }
