@@ -11,8 +11,6 @@ import DungeonCharacter.DungeonCharacter;
 import DungeonCharacter.Enemy.Enemy;
 import DungeonCharacter.Hero.Hero;
 import FloorGenerator.Floor;
-import Controller.SaveManager;
-import Controller.SaveState;
 import TileObjects.*;
 import TileObjects.Items.Item;
 import javax.imageio.ImageIO;
@@ -22,7 +20,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -256,13 +253,13 @@ public final class GameView extends JPanel implements Runnable, View {
 
                     //This prevents out of bounds errors by just spawning walls in out of bound locations
                     if(cameraHeight > floor.getFloorArray().length-1 || cameraWidth > floor.getFloorArray()[0].length-1){
-                        draw(row, column,  g2, new Wall().getSprite());
+                        draw(row, column,  g2, new Wall().getMySprite());
                     } else {
                         if (floor.getFloorArray()[cameraHeight][cameraWidth] instanceof DungeonCharacter ||
                                 floor.getFloorArray()[cameraHeight][cameraWidth] instanceof Item){
-                            draw(row, column,  g2, new Texture().getSprite());
+                            draw(row, column,  g2, new Texture().getMySprite());
                         };
-                        draw(row, column,  g2, floor.getFloorArray()[cameraHeight][cameraWidth].getSprite());
+                        draw(row, column,  g2, floor.getFloorArray()[cameraHeight][cameraWidth].getMySprite());
                     }
 
                 }

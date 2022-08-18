@@ -14,7 +14,7 @@ public class SpikeTip extends TileObject{
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/trap.png");
-            sprite = ImageIO.read(url);
+            mySprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("TRAP file NOT FOUND");
         } catch (IllegalArgumentException e){

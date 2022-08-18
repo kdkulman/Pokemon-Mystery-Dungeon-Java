@@ -15,7 +15,7 @@ public class Wall extends TileObject{
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Walls/Wall_Top.png");
-            sprite = ImageIO.read(url);
+            mySprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("WALL file NOT FOUND");
         } catch (IllegalArgumentException e){

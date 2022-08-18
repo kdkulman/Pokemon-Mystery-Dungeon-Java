@@ -222,25 +222,25 @@ public final class InputControls extends KeyAdapter {
     public static Floor moveUp(final Floor theFloor) throws IOException {
         updateFloorFields(theFloor);
         return move(theFloor, playerRow-1, playerColumn,
-                "Cannot move up!", DungeonCharacter.Direction.UP);
+                "Cannot move myUp!", DungeonCharacter.Direction.UP);
     }
 
     public static Floor moveDown(final Floor theFloor) throws IOException {
         updateFloorFields(theFloor);
         return move(theFloor, playerRow+1, playerColumn,
-                "Cannot move down!", DungeonCharacter.Direction.DOWN);
+                "Cannot move myDown!", DungeonCharacter.Direction.DOWN);
     }
 
     public static Floor moveLeft(final Floor theFloor) throws IOException {
         updateFloorFields(theFloor);
         return move(theFloor, playerRow, playerColumn-1,
-                "Cannot move left!", DungeonCharacter.Direction.LEFT);
+                "Cannot move myLeft!", DungeonCharacter.Direction.LEFT);
     }
 
     public static Floor moveRight(final Floor theFloor) throws IOException {
         updateFloorFields(theFloor);
         return move(theFloor, playerRow, playerColumn+1,
-                "Cannot move right!", DungeonCharacter.Direction.RIGHT);
+                "Cannot move myRight!", DungeonCharacter.Direction.RIGHT);
     }
 
     public static Floor move(final Floor theFloor, final int destinationRow,
@@ -250,7 +250,7 @@ public final class InputControls extends KeyAdapter {
         Floor returnFloor = theFloor;
         Hero hero = theFloor.player;
         returnFloor.getFloorArray()[playerRow][playerColumn].setDirection(direction);
-        if (floor[destinationRow][destinationColumn].getSolid() == false) {
+        if (floor[destinationRow][destinationColumn].getMySolidTest() == false) {
             TileObject playerTemp = floor[playerRow][playerColumn];
             if (floor[destinationRow][destinationColumn] instanceof OranBerry) {
                 hero.collectOranBerry();
@@ -278,7 +278,7 @@ public final class InputControls extends KeyAdapter {
             returnFloor = updateTileObjectVisibility(returnFloor);
             return returnFloor;
         }
-        System.out.println("Cannot move up!");
+        System.out.println("Cannot move myUp!");
         return theFloor;
     }
     public static void saveGame(final Floor theFloor){

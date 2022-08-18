@@ -17,22 +17,22 @@ public abstract class Hero extends DungeonCharacter {
             this.myVisionSeeds = 0;
     }
 
-    public BufferedImage getSprite() {
+    public BufferedImage getMySprite() {
         switch (this.getMyDirection()){
             case UP -> {
-                return up;
+                return myUp;
             }
             case DOWN -> {
-                return down;
+                return myDown;
             }
             case LEFT -> {
-                return left;
+                return myLeft;
             }
             case RIGHT -> {
-                return right;
+                return myRight;
             }
         }
-        return down;
+        return myDown;
     }
 
     public String toString() {

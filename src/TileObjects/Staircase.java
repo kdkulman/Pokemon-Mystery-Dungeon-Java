@@ -1,7 +1,6 @@
 package TileObjects;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -15,7 +14,7 @@ public class Staircase extends TileObject{
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Staircase.png");
-            sprite = ImageIO.read(url);
+            mySprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("STAIRCASE file NOT FOUND");
         } catch (IllegalArgumentException e){

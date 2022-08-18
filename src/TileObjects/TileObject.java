@@ -9,17 +9,17 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public abstract class TileObject implements Serializable {
-    private boolean isSolid;
-    private String name;
-    private String message;
-    private String stringRepresentation;
-    private boolean isVisibleOnMiniMap;
+    private boolean mySolidTest;
+    private String myName;
+    private String myMessage;
+    private String myStringRepresentation;
+    private boolean myVisibleOnMiniMapTest;
     private Direction myDirection;
-    protected BufferedImage sprite, up, down, left, right;
+    protected BufferedImage mySprite, myUp, myDown, myLeft, myRight;
     private boolean myEnemyStatus;
 
-    public boolean getSolid() {
-        return isSolid;
+    public boolean getMySolidTest() {
+        return mySolidTest;
     }
 
     public enum Direction{
@@ -29,37 +29,37 @@ public abstract class TileObject implements Serializable {
         RIGHT;
     }
 
-    public TileObject(final String name, final String stringRepresentation, final boolean isSolid){
-        this.name = name;
-        this.stringRepresentation = stringRepresentation;
-        this.isSolid = isSolid;
+    public TileObject(final String theName, final String myStringRepresentation, final boolean mySolidTest){
+        this.myName = theName;
+        this.myStringRepresentation = myStringRepresentation;
+        this.mySolidTest = mySolidTest;
         this.myDirection = Direction.DOWN;
-        this.isVisibleOnMiniMap = false;
+        this.myVisibleOnMiniMapTest = false;
         this.myEnemyStatus = false;
     }
 
-    public BufferedImage getSprite() {
-        return sprite;
+    public BufferedImage getMySprite() {
+        return mySprite;
     }
 
     abstract protected void setSprite();
 
     //Methods for custom serialization of TileObjects, allows Textures to reload
-    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
-        isSolid = ois.readBoolean();
-        name = ois.readUTF();
-        stringRepresentation = ois.readUTF();
-        isVisibleOnMiniMap = ois.readBoolean();
-        myDirection = Direction.values()[ois.readInt()];
+    private void readObject(final ObjectInputStream theOIS) throws ClassNotFoundException, IOException {
+        mySolidTest = theOIS.readBoolean();
+        myName  = theOIS.readUTF();
+        myStringRepresentation = theOIS.readUTF();
+        myVisibleOnMiniMapTest = theOIS.readBoolean();
+        myDirection = Direction.values()[theOIS.readInt()];
         setSprite();
     }
 
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.writeBoolean(isSolid);
-        oos.writeUTF(name);
-        oos.writeUTF(stringRepresentation);
-        oos.writeBoolean(isVisibleOnMiniMap);
-        oos.writeInt(myDirection.ordinal());
+    private void writeObject(final ObjectOutputStream theOOS) throws IOException {
+        theOOS.writeBoolean(mySolidTest);
+        theOOS.writeUTF(myName);
+        theOOS.writeUTF(myStringRepresentation);
+        theOOS.writeBoolean(myVisibleOnMiniMapTest);
+        theOOS.writeInt(myDirection.ordinal());
     }
 
     public void setMyEnemyStatus(final boolean theStatus) {
@@ -79,22 +79,22 @@ public abstract class TileObject implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return myName;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMyMessage() {
+        return myMessage;
     }
 
     public boolean getIsVisibleOnDungeonMap(){
-        return isVisibleOnMiniMap;
+        return myVisibleOnMiniMapTest;
     }
     public void setVisibleOnMiniMap(){
-        this.isVisibleOnMiniMap = true;
+        this.myVisibleOnMiniMapTest = true;
     }
 
     @Override
     public String toString(){
-        return stringRepresentation;
+        return myStringRepresentation;
     }
 }

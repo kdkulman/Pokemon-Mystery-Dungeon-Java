@@ -16,13 +16,13 @@ public class Gallade extends Hero{
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Hero/Gallade/Gallade_Up_Idle.png");
-            up = ImageIO.read(url);
+            myUp = ImageIO.read(url);
             url = this.getClass().getResource("/Sprites/Hero/Gallade/Gallade_Down_Idle.png");
-            down = ImageIO.read(url);
+            myDown = ImageIO.read(url);
             url = this.getClass().getResource("/Sprites/Hero/Gallade/Gallade_Left_Idle.png");
-            left = ImageIO.read(url);
+            myLeft = ImageIO.read(url);
             url = this.getClass().getResource("/Sprites/Hero/Gallade/Gallade_Right_Idle.png");
-            right = ImageIO.read(url);
+            myRight = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("GALLADE file NOT FOUND");
         } catch (IllegalArgumentException e){
@@ -35,7 +35,7 @@ public class Gallade extends Hero{
         String damage = this.getTarget().takeDamage((int) this.getAttack());
         this.takeDamage(SELF_INFLICTION);
         String message = "Gallade did " + damage + " damage to enemy " + this.getTarget().getName() + "! \n";
-        message += "(" + this.getTarget().getHP() + " HP left)";
+        message += "(" + this.getTarget().getHP() + " HP myLeft)";
         message += "Gallde did " + SELF_INFLICTION + " damage to itself!";
         return message;
     }

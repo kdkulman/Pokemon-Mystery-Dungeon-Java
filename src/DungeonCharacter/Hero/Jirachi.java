@@ -1,7 +1,6 @@
 package DungeonCharacter.Hero;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -15,13 +14,13 @@ public class Jirachi extends Hero{
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Hero/Jirachi/Jirachi_Up_Idle.png");
-            up = ImageIO.read(url);
+            myUp = ImageIO.read(url);
             url = this.getClass().getResource("/Sprites/Hero/Jirachi/Jirachi_Down_Idle.png");
-            down = ImageIO.read(url);
+            myDown = ImageIO.read(url);
             url = this.getClass().getResource("/Sprites/Hero/Jirachi/Jirachi_Left_Idle.png");
-            left = ImageIO.read(url);
+            myLeft = ImageIO.read(url);
             url = this.getClass().getResource("/Sprites/Hero/Jirachi/Jirachi_Right_Idle.png");
-            right = ImageIO.read(url);
+            myRight = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("JIRACHI file NOT FOUND");
         } catch (IllegalArgumentException e){

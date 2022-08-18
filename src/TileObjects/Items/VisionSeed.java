@@ -15,7 +15,7 @@ public class VisionSeed extends Item {
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Items/Vision_Seed.png");
-            sprite = ImageIO.read(url);
+            mySprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("VISION SEED file NOT FOUND");
         } catch (IllegalArgumentException e){

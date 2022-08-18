@@ -15,7 +15,7 @@ public class Texture extends TileObject{
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Textures/Texture_1.png");
-            sprite = ImageIO.read(url);
+            mySprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("TEXTURE file NOT FOUND");
         } catch (IllegalArgumentException e){

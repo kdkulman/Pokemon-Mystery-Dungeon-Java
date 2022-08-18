@@ -14,7 +14,7 @@ public class OranBerry extends Item {
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/TileObjects/Items/Oran_Berry.png");
-            sprite = ImageIO.read(url);
+            mySprite = ImageIO.read(url);
         } catch (IOException e) {
             System.out.println("ORAN BERRY file NOT FOUND");
         } catch (IllegalArgumentException e){

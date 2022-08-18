@@ -108,7 +108,7 @@ public class CharacterSelectQuiz {
 
         CharacterSelectQuestion question3 = new CharacterSelectQuestion(
                 "You see someone being bullied, what do you do?", "Don't get involved",
-                "Kick their ass", "Send thoughts and prayers", "Try to help but get beat up",
+                "Kick their ass", "Send thoughts and prayers", "Try to help but get beat myUp",
                 CharacterSelectQuestion.Points.SNORLAX, CharacterSelectQuestion.Points.GALLADE,
                 CharacterSelectQuestion.Points.JIRACHI, CharacterSelectQuestion.Points.MAGIKARP
         );
