@@ -11,12 +11,12 @@ import FloorGenerator.Floor;
 
 public class SaveManager {
 
-    public static void saveCurrentGameState(Floor floor) throws IOException{
-        File saveFile = new File("save.ser");
-        SaveState state = new SaveState(floor);
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(saveFile));
-        oos.writeObject(state);
-        oos.close();
+    public static void saveCurrentGameState(final Floor floor) throws IOException{
+        File myFile = new File("save.ser");
+        SaveState myState = new SaveState(floor);
+        ObjectOutputStream myOOS = new ObjectOutputStream(new FileOutputStream(myFile));
+        myOOS.writeObject(myState);
+        myOOS.close();
     }
 
     public static SaveState getSavedGameState() throws IOException, ClassNotFoundException{
