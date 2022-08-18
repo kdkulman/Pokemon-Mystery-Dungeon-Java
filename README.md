@@ -19,6 +19,7 @@ Keyboard Controls
 * ENTER - Special attack
 * 1 - Use Oran Berry
 * 2 - Use Vision Seed
+* P - Save Game
 
 # Features
 * Procedural dungeon generation
@@ -26,6 +27,7 @@ Keyboard Controls
 * Items
 * Mini map
 * Pokemon Quiz
+* Save/Load
 
 ***
 # What did we learn
