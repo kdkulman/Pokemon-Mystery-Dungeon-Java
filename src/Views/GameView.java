@@ -112,6 +112,14 @@ public final class GameView extends JPanel implements Runnable, View {
                     case KeyEvent.VK_P:
                         InputControls.saveGame(floor);
                         break;
+                    case KeyEvent.VK_V:
+                        System.out.println("CHEAT: GET VISION SEED");
+                        player.collectVisionSeeds();
+                        break;
+                    case KeyEvent.VK_B:
+                        System.out.println("CHEAT: GET ORAN BERRY");
+                        player.collectOranBerry();
+                        break;
                     default:
                         break;
                 }

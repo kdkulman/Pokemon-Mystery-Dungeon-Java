@@ -2,12 +2,14 @@ package DungeonCharacter.Enemy;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EnemyFactoryTest {
 
     @Test
-    void createEnemy() {
+    void createEnemy() throws IOException {
         EnemyFactory enemyFactory = EnemyFactory.getInstance();
         Enemy[] eArray = new Enemy[100];
         for(int i = 0; i < eArray.length; i++) {
@@ -16,16 +18,11 @@ class EnemyFactoryTest {
         for(int i = 0; i < eArray.length; i++) {
             assertNotNull(eArray[i]);
         }
-
-        Enemy test = enemyFactory.createEnemy();
-        assertNotNull(test);
-
-        System.out.println(test.getName());
-        System.out.println(test.getHP());
-        System.out.println(test.getAttack());
-        System.out.println(test.getDefense());
-        System.out.println(test.getDamageRange());
-        System.out.println(test.getTarget());
-        System.out.println(test.getBattleStatus());
+        for(int i = 0; i < eArray.length; i++) {
+            System.out.println(eArray[i].getName());
+            System.out.println(eArray[i].getHP());
+            System.out.println(eArray[i].getAttack());
+            System.out.println(eArray[i].getDefense());
+        }
     }
 }

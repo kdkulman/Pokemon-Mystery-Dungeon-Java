@@ -36,7 +36,6 @@ public class Gallade extends Hero{
         this.takeDamage(SELF_INFLICTION);
         String message = "Gallade did " + damage + " damage to enemy " + this.getTarget().getName() + "! \n";
         message += "(" + this.getTarget().getHP() + " HP myLeft)";
-        message += "Gallde did " + SELF_INFLICTION + " damage to itself!";
         return message;
     }
 }

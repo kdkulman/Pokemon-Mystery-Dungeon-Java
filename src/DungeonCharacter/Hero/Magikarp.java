@@ -36,7 +36,7 @@ public class Magikarp extends Hero {
     @Override
     public String specialAttack() {
         if(this.myBigAttackChance > Math.random()) {
-            this.getTarget().takeDamage(this.getTarget().getMaxHP());
+            this.getTarget().takeDamage(100000);
             this.myBigAttackChance += 0.05;
             this.heal(this.getMaxHP());
             return "Your target is defeated! You feel yourself growing stronger!";

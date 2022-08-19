@@ -50,8 +50,8 @@ public class SQLTables {
 
         this.query = "INSERT INTO 'enemyDB' " +
                 "('NAME','HP','MAXHP','DAMAGERANGE','ATTACK','SPECIALATTACK','DEFENSE','EVASION') VALUES" +
-                "('DONKEY KONG', '70','70','0','20','10','5','5')," +
-                "('TEAM ROCKET GRUNT', '50','50','0','20','10','5','5');";
+                "('DONKEY KONG', '70','70','0','25','10','5','5')," +
+                "('TEAM ROCKET GRUNT', '50','50','0','20','10','6','5');";
 
         try {
             returnValue = statement.executeUpdate( query );
@@ -67,7 +67,7 @@ public class SQLTables {
     public String extractDonkeyKongInfo() {
         String result = "";
         //this.query = "SELECT * FROM 'enemyDB';";
-        this.query = "SELECT * FROM enemyDB LIMIT 1";
+        this.query = "SELECT * FROM enemyDB LIMIT 1 OFFSET 0";
         //this.query = "SELECT rowid, * FROM enemyDB WHERE NAME = 'Donkey Kong'";
 
         try {
