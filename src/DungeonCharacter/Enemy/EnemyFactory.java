@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class EnemyFactory {
 
-    private static EnemyFactory instance;
+    private static EnemyFactory myInstance;
     private static SQLTables myEnemyTable;
 
     private EnemyFactory() {
@@ -21,8 +21,8 @@ public class EnemyFactory {
 
 
     public static EnemyFactory getInstance() {
-        if (instance == null) return new EnemyFactory();
-        return instance;
+        if (myInstance == null) return new EnemyFactory();
+        return myInstance;
     }
 
     public static Enemy createEnemy() {
