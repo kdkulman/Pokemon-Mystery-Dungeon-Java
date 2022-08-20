@@ -8,29 +8,29 @@ import java.io.Serializable;
 
 public class Floor implements Serializable {
 
-    private TileObject[][] floor;
-    private int playerRow;
-    private int playerColumn;
-    public Hero player;
+    private TileObject[][] myFloor;
+    private int myPlayerRow;
+    private int myPlayerColumn;
+    public Hero myPlayer;
 
-    public Floor(final Hero player) throws IOException {
-        this.player = player;
+    public Floor(final Hero thePlayer) throws IOException {
+        this.myPlayer = thePlayer;
         createFloor();
     }
 
     public Floor(final TileObject[][] theFloorArray, final int thePlayerRow, final int thePlayerCol, final Hero thePlayer) {
-        this.floor = theFloorArray;
-        this.playerRow = thePlayerRow;
-        this.playerColumn = thePlayerCol;
-        this.player = thePlayer;
+        this.myFloor = theFloorArray;
+        this.myPlayerRow = thePlayerRow;
+        this.myPlayerColumn = thePlayerCol;
+        this.myPlayer = thePlayer;
     }
 
     public void createFloor() throws IOException {
-        FloorGenerator floorGenerator = new FloorGenerator(player);
-        playerRow = floorGenerator.getPlayerRow();
-        playerColumn = floorGenerator.getPlayerColumn();
-        floor = floorGenerator.getFloor();
-        FloorTraversal testNewFloor = new FloorTraversal(floor, playerRow, playerColumn);
+        FloorGenerator floorGenerator = new FloorGenerator(myPlayer);
+        myPlayerRow = floorGenerator.getMyPlayerRow();
+        myPlayerColumn = floorGenerator.getMyPlayerColumn();
+        myFloor = floorGenerator.getMyFloor();
+        FloorTraversal testNewFloor = new FloorTraversal(myFloor, myPlayerRow, myPlayerColumn);
         boolean status = testNewFloor.getMyTraversableBoolean();
         //System.out.println("is the floor traversable: " + status);
         if (!status){
@@ -38,28 +38,28 @@ public class Floor implements Serializable {
         }
     }
 
-    public int getPlayerRow(){
-        return playerRow;
+    public int getMyPlayerRow(){
+        return myPlayerRow;
     }
 
-    public int getPlayerColumn(){
-        return playerColumn;
+    public int getMyPlayerColumn(){
+        return myPlayerColumn;
     }
 
-    public void setPlayerRow(final int playerRow){
-        this.playerRow = playerRow;
+    public void setMyPlayerRow(final int thePlayerRow){
+        this.myPlayerRow = thePlayerRow;
     }
 
-    public void setPlayerColumn(final int playerColumn){
-        this.playerColumn = playerColumn;
+    public void setMyPlayerColumn(final int thePlayerColumn){
+        this.myPlayerColumn = thePlayerColumn;
     }
 
-    public void setFloorArray(TileObject[][] floor){
-        this.floor = floor;
+    public void setFloorArray(final TileObject[][] theFloor){
+        this.myFloor = theFloor;
     }
 
     public TileObject[][] getFloorArray(){
-        return floor;
+        return myFloor;
     }
 }
 

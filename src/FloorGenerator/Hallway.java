@@ -2,19 +2,20 @@ package FloorGenerator;
 
 public class Hallway {
 
-    private final int width;
-    private final int height;
+    private final int myWidth;
+    private final int myHeight;
 
-    public Hallway(final int maxHeight, final int maxWidth, final int roomHeight, final int roomWidth){
-        width = maxWidth - roomWidth;
-        height = maxHeight - roomHeight;
+    public Hallway(final int theMaxHeight, final int theMaxWidth, final int theRoomHeight,
+                   final int theRoomWidth){
+        myWidth = theMaxWidth - theRoomWidth;
+        myHeight = theMaxHeight - theRoomHeight;
     }
 
-    public int getWidth() {
-        return width;
+    public int getMyWidth() {
+        return myWidth;
     }
 
-    public int getHeight() {
-        return height;
+    public int getMyHeight() {
+        return myHeight;
     }
 }

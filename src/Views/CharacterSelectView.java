@@ -9,29 +9,27 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class CharacterSelectView extends JPanel implements Runnable, View {
 
-    private static Hero selectedHero;
-    private Thread characterSelectViewThread;
-    private String currentQuestion;
-    private CharacterSelectQuiz characterSelectQuiz;
-    private Graphics2D graphics;
+    private static Hero mySelectedHero;
+    private Thread myCharacterSelectViewThread;
+    private String myCurrentQuestion;
+    private CharacterSelectQuiz myCharacterSelectQuiz;
+    private Graphics2D myGraphics;
 
     public CharacterSelectView() throws IOException {
         setLayout(null);
-        characterSelectQuiz = CharacterSelectQuiz.getInstance();
+        myCharacterSelectQuiz = CharacterSelectQuiz.getMyInstance();
         createQuestion();
-        characterSelectViewThread = new Thread(this);
-        characterSelectViewThread.start();
+        myCharacterSelectViewThread = new Thread(this);
+        myCharacterSelectViewThread.start();
     }
 
     @Override
     public void run() {
-        while (characterSelectViewThread != null){
+        while (myCharacterSelectViewThread != null){
             repaint();
 
 
@@ -45,12 +43,12 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         int ygap = 50 * SCALE;
         int width = 65 * SCALE;
         int height = 10 * SCALE;
-        CharacterSelectQuestion questionObject = characterSelectQuiz.getCurrentQuestion();
-        currentQuestion = questionObject.getQuestion();
-        String answer1String = questionObject.getAnswer1();
-        String answer2String = questionObject.getAnswer2();
-        String answer3String = questionObject.getAnswer3();
-        String answer4String = questionObject.getAnswer4();
+        CharacterSelectQuestion questionObject = myCharacterSelectQuiz.getCurrentQuestion();
+        myCurrentQuestion = questionObject.getMyQuestion();
+        String answer1String = questionObject.getMyAnswer1();
+        String answer2String = questionObject.getMyAnswer2();
+        String answer3String = questionObject.getMyAnswer3();
+        String answer4String = questionObject.getMyAnswer4();
         JButton answer1 = new JButton(answer1String);
         JButton answer2 = new JButton(answer2String);
         JButton answer3 = new JButton(answer3String);
@@ -64,8 +62,8 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
 
         answer1.addActionListener(e -> {
             try {
-                characterSelectQuiz.addCharacterPoints(questionObject.getAnswer1Points());
-                if (characterSelectQuiz.isQuizCompleted()){
+                myCharacterSelectQuiz.addCharacterPoints(questionObject.getMyAnswer1Points());
+                if (myCharacterSelectQuiz.isQuizCompleted()){
                     endCharacterSelectView();
                 } else {
                     createQuestion();
@@ -76,8 +74,8 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         });
         answer2.addActionListener(e -> {
             try {
-                characterSelectQuiz.addCharacterPoints(questionObject.getAnswer2Points());
-                if (characterSelectQuiz.isQuizCompleted()){
+                myCharacterSelectQuiz.addCharacterPoints(questionObject.getMyAnswer2Points());
+                if (myCharacterSelectQuiz.isQuizCompleted()){
                     endCharacterSelectView();
                 } else {
                     createQuestion();
@@ -88,8 +86,8 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         });
         answer3.addActionListener(e -> {
             try {
-                characterSelectQuiz.addCharacterPoints(questionObject.getAnswer3Points());
-                if (characterSelectQuiz.isQuizCompleted()){
+                myCharacterSelectQuiz.addCharacterPoints(questionObject.getMyAnswer3Points());
+                if (myCharacterSelectQuiz.isQuizCompleted()){
                     endCharacterSelectView();
                 } else {
                     createQuestion();
@@ -100,8 +98,8 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         });
         answer4.addActionListener(e -> {
             try {
-                characterSelectQuiz.addCharacterPoints(questionObject.getAnswer4Points());
-                if (characterSelectQuiz.isQuizCompleted()){
+                myCharacterSelectQuiz.addCharacterPoints(questionObject.getMyAnswer4Points());
+                if (myCharacterSelectQuiz.isQuizCompleted()){
                     endCharacterSelectView();
                 } else {
                     createQuestion();
@@ -118,9 +116,9 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
 
     private void endCharacterSelectView() throws IOException {
         removeAll();
-        GameManager.setSelectedHero(characterSelectQuiz.getPlayer());
-        currentQuestion = "It appears your inner Pokemon is " + characterSelectQuiz.getPlayer().getName();
-        drawQuestion(graphics);
+        GameManager.setMySelectedHero(myCharacterSelectQuiz.getMyPlayer());
+        myCurrentQuestion = "It appears your inner Pokemon is " + myCharacterSelectQuiz.getMyPlayer().getName();
+        drawQuestion(myGraphics);
         JButton proceedButton = new JButton("Go on");
         int x = (this.getWidth()/3 + this.getWidth()/2) / 2;
         int y = 90*SCALE;
@@ -137,23 +135,23 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         add(proceedButton);
     }
 
-    private void createBackground(final Graphics2D g2) throws IOException {
+    private void createBackground(final Graphics2D theGraphics) throws IOException {
         ImageIcon backgroundGif = new ImageIcon(CharacterSelectView.class.getResource("/Sprites/CharacterSelectScreen_Background.gif"));
-        g2.drawImage(backgroundGif.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
-        g2.setColor(Color.BLACK);
-        g2.fillRect(0, 0, this.getWidth(), 20*SCALE);
-        g2.fillRect(0, this.getHeight()-20*SCALE, this.getWidth(), this.getHeight()/2);
+        theGraphics.drawImage(backgroundGif.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+        theGraphics.setColor(Color.BLACK);
+        theGraphics.fillRect(0, 0, this.getWidth(), 20*SCALE);
+        theGraphics.fillRect(0, this.getHeight()-20*SCALE, this.getWidth(), this.getHeight()/2);
     }
 
-    private void drawQuestion(Graphics2D g){
-        setFont(font);
-        g.drawString(currentQuestion, this.getWidth()/5, this.getHeight()/3);
+    private void drawQuestion(final Graphics2D theGraphics){
+        setFont(FONT);
+        theGraphics.drawString(myCurrentQuestion, this.getWidth()/5, this.getHeight()/3);
     }
 
-    protected void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        graphics = g2;
+    protected void paintComponent(final Graphics theGraphics){
+        super.paintComponent(theGraphics);
+        Graphics2D g2 = (Graphics2D) theGraphics;
+        myGraphics = g2;
         try {
             createBackground(g2);
             drawQuestion(g2);
@@ -166,7 +164,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         JButton selectSnorlaxButton = new JButton("Snorlax");
         selectSnorlaxButton.addActionListener(e -> {
             try {
-                GameManager.setSelectedHero(new Snorlax());
+                GameManager.setMySelectedHero(new Snorlax());
                 GameManager.createGameView();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
@@ -177,7 +175,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         JButton selectJirachiButton = new JButton("Jirachi");
         selectJirachiButton.addActionListener(e -> {
             try {
-                GameManager.setSelectedHero(new Jirachi());
+                GameManager.setMySelectedHero(new Jirachi());
                 GameManager.createGameView();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
@@ -187,7 +185,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         JButton selectGalladeButton = new JButton("Gallade");
         selectGalladeButton.addActionListener(e -> {
             try {
-                GameManager.setSelectedHero(new Gallade());
+                GameManager.setMySelectedHero(new Gallade());
                 GameManager.createGameView();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
@@ -197,7 +195,7 @@ public class CharacterSelectView extends JPanel implements Runnable, View {
         JButton selectMagikarpButton = new JButton("Magikarp");
         selectMagikarpButton.addActionListener(e -> {
             try {
-                GameManager.setSelectedHero(new Magikarp());
+                GameManager.setMySelectedHero(new Magikarp());
                 GameManager.createGameView();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();

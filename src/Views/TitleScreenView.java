@@ -12,18 +12,16 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class TitleScreenView extends JPanel implements Runnable, View {
-    private Thread titleScreenViewThread;
+    private Thread myTitleScreenViewThread;
 
     public TitleScreenView(){
         setLayout(null);
         createMenuOptions();
-        titleScreenViewThread = new Thread(this);
-        titleScreenViewThread.start();
+        myTitleScreenViewThread = new Thread(this);
+        myTitleScreenViewThread.start();
     }
 
     private void createMenuOptions() {
@@ -35,7 +33,7 @@ public class TitleScreenView extends JPanel implements Runnable, View {
         JButton takeCharacterQuizButton = new JButton("Let fate decide your Pokemon");
         chooseJirachiButton.addActionListener(e -> {
             try {
-                GameManager.setSelectedHero(new Jirachi());
+                GameManager.setMySelectedHero(new Jirachi());
                 GameManager.createGameView();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
@@ -43,7 +41,7 @@ public class TitleScreenView extends JPanel implements Runnable, View {
         });
         chooseGalladeButton.addActionListener(e -> {
             try {
-                GameManager.setSelectedHero(new Gallade());
+                GameManager.setMySelectedHero(new Gallade());
                 GameManager.createGameView();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
@@ -51,7 +49,7 @@ public class TitleScreenView extends JPanel implements Runnable, View {
         });
         chooseMagikarpButton.addActionListener(e -> {
             try {
-                GameManager.setSelectedHero(new Magikarp());
+                GameManager.setMySelectedHero(new Magikarp());
                 GameManager.createGameView();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
@@ -59,7 +57,7 @@ public class TitleScreenView extends JPanel implements Runnable, View {
         });
         chooseSnorlaxButton.addActionListener(e -> {
             try {
-                GameManager.setSelectedHero(new Snorlax());
+                GameManager.setMySelectedHero(new Snorlax());
                 GameManager.createGameView();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
@@ -116,9 +114,9 @@ public class TitleScreenView extends JPanel implements Runnable, View {
     public void run() {
 
     }
-    protected void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
+    protected void paintComponent(final Graphics theGraphics){
+        super.paintComponent(theGraphics);
+        Graphics2D g2 = (Graphics2D) theGraphics;
         try {
             createBackground(g2);
         } catch (IOException e) {
@@ -126,29 +124,30 @@ public class TitleScreenView extends JPanel implements Runnable, View {
         }
     }
 
-    private void createBackground(Graphics2D g2) throws IOException {
+    private void createBackground(final Graphics2D theGraphics) throws IOException {
         ImageIcon background = new ImageIcon(CharacterSelectView.class.getResource("/Sprites/Title_Screen_Background.png"));
-        g2.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+        theGraphics.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
         int yPadding = SCALE * 15;
-        g2.setColor(Color.BLACK);
-        g2.setFont(new Font(Font.SERIF, Font.BOLD, 12*SCALE));
-        drawStringWithOutline(g2,"Developed by", yPadding/2, this.getHeight()/15);
-        drawStringWithOutline(g2,"Select your Pokemon", yPadding/2, this.getHeight()/2 - yPadding);
-        drawStringWithOutline(g2,"Load game", yPadding/2, this.getHeight()/2 + this.getHeight()/3);
-        g2.setFont(new Font(Font.SERIF, Font.PLAIN, 10*SCALE));
-        drawStringWithOutline(g2,"Kevin Kulman", yPadding, this.getHeight()/8);
-        drawStringWithOutline(g2,"Stephen Vanluven", yPadding, this.getHeight()/8 + yPadding);
-        drawStringWithOutline(g2,"Anthony Owens", yPadding, this.getHeight()/8 + yPadding*2);
+        theGraphics.setColor(Color.BLACK);
+        theGraphics.setFont(new Font(Font.SERIF, Font.BOLD, 12*SCALE));
+        drawStringWithOutline(theGraphics,"Developed by", yPadding/2, this.getHeight()/15);
+        drawStringWithOutline(theGraphics,"Select your Pokemon", yPadding/2, this.getHeight()/2 - yPadding);
+        drawStringWithOutline(theGraphics,"Load game", yPadding/2, this.getHeight()/2 + this.getHeight()/3);
+        theGraphics.setFont(new Font(Font.SERIF, Font.PLAIN, 10*SCALE));
+        drawStringWithOutline(theGraphics,"Kevin Kulman", yPadding, this.getHeight()/8);
+        drawStringWithOutline(theGraphics,"Stephen Vanluven", yPadding, this.getHeight()/8 + yPadding);
+        drawStringWithOutline(theGraphics,"Anthony Owens", yPadding, this.getHeight()/8 + yPadding*2);
     }
 
     @Override
-    public void drawStringWithOutline(Graphics g, String string, int x, int y) {
-        g.setColor(Color.WHITE);
-        g.drawString(string,x-1, y-1);
-        g.drawString(string,x-1, y+1);
-        g.drawString(string,x+1, y-1);
-        g.drawString(string,x+1, y+1);
-        g.setColor(Color.BLACK);
-        g.drawString(string, x, y);
+    public void drawStringWithOutline(final Graphics theGraphics, final String theString,
+                                      final int theX, final int theY) {
+        theGraphics.setColor(Color.WHITE);
+        theGraphics.drawString(theString,theX-1, theY-1);
+        theGraphics.drawString(theString,theX-1, theY+1);
+        theGraphics.drawString(theString,theX+1, theY-1);
+        theGraphics.drawString(theString,theX+1, theY+1);
+        theGraphics.setColor(Color.BLACK);
+        theGraphics.drawString(theString, theX, theY);
     }
 }

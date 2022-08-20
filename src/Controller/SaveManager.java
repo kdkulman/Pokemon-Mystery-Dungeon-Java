@@ -11,9 +11,9 @@ import FloorGenerator.Floor;
 
 public class SaveManager {
 
-    public static void saveCurrentGameState(final Floor floor) throws IOException{
+    public static void saveCurrentGameState(final Floor theFloor) throws IOException{
         File myFile = new File("save.ser");
-        SaveState myState = new SaveState(floor);
+        SaveState myState = new SaveState(theFloor);
         ObjectOutputStream myOOS = new ObjectOutputStream(new FileOutputStream(myFile));
         myOOS.writeObject(myState);
         myOOS.close();
