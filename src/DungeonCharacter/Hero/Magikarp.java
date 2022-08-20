@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Magikarp extends Hero {
-    private double myBigAttackChance;
+    private double MY_BIG_ATTACK_CHANCE;
 
     public Magikarp() throws IOException {
         super("Magikarp", 60, 60,
                 0, 1, 0,
                 2, 5);
-        this.myBigAttackChance = 0.1;
+        this.MY_BIG_ATTACK_CHANCE = 0.1;
         setSprite();
     }
 
@@ -35,9 +35,9 @@ public class Magikarp extends Hero {
 
     @Override
     public String specialAttack() {
-        if(this.myBigAttackChance > Math.random()) {
+        if(this.MY_BIG_ATTACK_CHANCE > Math.random()) {
             this.getTarget().takeDamage(100000);
-            this.myBigAttackChance += 0.05;
+            this.MY_BIG_ATTACK_CHANCE += 0.05;
             this.heal(this.getMaxHP());
             return "Your target is defeated! You feel yourself growing stronger!";
         } else {
@@ -46,6 +46,6 @@ public class Magikarp extends Hero {
     }
 
     public double getMyBigAttackChance() {
-        return this.myBigAttackChance;
+        return this.MY_BIG_ATTACK_CHANCE;
     }
 }

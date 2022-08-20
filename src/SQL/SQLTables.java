@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLTables {
-    private SQLiteDataSource enemyTable;
-    private Connection connection;
-    private Statement statement;
-    private String query;
-    private int returnValue;
+    private SQLiteDataSource myEnemyTable;
+    private Connection myConnection;
+    private Statement myStatement;
+    private String myQuery;
+    private int myReturnValue;
     private ResultSet myResultSet;
 
     public SQLTables() throws SQLException {
@@ -21,9 +21,9 @@ public class SQLTables {
     }
 
     private void createEnemyTable() {
-        this.enemyTable = new SQLiteDataSource();
+        this.myEnemyTable = new SQLiteDataSource();
 
-         this.query = "CREATE TABLE enemyDB (" +
+         this.myQuery = "CREATE TABLE enemyDB (" +
                       "NAME TEXT PRIMARY KEY," +
                       "HP TEXT NOT NULL," +
                       "MAXHP TEXT NOT NULL," +
@@ -34,10 +34,10 @@ public class SQLTables {
                       "EVASION TEXT NOT NULL);";
 
         try {
-            this.connection =  enemyTable.getConnection();
-            this.statement = connection.createStatement();
-            returnValue = statement.executeUpdate( query );
-            System.out.println("executeUpdate() returned " + returnValue);
+            this.myConnection =  myEnemyTable.getConnection();
+            this.myStatement = myConnection.createStatement();
+            myReturnValue = myStatement.executeUpdate(myQuery);
+            System.out.println("executeUpdate() returned " + myReturnValue);
         } catch (SQLException e) {
             System.out.println("Error creating enemy table");
             System.exit(0);
@@ -48,14 +48,14 @@ public class SQLTables {
 
     private void fillEnemyTable() {
 
-        this.query = "INSERT INTO 'enemyDB' " +
+        this.myQuery = "INSERT INTO 'enemyDB' " +
                 "('NAME','HP','MAXHP','DAMAGERANGE','ATTACK','SPECIALATTACK','DEFENSE','EVASION') VALUES" +
                 "('DONKEY KONG', '70','70','0','25','10','5','5')," +
                 "('TEAM ROCKET GRUNT', '50','50','0','20','10','6','5');";
 
         try {
-            returnValue = statement.executeUpdate( query );
-            System.out.println("executeUpdate() returned " + returnValue);
+            myReturnValue = myStatement.executeUpdate(myQuery);
+            System.out.println("executeUpdate() returned " + myReturnValue);
         } catch (SQLException e) {
             System.out.println("Error filling values into enemy table");
             System.out.println(e.getMessage());
@@ -67,11 +67,11 @@ public class SQLTables {
     public String extractDonkeyKongInfo() {
         String result = "";
         //this.query = "SELECT * FROM 'enemyDB';";
-        this.query = "SELECT * FROM enemyDB LIMIT 1 OFFSET 0";
+        this.myQuery = "SELECT * FROM enemyDB LIMIT 1 OFFSET 0";
         //this.query = "SELECT rowid, * FROM enemyDB WHERE NAME = 'Donkey Kong'";
 
         try {
-            this.myResultSet = this.statement.executeQuery(this.query);
+            this.myResultSet = this.myStatement.executeQuery(this.myQuery);
             while(this.myResultSet.next()) {
                 result += this.myResultSet.getString("NAME") + "\n";
                 result += this.myResultSet.getString("HP") + "\n";
@@ -93,10 +93,10 @@ public class SQLTables {
 
     public String extractTeamRocketInfo() {
         String result = "";
-        this.query = "SELECT * FROM enemyDB LIMIT 1 OFFSET 1";
+        this.myQuery = "SELECT * FROM enemyDB LIMIT 1 OFFSET 1";
 
         try {
-            this.myResultSet = this.statement.executeQuery(this.query);
+            this.myResultSet = this.myStatement.executeQuery(this.myQuery);
             while(this.myResultSet.next()) {
                 result += this.myResultSet.getString("NAME") + "\n";
                 result += this.myResultSet.getString("HP") + "\n";

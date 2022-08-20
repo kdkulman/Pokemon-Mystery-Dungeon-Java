@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Snorlax extends Hero{
+    //Snorlax sleep time is not implemented yet. Future iteration?
     private int mySleepCounter;
 
     //I made it public because he cannot be accessed out of package unless public -Kevin

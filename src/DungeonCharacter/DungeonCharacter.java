@@ -15,17 +15,17 @@ public abstract class DungeonCharacter extends TileObject {
     private boolean myBattleStatus;
 
 
-    public DungeonCharacter(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE,
-                     final int THE_ATTACK, final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION){
+    public DungeonCharacter(final String theName, final int theHP, final int theMaxHP, final int theDamageRange,
+                     final int theAttack, final int theSpecialAttack, final int theDefense, final int theEvasion){
 
-        super(THE_NAME,"", true);
-        this.myMaxHP = THE_MAX_HP;
-        this.myHP = THE_HP;
-        this.myDamageRange = THE_DAMAGE_RANGE;
-        this.myAttack = THE_ATTACK;
-        this.mySpecialAttack = THE_SPECIAL_ATTACK;
-        this.myDefense = THE_DEFENSE;
-        this.myEvasion = THE_EVASION;
+        super(theName,"", true);
+        this.myMaxHP = theMaxHP;
+        this.myHP = theHP;
+        this.myDamageRange = theDamageRange;
+        this.myAttack = theAttack;
+        this.mySpecialAttack = theSpecialAttack;
+        this.myDefense = theDefense;
+        this.myEvasion = theEvasion;
         this.myTarget = null;
         this.myBattleStatus = true;
     }

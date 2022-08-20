@@ -9,10 +9,10 @@ public abstract class Hero extends DungeonCharacter {
     private int myVisionSeeds;
     private int myFloorLevel = 1;
 
-    public Hero(final String THE_NAME, final int THE_HP, final int THE_MAX_HP, final int THE_DAMAGE_RANGE, final int THE_ATTACK,
-         final int THE_SPECIAL_ATTACK, final int THE_DEFENSE, final int THE_EVASION){
+    public Hero(final String theName, final int theHP, final int theMaxHP, final int theDamageRange, final int theAttack,
+         final int theSpecialAttack, final int theDefense, final int theEvasion){
 
-            super(THE_NAME, THE_HP, THE_MAX_HP, THE_DAMAGE_RANGE, THE_ATTACK, THE_SPECIAL_ATTACK, THE_DEFENSE, THE_EVASION);
+            super(theName, theHP, theMaxHP, theDamageRange, theAttack, theSpecialAttack, theDefense, theEvasion);
             this.myOranBerryCount = 0;
             this.myVisionSeeds = 0;
     }

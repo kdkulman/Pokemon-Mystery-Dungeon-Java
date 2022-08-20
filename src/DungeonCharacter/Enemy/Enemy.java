@@ -10,8 +10,8 @@ public abstract class Enemy extends DungeonCharacter {
     private final double MY_CHANCE_TO_SPECIAL = 0.10;
     private final int MY_HEALING_AMOUNT = 10;
 
-    public Enemy(final String THE_NAME) {
-        super(THE_NAME);
+    public Enemy(final String theName) {
+        super(theName);
         setMyEnemyStatus(true);
     }
 

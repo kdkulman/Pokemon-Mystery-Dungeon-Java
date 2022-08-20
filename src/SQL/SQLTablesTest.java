@@ -3,10 +3,9 @@ package SQL;
 import org.junit.jupiter.api.Test;
 import org.sqlite.SQLiteDataSource;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
