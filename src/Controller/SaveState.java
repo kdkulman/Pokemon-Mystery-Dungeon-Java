@@ -8,8 +8,8 @@ public class SaveState implements Serializable{
     public Hero hero;
     public Floor floor;
 
-    public SaveState(final Floor floor){
-        this.floor = floor;
-        hero = floor.player;
+    public SaveState(final Floor theFloor){
+        this.floor = theFloor;
+        hero = theFloor.myPlayer;
     }
 }

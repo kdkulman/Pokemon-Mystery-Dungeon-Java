@@ -1,7 +1,6 @@
 package CharacterSelect;
 
 import DungeonCharacter.Hero.*;
-import TileObjects.TileObject;
 
 import java.io.IOException;
 
@@ -9,50 +8,42 @@ import java.io.IOException;
 //Model for CharacterSelectView
 public class CharacterSelectQuiz {
 
-    private static CharacterSelectQuiz instance;
-
-
+    private static CharacterSelectQuiz myInstance;
     private static final int NUMBER_OF_QUESTIONS = 9;
-    private static int currentQuestionIndex;
-
-    public static boolean isQuizCompleted() {
-        return isQuizCompleted;
-    }
-
-    private static boolean isQuizCompleted = false;
-    private static int pointsForJirachi;
-    private static int pointsForGallade;
-    private static int pointsForSnorlax;
-    private static int pointsForMagikarp;
-    private Hero player;
-    private static CharacterSelectQuestion[] arrayOfQuestions;
+    private static int myCurrentQuestionIndex;
+    private static boolean myIsQuizCompleted = false;
+    private static int myPointsForJirachi;
+    private static int myPointsForGallade;
+    private static int myPointsForSnorlax;
+    private static int myPointsForMagikarp;
+    private static CharacterSelectQuestion[] myArrayOfQuestions;
+    private Hero myPlayer;
 
     private CharacterSelectQuiz(){
-
         createQuiz();
     }
 
     public static CharacterSelectQuestion getCurrentQuestion() {
-        return arrayOfQuestions[currentQuestionIndex];
+        return myArrayOfQuestions[myCurrentQuestionIndex];
     }
 
-    public Hero getPlayer() {
-        return player;
+    public Hero getMyPlayer() {
+        return myPlayer;
     }
 
-    public void addCharacterPoints(final CharacterSelect.CharacterSelectQuestion.Points points) throws IOException {
-        if (points == CharacterSelectQuestion.Points.JIRACHI){
-            pointsForJirachi++;
-        } else if (points == CharacterSelectQuestion.Points.GALLADE){
-            pointsForGallade++;
-        } else if (points == CharacterSelectQuestion.Points.SNORLAX){
-            pointsForSnorlax++;
-        } else if (points == CharacterSelectQuestion.Points.MAGIKARP){
-            pointsForMagikarp++;
+    public void addCharacterPoints(final CharacterSelect.CharacterSelectQuestion.Points thePoints) throws IOException {
+        if (thePoints == CharacterSelectQuestion.Points.JIRACHI){
+            myPointsForJirachi++;
+        } else if (thePoints == CharacterSelectQuestion.Points.GALLADE){
+            myPointsForGallade++;
+        } else if (thePoints == CharacterSelectQuestion.Points.SNORLAX){
+            myPointsForSnorlax++;
+        } else if (thePoints == CharacterSelectQuestion.Points.MAGIKARP){
+            myPointsForMagikarp++;
         }
-        currentQuestionIndex++;
-        if(currentQuestionIndex >= NUMBER_OF_QUESTIONS) {
-            isQuizCompleted = true;
+        myCurrentQuestionIndex++;
+        if(myCurrentQuestionIndex >= NUMBER_OF_QUESTIONS) {
+            myIsQuizCompleted = true;
             decideHero();
         }
 
@@ -60,40 +51,43 @@ public class CharacterSelectQuiz {
 
     private void decideHero() throws IOException {
         int max = 0;
-        System.out.println(pointsForMagikarp + " points for magikarp");
+        System.out.println(myPointsForMagikarp + " points for magikarp");
 
-        if (pointsForMagikarp > max) {
-            max = pointsForMagikarp;
-            player = new Magikarp();
+        if (myPointsForMagikarp > max) {
+            max = myPointsForMagikarp;
+            myPlayer = new Magikarp();
         }
-        System.out.println(pointsForSnorlax + " points for snorlax");
+        System.out.println(myPointsForSnorlax + " points for snorlax");
 
-        if (pointsForSnorlax > max) {
-            max = pointsForSnorlax;
-            player = new Snorlax();
+        if (myPointsForSnorlax > max) {
+            max = myPointsForSnorlax;
+            myPlayer = new Snorlax();
         }
-        System.out.println(pointsForGallade + " points for gallade");
+        System.out.println(myPointsForGallade + " points for gallade");
 
-        if (pointsForGallade > max) {
-            max = pointsForGallade;
-            player = new Gallade();
+        if (myPointsForGallade > max) {
+            max = myPointsForGallade;
+            myPlayer = new Gallade();
         }
-        System.out.println(pointsForJirachi + " points for jirachi");
-        if (pointsForJirachi > max) {
-            max = pointsForJirachi;
-            player = new Jirachi();
+        System.out.println(myPointsForJirachi + " points for jirachi");
+        if (myPointsForJirachi > max) {
+            max = myPointsForJirachi;
+            myPlayer = new Jirachi();
         }
     }
 
-    public static CharacterSelectQuiz getInstance() throws IOException {
-        if (instance == null){
-            instance = new CharacterSelectQuiz();
+    public static CharacterSelectQuiz getMyInstance() throws IOException {
+        if (myInstance == null){
+            myInstance = new CharacterSelectQuiz();
         }
-        return instance;
+        return myInstance;
+    }
+    public static boolean isQuizCompleted() {
+        return myIsQuizCompleted;
     }
 
     private static void createQuiz(){
-        arrayOfQuestions = new CharacterSelectQuestion[NUMBER_OF_QUESTIONS];
+        myArrayOfQuestions = new CharacterSelectQuestion[NUMBER_OF_QUESTIONS];
 
         CharacterSelectQuestion question1 = new CharacterSelectQuestion(
                 "Do you think you're built different?", "Yes", "No",
@@ -149,14 +143,14 @@ public class CharacterSelectQuiz {
                 "Violence is wrong", CharacterSelectQuestion.Points.JIRACHI, CharacterSelectQuestion.Points.SNORLAX,
                 CharacterSelectQuestion.Points.GALLADE, CharacterSelectQuestion.Points.MAGIKARP
         );
-        arrayOfQuestions[0] = question1;
-        arrayOfQuestions[1] = question2;
-        arrayOfQuestions[2] = question3;
-        arrayOfQuestions[3] = question4;
-        arrayOfQuestions[4] = question5;
-        arrayOfQuestions[5] = question6;
-        arrayOfQuestions[6] = question7;
-        arrayOfQuestions[7] = question8;
-        arrayOfQuestions[8] = question9;
+        myArrayOfQuestions[0] = question1;
+        myArrayOfQuestions[1] = question2;
+        myArrayOfQuestions[2] = question3;
+        myArrayOfQuestions[3] = question4;
+        myArrayOfQuestions[4] = question5;
+        myArrayOfQuestions[5] = question6;
+        myArrayOfQuestions[6] = question7;
+        myArrayOfQuestions[7] = question8;
+        myArrayOfQuestions[8] = question9;
     }
 }

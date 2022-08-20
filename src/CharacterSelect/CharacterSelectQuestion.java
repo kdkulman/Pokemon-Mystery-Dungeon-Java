@@ -2,45 +2,28 @@ package CharacterSelect;
 
 public class CharacterSelectQuestion {
 
-    private String question;
-    private String answer1;
-    private String answer2;
-    private String answer3;
-    private String answer4;
+    private String myQuestion;
+    private String myAnswer1;
+    private String myAnswer2;
+    private String myAnswer3;
+    private String myAnswer4;
+    private Points myAnswer1Points;
+    private Points myAnswer2Points;
+    private Points myAnswer3Points;
+    private Points myAnswer4Points;
 
-    public Points getAnswer1Points() {
-        return answer1Points;
-    }
-
-    public Points getAnswer2Points() {
-        return answer2Points;
-    }
-
-    public Points getAnswer3Points() {
-        return answer3Points;
-    }
-
-    public Points getAnswer4Points() {
-        return answer4Points;
-    }
-
-    private Points answer1Points;
-    private Points answer2Points;
-    private Points answer3Points;
-    private Points answer4Points;
-
-    public CharacterSelectQuestion(final String question, final String answer1, final String answer2,
-                                   final String answer3, final String answer4, final Points answer1Points,
-                                   final Points answer2Points, final Points answer3Points, final Points answer4Points){
-        this.question = question;
-        this.answer1 = answer1;
-        this.answer2 = answer2;
-        this.answer3 = answer3;
-        this.answer4 = answer4;
-        this.answer1Points = answer1Points;
-        this.answer2Points = answer2Points;
-        this.answer3Points = answer3Points;
-        this.answer4Points = answer4Points;
+    public CharacterSelectQuestion(final String theQuestion, final String theAnswer1, final String theAnswer2,
+                                   final String theAnswer3, final String theAnswer4, final Points theAnswer1Points,
+                                   final Points theAnswer2Points, final Points theAnswer3Points, final Points theAnswer4Points){
+        this.myQuestion = theQuestion;
+        this.myAnswer1 = theAnswer1;
+        this.myAnswer2 = theAnswer2;
+        this.myAnswer3 = theAnswer3;
+        this.myAnswer4 = theAnswer4;
+        this.myAnswer1Points = theAnswer1Points;
+        this.myAnswer2Points = theAnswer2Points;
+        this.myAnswer3Points = theAnswer3Points;
+        this.myAnswer4Points = theAnswer4Points;
     }
 
     public enum Points{
@@ -49,27 +32,42 @@ public class CharacterSelectQuestion {
         SNORLAX,
         MAGIKARP
     }
-
-
-    public String getQuestion() {
-        return question;
+    public String getMyQuestion() {
+        return myQuestion;
     }
 
-    public String getAnswer1() {
-        return answer1;
+    public String getMyAnswer1() {
+        return myAnswer1;
     }
 
-    public String getAnswer2() {
-        return answer2;
+    public String getMyAnswer2() {
+        return myAnswer2;
     }
 
-    public String getAnswer3() {
-        return answer3;
+    public String getMyAnswer3() {
+        return myAnswer3;
     }
 
-    public String getAnswer4() {
-        return answer4;
+    public String getMyAnswer4() {
+        return myAnswer4;
     }
+
+    public Points getMyAnswer1Points() {
+        return myAnswer1Points;
+    }
+
+    public Points getMyAnswer2Points() {
+        return myAnswer2Points;
+    }
+
+    public Points getMyAnswer3Points() {
+        return myAnswer3Points;
+    }
+
+    public Points getMyAnswer4Points() {
+        return myAnswer4Points;
+    }
+
 
 
 }

@@ -7,7 +7,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 public class Music {
-    private static Clip clip;
+    private static Clip myClip;
 
     private Music(){
         
@@ -19,11 +19,11 @@ public class Music {
         GAMEPLAY
     }
     
-    public static void playMusic(final Song song) throws UnsupportedAudioFileException,
+    public static void playMusic(final Song theSong) throws UnsupportedAudioFileException,
             IOException, LineUnavailableException
     {
         AudioInputStream audioInputStream = null;
-        switch (song){
+        switch (theSong){
             case TITLE_SCREEN ->  {
                 audioInputStream = AudioSystem.getAudioInputStream(Music.class.getResourceAsStream(
                         "/Music/Title_Screen_Music.wav"));
@@ -46,9 +46,9 @@ public class Music {
             }
 
         }
-        if (clip != null) clip.stop();
-        clip = AudioSystem.getClip();
-        clip.open(audioInputStream);
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        if (myClip != null) myClip.stop();
+        myClip = AudioSystem.getClip();
+        myClip.open(audioInputStream);
+        myClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 }

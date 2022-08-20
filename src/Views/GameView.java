@@ -22,24 +22,23 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
-
-import static Controller.GameManager.jFrame;
+import static Controller.GameManager.myJFrame;
 
 public final class GameView extends JPanel implements Runnable, View {
-    private static Floor floor;
-    private Hero player;
-    private Thread gameThread;
-    private Message message;
+    private static Floor myFloor;
+    private Hero myPlayer;
+    private Thread myGameViewThread;
+    private Message myMessage;
 
-    public GameView(final Hero player) throws IOException {
-        this(player, new Floor(player));
+    public GameView(final Hero thePlayer) throws IOException {
+        this(thePlayer, new Floor(thePlayer));
     }
 
-    public GameView(final Hero player, final Floor f) throws IOException {
-        this.message = Message.getInstance();
-        this.player = player;
-        this.floor = f;
-        jFrame.addKeyListener(new KeyListener() {
+    public GameView(final Hero thePlayer, final Floor theFloor) throws IOException {
+        this.myMessage = Message.getMyInstance();
+        this.myPlayer = thePlayer;
+        this.myFloor = theFloor;
+        myJFrame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -52,7 +51,7 @@ public final class GameView extends JPanel implements Runnable, View {
                     case KeyEvent.VK_W:
                         System.out.println("UP");
                         try {
-                            floor = InputControls.moveUp(floor);
+                            myFloor = InputControls.moveUp(myFloor);
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -60,7 +59,7 @@ public final class GameView extends JPanel implements Runnable, View {
                     case KeyEvent.VK_S:
                         System.out.println("DOWN");
                         try {
-                            floor = InputControls.moveDown(floor);
+                            myFloor = InputControls.moveDown(myFloor);
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -68,7 +67,7 @@ public final class GameView extends JPanel implements Runnable, View {
                     case KeyEvent.VK_A:
                         System.out.println("LEFT");
                         try {
-                            floor = InputControls.moveLeft(floor);
+                            myFloor = InputControls.moveLeft(myFloor);
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -76,7 +75,7 @@ public final class GameView extends JPanel implements Runnable, View {
                     case KeyEvent.VK_D:
                         System.out.println("RIGHT");
                         try {
-                            floor = InputControls.moveRight(floor);
+                            myFloor = InputControls.moveRight(myFloor);
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -84,7 +83,7 @@ public final class GameView extends JPanel implements Runnable, View {
                     case KeyEvent.VK_SPACE:
                         System.out.println("Regular Attack");
                         try {
-                            floor = InputControls.useRegularAttack(floor);
+                            myFloor = InputControls.useRegularAttack(myFloor);
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -92,33 +91,33 @@ public final class GameView extends JPanel implements Runnable, View {
                     case KeyEvent.VK_SHIFT:
                         System.out.println("Special Attack");
                         try {
-                            floor = InputControls.useSpecialAttack(floor);
+                            myFloor = InputControls.useSpecialAttack(myFloor);
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
                         break;
                     case KeyEvent.VK_1:
                         System.out.println("USE ORAN BERRY");
-                        floor = InputControls.useOranBerry(floor);
+                        myFloor = InputControls.useOranBerry(myFloor);
                         break;
                     case KeyEvent.VK_2:
                         System.out.println("USE VISION SEED");
-                        floor = InputControls.useVisionSeed(floor);
+                        myFloor = InputControls.useVisionSeed(myFloor);
                         break;
                     case KeyEvent.VK_ESCAPE:
                         System.out.println("QUIT GAME");
                         InputControls.quitGame();
                         break;
                     case KeyEvent.VK_P:
-                        InputControls.saveGame(floor);
+                        InputControls.saveGame(myFloor);
                         break;
                     case KeyEvent.VK_V:
                         System.out.println("CHEAT: GET VISION SEED");
-                        player.collectVisionSeeds();
+                        thePlayer.collectVisionSeeds();
                         break;
                     case KeyEvent.VK_B:
                         System.out.println("CHEAT: GET ORAN BERRY");
-                        player.collectOranBerry();
+                        thePlayer.collectOranBerry();
                         break;
                     default:
                         break;
@@ -131,15 +130,13 @@ public final class GameView extends JPanel implements Runnable, View {
 
             }
         });
-        gameThread = new Thread(this);
-        gameThread.start();
-        jFrame.pack();
+        myGameViewThread = new Thread(this);
+        myGameViewThread.start();
+        myJFrame.pack();
     }
 
-    //This needs to be refactored to a different class
-    //Should not be in view class, but oh well for now
     private void createFloor() throws IOException {
-        floor = new Floor(player);
+        myFloor = new Floor(myPlayer);
     }
 
     @Override
@@ -147,7 +144,7 @@ public final class GameView extends JPanel implements Runnable, View {
 
         double interval = 1000000000/FPS; //update every .01666 seconds
         double nextUpdate = System.nanoTime() + interval;
-        while(gameThread != null){
+        while(myGameViewThread != null){
             update();
             repaint();
             double timeUntilUpdate = nextUpdate - System.nanoTime(); //1mil = 1sec
@@ -166,9 +163,9 @@ public final class GameView extends JPanel implements Runnable, View {
 
     }
 
-    protected void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
+    protected void paintComponent(final Graphics theGraphics){
+        super.paintComponent(theGraphics);
+        Graphics2D g2 = (Graphics2D) theGraphics;
         try {
             drawFloor(g2);
             drawDungeonMap(g2);
@@ -180,14 +177,14 @@ public final class GameView extends JPanel implements Runnable, View {
     }
 
     private void gameOverCheck() {
-        if(player.getHP() < 1) {
-            Message.setMessage(player.getName() + " fainted! Game over!");
+        if(myPlayer.getHP() < 1) {
+            Message.setMessage(myPlayer.getName() + " fainted! Game over!");
             Scanner in = new Scanner(System.in);
             System.exit(0);
         }
     }
 
-    private void drawMessage(final Graphics2D g2) throws IOException {
+    private void drawMessage(final Graphics2D theGraphics) throws IOException {
         if (Message.getVisible()) {
             URL url = this.getClass().getResource("/Sprites/Text_Box.png");
             BufferedImage sprite = ImageIO.read(url);
@@ -195,79 +192,79 @@ public final class GameView extends JPanel implements Runnable, View {
             String previousMessage = Message.getPreviousMessage();
             int x = this.getWidth()/7;
             int y = this.getHeight()-this.getHeight()/5;
-            g2.drawImage(sprite, x, y, sprite.getWidth() * 3, sprite.getHeight() * 2, null);
-            g2.setFont(messageFont);
-            g2.setColor(Color.white);
-            drawStringWithOutline(g2, previousMessage, x+9*SCALE, y + 13*SCALE);
-            drawStringWithOutline(g2, message, x+9*SCALE, y + 25*SCALE);
+            theGraphics.drawImage(sprite, x, y, sprite.getWidth() * 3, sprite.getHeight() * 2, null);
+            theGraphics.setFont(MESSAGE_FONT);
+            theGraphics.setColor(Color.white);
+            drawStringWithOutline(theGraphics, previousMessage, x+9*SCALE, y + 13*SCALE);
+            drawStringWithOutline(theGraphics, message, x+9*SCALE, y + 25*SCALE);
         }
     }
 
-    private void drawHud(final Graphics2D g) throws IOException {
+    private void drawHud(final Graphics2D theGraphics) throws IOException {
         int xx = 5*SCALE;
         int yy = SCREEN_HEIGHT/12;
-        TileObject[][] floorArray = floor.getFloorArray();
-        Hero player = (Hero) floorArray[floor.getPlayerRow()][floor.getPlayerColumn()];
-        g.setFont(font);
-        drawStringWithOutline(g, "" + player.getMyFloorLevel() + "F", xx, yy);
-        drawHpBar(g, 18*SCALE, yy/2, player);
-        drawStringWithOutline(g, "" + player.getHP() + "HP", SCREEN_WIDTH/3, yy);
-        drawInventory(g, 22*SCALE, -3, player);
+        TileObject[][] floorArray = myFloor.getFloorArray();
+        Hero player = (Hero) floorArray[myFloor.getMyPlayerRow()][myFloor.getMyPlayerColumn()];
+        theGraphics.setFont(FONT);
+        drawStringWithOutline(theGraphics, "" + player.getMyFloorLevel() + "F", xx, yy);
+        drawHpBar(theGraphics, 18*SCALE, yy/2, player);
+        drawStringWithOutline(theGraphics, "" + player.getHP() + "HP", SCREEN_WIDTH/3, yy);
+        drawInventory(theGraphics, 22*SCALE, -3, player);
     }
 
-    private static void drawInventory(final Graphics2D g, final int x, final int y, final Hero player) throws IOException {
+    private static void drawInventory(final Graphics2D theGraphics, final int theX, final int theY, final Hero thePlayer) throws IOException {
         //DRAW ORAN BERRYS
-        int numberOfOranBerries = player.getBerryCount();
-        int numberOfVisionSeeds = player.getSeedCount();
+        int numberOfOranBerries = thePlayer.getBerryCount();
+        int numberOfVisionSeeds = thePlayer.getSeedCount();
         int totalInventoryCount = numberOfOranBerries + numberOfVisionSeeds;
         URL url = GameView.class.getResource("/Sprites/TileObjects/Items/Oran_Berry.png");
         BufferedImage oranBerrySprite = ImageIO.read(url);
         for(int i = 0; i < numberOfOranBerries; i++)
-            g.drawImage(oranBerrySprite, x+(10*i*SCALE), y, TILE_SIZE/2, TILE_SIZE/2, null);
+            theGraphics.drawImage(oranBerrySprite, theX+(10*i*SCALE), theY, TILE_SIZE/2, TILE_SIZE/2, null);
 
         //DRAW VISION SEEDS
         url = GameView.class.getResource("/Sprites/TileObjects/Items/Vision_Seed.png");
         BufferedImage visionSeedSprite = ImageIO.read(url);
         for(int i = numberOfOranBerries; i < totalInventoryCount; i++)
-            g.drawImage(visionSeedSprite, x+(10*i*SCALE), y, TILE_SIZE/2, TILE_SIZE/2, null);
+            theGraphics.drawImage(visionSeedSprite, theX+(10*i*SCALE), theY, TILE_SIZE/2, TILE_SIZE/2, null);
 
     }
-    private static void drawHpBar(final Graphics g, final int x, final int y, final Hero player){
-        g.setColor(Color.BLACK);
-        g.fillRect(x-2, y-2, SCREEN_WIDTH/4+4, SCREEN_HEIGHT/20+4);
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(x, y, SCREEN_WIDTH/4, SCREEN_HEIGHT/20);
-        g.setColor(Color.CYAN);
+    private static void drawHpBar(final Graphics theGraphics, final int theX, final int theY, final Hero thePlayer){
+        theGraphics.setColor(Color.BLACK);
+        theGraphics.fillRect(theX-2, theY-2, SCREEN_WIDTH/4+4, SCREEN_HEIGHT/20+4);
+        theGraphics.setColor(Color.LIGHT_GRAY);
+        theGraphics.fillRect(theX, theY, SCREEN_WIDTH/4, SCREEN_HEIGHT/20);
+        theGraphics.setColor(Color.CYAN);
         //FillRect only takes in integers so must calculate the width using double division
-        double hpBarWidthDouble = 1.0* player.getHP()/player.getMaxHP()*SCREEN_WIDTH/4.0;
+        double hpBarWidthDouble = 1.0* thePlayer.getHP()/thePlayer.getMaxHP()*SCREEN_WIDTH/4.0;
         int hpBarWidth = (int) Math.round(hpBarWidthDouble);
-        g.fillRect(x, y, hpBarWidth, SCREEN_HEIGHT/20);
+        theGraphics.fillRect(theX, theY, hpBarWidth, SCREEN_HEIGHT/20);
     }
 
     //Clamp is used to make sure the camera stays in bounds
-    private static int clamp(final int value, final int min, final int max){
-        int theValue = value;
-        if (min > value) return min;
-        if (value > max) return max;
-        return theValue;
+    private static int clamp(final int theValue, final int theMin, final int theMax){
+        int value = theValue;
+        if (theMin > theValue) return theMin;
+        if (theValue > theMax) return theMax;
+        return value;
     }
 
-    private static void drawFloor(final Graphics2D g2) throws IOException {
-        if (floor != null) {
+    private static void drawFloor(final Graphics2D theGraphics) throws IOException {
+        if (myFloor != null) {
             for (int row = 0; row < SCREEN_TILE_HEIGHT; row++) {
                 for (int column = 0; column < SCREEN_TILE_WIDTH; column++) {
-                    int cameraHeight = clamp(floor.getPlayerRow() + row - SCREEN_TILE_HEIGHT/2, 0, floor.getFloorArray().length-1);
-                    int cameraWidth = clamp(floor.getPlayerColumn() + column - SCREEN_TILE_WIDTH/2, 0, floor.getFloorArray()[0].length-1);
+                    int cameraHeight = clamp(myFloor.getMyPlayerRow() + row - SCREEN_TILE_HEIGHT/2, 0, myFloor.getFloorArray().length-1);
+                    int cameraWidth = clamp(myFloor.getMyPlayerColumn() + column - SCREEN_TILE_WIDTH/2, 0, myFloor.getFloorArray()[0].length-1);
 
                     //This prevents out of bounds errors by just spawning walls in out of bound locations
-                    if(cameraHeight > floor.getFloorArray().length-1 || cameraWidth > floor.getFloorArray()[0].length-1){
-                        draw(row, column,  g2, new Wall().getMySprite());
+                    if(cameraHeight > myFloor.getFloorArray().length-1 || cameraWidth > myFloor.getFloorArray()[0].length-1){
+                        draw(row, column,  theGraphics, new Wall().getMySprite());
                     } else {
-                        if (floor.getFloorArray()[cameraHeight][cameraWidth] instanceof DungeonCharacter ||
-                                floor.getFloorArray()[cameraHeight][cameraWidth] instanceof Item){
-                            draw(row, column,  g2, new Texture().getMySprite());
+                        if (myFloor.getFloorArray()[cameraHeight][cameraWidth] instanceof DungeonCharacter ||
+                                myFloor.getFloorArray()[cameraHeight][cameraWidth] instanceof Item){
+                            draw(row, column,  theGraphics, new Texture().getMySprite());
                         };
-                        draw(row, column,  g2, floor.getFloorArray()[cameraHeight][cameraWidth].getMySprite());
+                        draw(row, column,  theGraphics, myFloor.getFloorArray()[cameraHeight][cameraWidth].getMySprite());
                     }
 
                 }
@@ -275,36 +272,37 @@ public final class GameView extends JPanel implements Runnable, View {
         }
     }
 
-    private static void drawDungeonMap(final Graphics2D g2){
+    private static void drawDungeonMap(final Graphics2D theGraphics){
         int size = 2*SCALE+1;
         int mapSize = 10;
-        for (int row = 0; row < floor.getFloorArray().length; row++) {
-            for (int column = 0; column < floor.getFloorArray()[0].length; column++) {
-                TileObject tile = floor.getFloorArray()[row][column];
+        for (int row = 0; row < myFloor.getFloorArray().length; row++) {
+            for (int column = 0; column < myFloor.getFloorArray()[0].length; column++) {
+                TileObject tile = myFloor.getFloorArray()[row][column];
                 if(tile.getIsVisibleOnDungeonMap() == true) {
                     if (tile instanceof Texture || tile instanceof SpikeTip) {
-                        g2.setColor(new Color(255, 255, 255, 150));
-                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                        theGraphics.setColor(new Color(255, 255, 255, 150));
+                        theGraphics.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     } else if (tile instanceof Hero) {
-                        g2.setColor(Color.blue);
-                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                        theGraphics.setColor(Color.blue);
+                        theGraphics.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     } else if (tile instanceof Staircase) {
-                        g2.setColor(Color.yellow);
-                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                        theGraphics.setColor(Color.yellow);
+                        theGraphics.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     } else if (tile instanceof Item) {
-                        g2.setColor(Color.CYAN);
-                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                        theGraphics.setColor(Color.CYAN);
+                        theGraphics.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     } else if (tile instanceof Enemy) {
-                        g2.setColor(Color.RED);
-                        g2.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
+                        theGraphics.setColor(Color.RED);
+                        theGraphics.fillRect(column * size + SCREEN_WIDTH / mapSize, row * size + SCREEN_HEIGHT / mapSize, size, size);
                     }
                 }
             }
         }
     }
 
-    private static void draw(final int row, final int column, final Graphics2D g2, final BufferedImage image) throws IOException {
-        g2.drawImage(image, column*TILE_SIZE,row*TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+    private static void draw(final int theRow, final int theColumn, final Graphics2D theGraphics,
+                             final BufferedImage theImage) throws IOException {
+        theGraphics.drawImage(theImage, theColumn*TILE_SIZE,theRow*TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
     }
 
 }

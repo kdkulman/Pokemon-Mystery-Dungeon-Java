@@ -16,77 +16,77 @@ import static Views.View.SCREEN_HEIGHT;
 import static Views.View.SCREEN_WIDTH;
 
 public class GameManager {
-    public static JFrame jFrame;
-    private static GameManager instance;
-    private static Hero selectedHero;
-    private static JPanel jPanelCharacterSelectView;
-    private static JPanel jPanelGameView;
-    private static JPanel jPanelTitleScreenView;
+    public static JFrame myJFrame;
+    private static GameManager myInstance;
+    private static Hero mySelectedHero;
+    private static JPanel myJPanelCharacterSelectView;
+    private static JPanel myJPanelGameView;
+    private static JPanel myJPanelTitleScreenView;
 
     private GameManager() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         createJFrame();
         createTitleScreenView();
     }
 
-    public static GameManager getInstance() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (instance == null){
-            instance = new GameManager();
+    public static GameManager getMyInstance() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        if (myInstance == null){
+            myInstance = new GameManager();
         }
-        return instance;
+        return myInstance;
     }
 
-    public static void setSelectedHero(final Hero hero){
-        selectedHero = hero;
+    public static void setMySelectedHero(final Hero theHero){
+        mySelectedHero = theHero;
     }
 
 
     private static void createTitleScreenView() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        jPanelTitleScreenView = new TitleScreenView();
-        jFrame.add(jPanelTitleScreenView);
+        myJPanelTitleScreenView = new TitleScreenView();
+        myJFrame.add(myJPanelTitleScreenView);
         Music.playMusic(Music.Song.TITLE_SCREEN);
-        jFrame.pack();
-        jFrame.setLocationRelativeTo(null);
+        myJFrame.pack();
+        myJFrame.setLocationRelativeTo(null);
     }
 
     public static void createCharacterSelectView() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        jFrame.remove(jPanelTitleScreenView);
-        jPanelCharacterSelectView = new CharacterSelectView();
-        jFrame.add(jPanelCharacterSelectView);
+        myJFrame.remove(myJPanelTitleScreenView);
+        myJPanelCharacterSelectView = new CharacterSelectView();
+        myJFrame.add(myJPanelCharacterSelectView);
         Music.playMusic(Music.Song.CHARACTER_SELECT_QUIZ);
-        jFrame.pack();
-        jFrame.setLocationRelativeTo(null);
+        myJFrame.pack();
+        myJFrame.setLocationRelativeTo(null);
     }
 
     public static void createGameView() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (jPanelCharacterSelectView == null) {
-            jFrame.remove(jPanelTitleScreenView);
+        if (myJPanelCharacterSelectView == null) {
+            myJFrame.remove(myJPanelTitleScreenView);
         } else {
-            jFrame.remove(jPanelCharacterSelectView);
+            myJFrame.remove(myJPanelCharacterSelectView);
         }
-        jPanelGameView = new GameView(selectedHero);
-        jFrame.add(jPanelGameView);
+        myJPanelGameView = new GameView(mySelectedHero);
+        myJFrame.add(myJPanelGameView);
         Music.playMusic(Music.Song.GAMEPLAY);
-        jFrame.pack();
+        myJFrame.pack();
     }
 
-    public static void loadGame(SaveState state) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public static void loadGame(final SaveState theState) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         //If this is needed to load a game, just call GameManager.loadGame()
         //from he TitleScreenView loadButton ActionListener
-        jFrame.remove(jPanelTitleScreenView);
-        selectedHero = state.hero;
-        jPanelGameView = new GameView(state.hero, state.floor);
-        jFrame.add(jPanelGameView);
+        myJFrame.remove(myJPanelTitleScreenView);
+        mySelectedHero = theState.hero;
+        myJPanelGameView = new GameView(theState.hero, theState.floor);
+        myJFrame.add(myJPanelGameView);
         Music.playMusic(Music.Song.GAMEPLAY);
-        jFrame.pack();
+        myJFrame.pack();
     }
 
     private static void createJFrame(){
-        jFrame = new JFrame();
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setResizable(false);
-        jFrame.setTitle("Pokemon Mystery Dungeon Java");
-        jFrame.setBackground(Color.BLACK);
-        jFrame.isDoubleBuffered();
-        jFrame.setVisible(true);
-        jFrame.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));}
+        myJFrame = new JFrame();
+        myJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myJFrame.setResizable(false);
+        myJFrame.setTitle("Pokemon Mystery Dungeon Java");
+        myJFrame.setBackground(Color.BLACK);
+        myJFrame.isDoubleBuffered();
+        myJFrame.setVisible(true);
+        myJFrame.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));}
 }
