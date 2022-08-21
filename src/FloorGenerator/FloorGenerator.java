@@ -7,7 +7,10 @@ import TileObjects.Items.VisionSeed;
 
 import java.io.IOException;
 import java.util.Random;
-
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public class FloorGenerator {
     private TileObject[][] myFloor;
     private final int FLOOR_WIDTH = 32; //56 IS DEFAULT
@@ -26,6 +29,11 @@ public class FloorGenerator {
     private final Random myRandom;
     private static EnemyFactory myEnemyFactory;
 
+    /**
+     * Constructor for objects of class FloorGenerator
+     * @param thePlayer The player object
+     * @throws IOException
+     */
     public FloorGenerator(final Hero thePlayer) throws IOException {
         myEnemyFactory = EnemyFactory.getInstance();
         this.myPlayer = thePlayer;
@@ -46,7 +54,14 @@ public class FloorGenerator {
         fillNullTilesWithWalls();
     }
 
-    //JUNIT TEST CONSTRUCTOR
+    /**
+     * JUNIT test constructor
+     * @param thePlayer The player object
+     * @param theFloor The floor object
+     * @param theFloorHeight The floor height
+     * @param theFloorWidth The floor width
+     * @throws IOException
+     */
     private FloorGenerator(final Hero thePlayer, final TileObject[][] theFloor, final int theFloorHeight,
                            final int theFloorWidth) throws IOException {
         myEnemyFactory = EnemyFactory.getInstance();
@@ -68,6 +83,13 @@ public class FloorGenerator {
         fillNullTilesWithWalls();
     }
 
+    /**
+     * method that places player in viable floor position
+     * @param thePlayer The player object
+     * @param theHeight The floor height
+     * @param theWidth The floor width
+     * @throws IOException
+     */
     private void placePlayer(final Hero thePlayer, final int theHeight, final int theWidth) throws IOException {
         int row = myRandom.nextInt(theHeight);
         int column = myRandom.nextInt(theWidth);
@@ -80,22 +102,37 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * method for random floor layout
+     * @return random number
+     */
     private int generateFloorLayout(){
         int range = MAX_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN - MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN;
         if (range < 1) range = 1;
         return MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN + myRandom.nextInt(range);
     }
 
+    /**
+     * method for random number of rooms
+     * @return int room quantity
+     */
     private int generateNumberOfRooms(){
         return myNumberOfRoomsHorizontally * myNumberOfRoomsVertically;
     }
 
+    /**
+     * method for creating list of rooms
+     */
     private void createListOfRooms() {
         for(int i = 0; i < myNumberOfRooms; i++) {
             myRooms[i] = new Room(myMaxRoomHeight, myMaxRoomWidth);
         }
     }
 
+    /**
+     * method for placing rooms in floor
+     * @throws IOException
+     */
     private void putRoomsInFloor() throws IOException {
         int roomCounter = 0;
         int isStaircasePlaced = 1 + myRandom.nextInt(myNumberOfRooms);
@@ -117,7 +154,16 @@ public class FloorGenerator {
         }
     }
 
-    //Switch is used to facilitate random chance of a hallway spawning
+    /**
+     * method for placing hallways in floor; switch is used to facilitate random chance of a hallway spawning
+     * @param theRoomWidth The room width
+     * @param theRoomHeight The room height
+     * @param theHallwayWidth The hallway width
+     * @param theHallwayHeight The hallway height
+     * @param theI The row
+     * @param theJ The column
+     * @throws IOException
+     */
     private void placeHallways(final int theRoomWidth, final int theRoomHeight, final int theHallwayWidth,
                                final int theHallwayHeight, final int theI, final int theJ) throws IOException {
         int chanceOfHallway = myRandom.nextInt(5); //0-4
@@ -143,6 +189,12 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * method for placing textures in room
+     * @param theTile The tile
+     * @param theHeight The height
+     * @param theWidth The width
+     */
     private void placeTileObject(final TileObject theTile, final int theHeight, final int theWidth){
         int row = myRandom.nextInt(theHeight);
         int column = myRandom.nextInt(theWidth);
@@ -153,6 +205,9 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * method for placing enemies in room
+     */
     private void placeEnemies() {
         int enemiesToCreate = myRandom.nextInt(8);
         for(int i = 0; i < enemiesToCreate; i++){
@@ -161,6 +216,9 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * method for placing items in room
+     */
     private void placeItems(){
         int berriesToCreate = myRandom.nextInt(3);
         for(int i = 0; i < berriesToCreate; i++){
@@ -174,6 +232,14 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * ensuring specific hallway locations
+     * @param theStart The start
+     * @param theEnd The end
+     * @param theColumn The column
+     * @param theTile The tile
+     * @throws IOException
+     */
     private void placeSouthHallway(final int theStart, final int theEnd, final int theColumn,
                                    final TileObject theTile) throws IOException {
         if(theEnd < FLOOR_HEIGHT) placeVerticalTileObjects(theStart, theEnd-1, theColumn-1, theTile);
@@ -187,6 +253,14 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * ensuring specific hallway locations
+     * @param theStart The start
+     * @param theEnd The end
+     * @param theRow The row
+     * @param theTile The tile
+     * @throws IOException
+     */
     private void placeEastHallway(final int theStart, final int theEnd, final int theRow,
                                   final TileObject theTile) throws IOException {
         placeHorizontalTileObjects(theStart, theEnd, theRow-1, theTile);
@@ -200,6 +274,14 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * Fills room with textures
+     * @param theStart The start
+     * @param theEnd The end
+     * @param theTopRow The top row
+     * @param theBottomRow The bottom row
+     * @throws IOException
+     */
     private void placeTexturesInRoom(final int theStart, final int theEnd, final int theTopRow,
                                      final int theBottomRow) throws IOException {
         for (int i = theTopRow; i < theBottomRow; i++){
@@ -207,6 +289,14 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     *
+     * @param theStart
+     * @param theEnd
+     * @param theRow
+     * @param theTile
+     * @throws IOException
+     */
     private void placeHorizontalTileObjects(final int theStart, final int theEnd, final int theRow,
                                             final TileObject theTile) throws IOException {
         int newEnd = 0;
@@ -221,6 +311,12 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * Tile object factory
+     * @param theTile The tile
+     * @return The tile object to be placed
+     * @throws IOException
+     */
     private TileObject tileObjectFactory(final TileObject theTile) throws IOException {
         if (theTile instanceof Texture) return new Texture();
         if (theTile instanceof Wall) return new Wall();
@@ -241,6 +337,9 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * Fills null tiles with wall textures
+     */
     private void fillNullTilesWithWalls(){
         for(int i = 0; i < myFloor.length; i++){
             for (int j = 0; j < myFloor[0].length; j++){
@@ -249,14 +348,26 @@ public class FloorGenerator {
         }
     }
 
+    /**
+     * getter for current floor tileobject array
+     * @return the floor
+     */
     public TileObject[][] getMyFloor(){
         return myFloor;
     }
 
-    public void setMyFloor(final TileObject[][] theFloor){
+    /**
+     * setter for current floor tileobject array
+     * @param theFloor the floor to set
+     */
+    public void setMyFloor(final TileObject[][] theFloor) {
         myFloor = theFloor;
     }
 
+    /**
+     * toString method Override
+     * @return the string representation of the floor
+     */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -268,7 +379,6 @@ public class FloorGenerator {
         }
         return sb.toString();
     }
-
     public String debugToString(){
         StringBuilder sb = new StringBuilder();
         sb.append(toString());
@@ -283,18 +393,40 @@ public class FloorGenerator {
         return sb.toString();
     }
 
+    /**
+     * getter for player row
+     * @return the player row
+     */
     public int getMyPlayerRow() {
         return myPlayerRow;
     }
 
+    /**
+     * getter for player column
+     * @return the player column
+     */
     public int getMyPlayerColumn() {
         return myPlayerColumn;
     }
 
+    /**
+     *
+     * @param theHero
+     * @param theHeight
+     * @param theWidth
+     * @throws IOException
+     */
     public void placePlayerTest(final Hero theHero, final int theHeight, final int theWidth) throws IOException {
         placePlayer(myPlayer, theHeight, theWidth);
     }
 
+    /**
+     *
+     * @param theTile
+     * @param theHeight
+     * @param theWidth
+     * @throws IOException
+     */
     public void placeTileObjectTest(final TileObject theTile, final int theHeight, final int theWidth) throws IOException {
         placeTileObject(theTile, theHeight, theWidth);
     }

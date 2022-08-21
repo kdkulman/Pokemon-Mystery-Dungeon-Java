@@ -1,7 +1,10 @@
 package FloorGenerator;
 
 import TileObjects.TileObject;
-
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public class FloorTraversal {
     private final TileObject[][] myFloor;
     private boolean myTraversableBoolean;
@@ -10,6 +13,12 @@ public class FloorTraversal {
     private final int myFloorHeight;
     private final int myFloorWidth;
 
+    /**
+     * Constructor for objects of class FloorTraversal
+     * @param theFloor
+     * @param thePlayerRow
+     * @param myPlayerColumn
+     */
     public FloorTraversal(final TileObject[][] theFloor, final int thePlayerRow, final int myPlayerColumn) {
         this.myFloor = theFloor;
         myFloorHeight = theFloor.length;

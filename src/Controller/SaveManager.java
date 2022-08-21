@@ -8,9 +8,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import FloorGenerator.Floor;
-
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public class SaveManager {
-
+    /**
+     * method to save current game state
+     * @param theFloor the current floor
+     * @throws IOException
+     */
     public static void saveCurrentGameState(final Floor theFloor) throws IOException{
         File myFile = new File("save.ser");
         SaveState myState = new SaveState(theFloor);
@@ -19,6 +26,12 @@ public class SaveManager {
         myOOS.close();
     }
 
+    /**
+     * method to load saved game state
+     * @return the saved game state
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static SaveState getSavedGameState() throws IOException, ClassNotFoundException{
         File saveFile = new File("save.ser");
         if(saveFile.isFile() && saveFile.canRead()){
