@@ -7,16 +7,15 @@ public class FloorTraversal {
     private boolean myTraversableBoolean;
     private final int myPlayerRow;
     private final int myPlayerColumn;
-
     private final int myFloorHeight;
     private final int myFloorWidth;
 
-    public FloorTraversal(final TileObject[][] myFloor, final int myPlayerRow, final int myPlayerColumn) {
-        this.myFloor = myFloor;
-        myFloorHeight = myFloor.length;
-        myFloorWidth = myFloor[0].length;
+    public FloorTraversal(final TileObject[][] theFloor, final int thePlayerRow, final int myPlayerColumn) {
+        this.myFloor = theFloor;
+        myFloorHeight = theFloor.length;
+        myFloorWidth = theFloor[0].length;
         this.myPlayerColumn = myPlayerColumn;
-        this.myPlayerRow = myPlayerRow;
+        this.myPlayerRow = thePlayerRow;
         this.setTraversable();
     }
 

@@ -4,42 +4,42 @@ package Views;
 
 //Singleton
 public class Message {
-    private static Message instance;
+    private static Message myInstance;
     private static String myMessage;
     private static String myPreviousMessage;
-    private static boolean isVisible;
+    private static boolean myIsVisible;
 
     private Message(){
         myMessage = "";
         myPreviousMessage = "";
-        isVisible = false;
+        myIsVisible = false;
     }
 
-    public static void setMessage(final String THE_MESSAGE) {
-        if (THE_MESSAGE.equals("")) {
-            isVisible = false;
+    public static void setMessage(final String theMessage) {
+        if (theMessage.equals("")) {
+            myIsVisible = false;
         } else {
-            isVisible = true;
+            myIsVisible = true;
             myPreviousMessage = myMessage;
-            myMessage = THE_MESSAGE;
+            myMessage = theMessage;
         }
     }
 
-    public static void setIsVisible(final boolean visible){
-        isVisible = visible;
+    public static void setMyIsVisible(final boolean theVisible){
+        myIsVisible = theVisible;
     }
 
     public static boolean getVisible(){
-        return isVisible;
+        return myIsVisible;
     }
 
     public static String getMessage() {
         return myMessage;
     }
 
-    public static Message getInstance(){
-        if (instance == null) return new Message();
-        return instance;
+    public static Message getMyInstance(){
+        if (myInstance == null) return new Message();
+        return myInstance;
     }
 
     public static String getPreviousMessage() {

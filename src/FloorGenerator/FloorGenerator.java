@@ -1,11 +1,7 @@
 package FloorGenerator;
-import DungeonCharacter.DungeonCharacter;
-import DungeonCharacter.Enemy.Enemy;
 import DungeonCharacter.Enemy.EnemyFactory;
 import DungeonCharacter.Hero.Hero;
-import DungeonCharacter.Hero.Magikarp;
 import TileObjects.*;
-import TileObjects.Items.Item;
 import TileObjects.Items.OranBerry;
 import TileObjects.Items.VisionSeed;
 
@@ -13,232 +9,260 @@ import java.io.IOException;
 import java.util.Random;
 
 public class FloorGenerator {
-    private TileObject[][] floor;
+    private TileObject[][] myFloor;
     private final int FLOOR_WIDTH = 32; //56 IS DEFAULT
     private final int FLOOR_HEIGHT = 32; //32 IS DEFAULT
     private final int MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN = 2; //2 IS DEFAULT
     private final int MAX_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN = 6; //6 IS DEFAULT
-    private Room[] rooms;
-    private final int numberOfRooms;
-    private final int numberOfRoomsHorizontally;
-    private final int numberOfRoomsVertically;
-    private final int maxRoomWidth;
-    private final int maxRoomHeight;
-    private int playerRow;
-    private int playerColumn;
-    private Hero player;
-    private final Random r;
-    private static EnemyFactory enemyFactory;
+    private Room[] myRooms;
+    private final int myNumberOfRooms;
+    private final int myNumberOfRoomsHorizontally;
+    private final int myNumberOfRoomsVertically;
+    private final int myMaxRoomWidth;
+    private final int myMaxRoomHeight;
+    private int myPlayerRow;
+    private int myPlayerColumn;
+    private Hero myPlayer;
+    private final Random myRandom;
+    private static EnemyFactory myEnemyFactory;
 
-    public FloorGenerator(Hero player) throws IOException {
-        enemyFactory = EnemyFactory.getInstance();
-        this.player = player;
-        r = new Random();
-        floor = new TileObject[FLOOR_HEIGHT][FLOOR_WIDTH];
-        numberOfRoomsHorizontally = generateFloorLayout();
-        numberOfRoomsVertically = generateFloorLayout();
-        numberOfRooms = generateNumberOfRooms();
-        rooms = new Room[numberOfRooms];
-        maxRoomWidth = (FLOOR_WIDTH / numberOfRoomsHorizontally);
-        maxRoomHeight = (FLOOR_HEIGHT / numberOfRoomsVertically);
+    public FloorGenerator(final Hero thePlayer) throws IOException {
+        myEnemyFactory = EnemyFactory.getInstance();
+        this.myPlayer = thePlayer;
+        myRandom = new Random();
+        myFloor = new TileObject[FLOOR_HEIGHT][FLOOR_WIDTH];
+        myNumberOfRoomsHorizontally = generateFloorLayout();
+        myNumberOfRoomsVertically = generateFloorLayout();
+        myNumberOfRooms = generateNumberOfRooms();
+        myRooms = new Room[myNumberOfRooms];
+        myMaxRoomWidth = (FLOOR_WIDTH / myNumberOfRoomsHorizontally);
+        myMaxRoomHeight = (FLOOR_HEIGHT / myNumberOfRoomsVertically);
         createListOfRooms();
         putRoomsInFloor();
         placeEnemies();
         placeItems();
-        placeTileObject(new Staircase());//place staircase
-        placePlayer(player);
+        placeTileObject(new Staircase(), FLOOR_HEIGHT, FLOOR_WIDTH);//place staircase
+        placePlayer(thePlayer, FLOOR_HEIGHT, FLOOR_WIDTH);
         fillNullTilesWithWalls();
     }
 
-    private void placePlayer(final Hero player) throws IOException {
-        int row = r.nextInt(FLOOR_HEIGHT);
-        int column = r.nextInt(FLOOR_WIDTH);
-        if (floor[row][column] instanceof Texture){ //if it is a texture
-            floor[row][column] = player;
-            playerRow = row;
-            playerColumn = column;
-        } else {
-            placePlayer(player);
-        }
+    //JUNIT TEST CONSTRUCTOR
+    private FloorGenerator(final Hero thePlayer, final TileObject[][] theFloor, final int theFloorHeight,
+                           final int theFloorWidth) throws IOException {
+        myEnemyFactory = EnemyFactory.getInstance();
+        myPlayer = thePlayer;
+        myRandom = new Random();
+        myFloor = new TileObject[FLOOR_HEIGHT][FLOOR_WIDTH];
+        myNumberOfRoomsHorizontally = generateFloorLayout();
+        myNumberOfRoomsVertically = generateFloorLayout();
+        myNumberOfRooms = generateNumberOfRooms();
+        myRooms = new Room[myNumberOfRooms];
+        myMaxRoomWidth = (FLOOR_WIDTH / myNumberOfRoomsHorizontally);
+        myMaxRoomHeight = (FLOOR_HEIGHT / myNumberOfRoomsVertically);
+        createListOfRooms();
+        putRoomsInFloor();
+        placeEnemies();
+        placeItems();
+        placeTileObject(new Staircase(), FLOOR_HEIGHT, FLOOR_WIDTH);//place staircase
+        placePlayer(myPlayer, FLOOR_HEIGHT, FLOOR_WIDTH);
+        fillNullTilesWithWalls();
     }
 
-    private void placeHero(int i, TileObject player) {
-        floor[20][30] = player;
+    private void placePlayer(final Hero thePlayer, final int theHeight, final int theWidth) throws IOException {
+        int row = myRandom.nextInt(theHeight);
+        int column = myRandom.nextInt(theWidth);
+        if (myFloor[row][column] instanceof Texture){
+            myFloor[row][column] = thePlayer;
+            myPlayerRow = row;
+            myPlayerColumn = column;
+        } else {
+            placePlayer(thePlayer, theHeight, theWidth);
+        }
     }
 
     private int generateFloorLayout(){
         int range = MAX_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN - MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN;
         if (range < 1) range = 1;
-        return MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN + r.nextInt(range);
+        return MIN_NUMBER_OF_ROOMS_PER_ROW_OR_COLUMN + myRandom.nextInt(range);
     }
 
     private int generateNumberOfRooms(){
-        return numberOfRoomsHorizontally * numberOfRoomsVertically;
+        return myNumberOfRoomsHorizontally * myNumberOfRoomsVertically;
     }
 
     private void createListOfRooms() {
-        for(int i = 0; i < numberOfRooms; i++) {
-            rooms[i] = new Room(maxRoomHeight, maxRoomWidth);
+        for(int i = 0; i < myNumberOfRooms; i++) {
+            myRooms[i] = new Room(myMaxRoomHeight, myMaxRoomWidth);
         }
     }
 
     private void putRoomsInFloor() throws IOException {
         int roomCounter = 0;
-        int isStaircasePlaced = 1 + r.nextInt(numberOfRooms);
-        for(int i = 0; i < numberOfRoomsVertically; i++) { //columns/height
-            for (int j = 0; j < numberOfRoomsHorizontally; j++) {
-                Room room = rooms[roomCounter];
-                Hallway hallway = room.getHallway();
-                int roomHeight = room.getHeight();
-                int roomWidth = room.getWidth();
-                placeHorizontalTileObjects((maxRoomWidth*j), (maxRoomWidth*j)+roomWidth, maxRoomHeight * i, new Wall());
-                placeHorizontalTileObjects((maxRoomWidth*j), (maxRoomWidth*j)+roomWidth, (maxRoomHeight * i) + roomHeight-1, new Wall());
-                placeVerticalTileObjects((maxRoomHeight*i), (maxRoomHeight*i)+roomHeight, maxRoomWidth * j, new Wall());
-                placeVerticalTileObjects((maxRoomHeight*i), (maxRoomHeight*i)+roomHeight, (maxRoomWidth * j) + roomWidth-1, new Wall());
-                placeTexturesInRoom((maxRoomWidth*j)+1, (maxRoomWidth*j)+roomWidth-1, maxRoomHeight * i + 1,
-                        (maxRoomHeight * i) + roomHeight - 1);
-                placeHallways(roomWidth, roomHeight, hallway.getWidth(), hallway.getHeight(), i, j);
+        int isStaircasePlaced = 1 + myRandom.nextInt(myNumberOfRooms);
+        for(int i = 0; i < myNumberOfRoomsVertically; i++) {
+            for (int j = 0; j < myNumberOfRoomsHorizontally; j++) {
+                Room room = myRooms[roomCounter];
+                Hallway hallway = room.getMyHallway();
+                int roomHeight = room.getMyHeight();
+                int roomWidth = room.getMyWidth();
+                placeHorizontalTileObjects((myMaxRoomWidth *j), (myMaxRoomWidth *j)+roomWidth, myMaxRoomHeight * i, new Wall());
+                placeHorizontalTileObjects((myMaxRoomWidth *j), (myMaxRoomWidth *j)+roomWidth, (myMaxRoomHeight * i) + roomHeight-1, new Wall());
+                placeVerticalTileObjects((myMaxRoomHeight *i), (myMaxRoomHeight *i)+roomHeight, myMaxRoomWidth * j, new Wall());
+                placeVerticalTileObjects((myMaxRoomHeight *i), (myMaxRoomHeight *i)+roomHeight, (myMaxRoomWidth * j) + roomWidth-1, new Wall());
+                placeTexturesInRoom((myMaxRoomWidth *j)+1, (myMaxRoomWidth *j)+roomWidth-1, myMaxRoomHeight * i + 1,
+                        (myMaxRoomHeight * i) + roomHeight - 1);
+                placeHallways(roomWidth, roomHeight, hallway.getMyWidth(), hallway.getMyHeight(), i, j);
                 roomCounter++;
             }
         }
     }
 
     //Switch is used to facilitate random chance of a hallway spawning
-    private void placeHallways(int roomWidth, int roomHeight, int hallwayWidth, int hallwayHeight, int i, int j) throws IOException {
-        int chanceOfHallway = r.nextInt(5); //0-4
+    private void placeHallways(final int theRoomWidth, final int theRoomHeight, final int theHallwayWidth,
+                               final int theHallwayHeight, final int theI, final int theJ) throws IOException {
+        int chanceOfHallway = myRandom.nextInt(5); //0-4
         switch (chanceOfHallway){
             case 1: chanceOfHallway = 0;
-                placeEastHallway((maxRoomWidth * j) + roomWidth,
-                        maxRoomWidth * j + roomWidth + hallwayWidth, (maxRoomHeight * i) + (roomHeight / 2),
+                placeEastHallway((myMaxRoomWidth * theJ) + theRoomWidth,
+                        myMaxRoomWidth * theJ + theRoomWidth + theHallwayWidth, (myMaxRoomHeight * theI) + (theRoomHeight / 2),
                         new Wall());
                 break;
             case 2: chanceOfHallway = 1;
-                placeSouthHallway((maxRoomHeight * i) + roomHeight,
-                        maxRoomHeight * i + roomHeight + hallwayHeight, (maxRoomWidth * j) + (roomWidth / 2),
+                placeSouthHallway((myMaxRoomHeight * theI) + theRoomHeight,
+                        myMaxRoomHeight * theI + theRoomHeight + theHallwayHeight, (myMaxRoomWidth * theJ) + (theRoomWidth / 2),
                         new Wall());
                 break;
             default:
-                placeEastHallway((maxRoomWidth * j) + roomWidth,
-                        maxRoomWidth * j + roomWidth + hallwayWidth, (maxRoomHeight * i) + (roomHeight / 2),
+                placeEastHallway((myMaxRoomWidth * theJ) + theRoomWidth,
+                        myMaxRoomWidth * theJ + theRoomWidth + theHallwayWidth, (myMaxRoomHeight * theI) + (theRoomHeight / 2),
                         new Wall());
-                placeSouthHallway((maxRoomHeight * i) + roomHeight,
-                        maxRoomHeight * i + roomHeight + hallwayHeight, (maxRoomWidth * j) + (roomWidth / 2),
+                placeSouthHallway((myMaxRoomHeight * theI) + theRoomHeight,
+                        myMaxRoomHeight * theI + theRoomHeight + theHallwayHeight, (myMaxRoomWidth * theJ) + (theRoomWidth / 2),
                         new Wall());
                 break;
         }
     }
 
-    private void placeTileObject(final TileObject tile){
-        int row = r.nextInt(FLOOR_HEIGHT);
-        int column = r.nextInt(FLOOR_WIDTH);
-        if (floor[row][column] instanceof Texture) { //if it is a texture
-            floor[row][column] = tile;
+    private void placeTileObject(final TileObject theTile, final int theHeight, final int theWidth){
+        int row = myRandom.nextInt(theHeight);
+        int column = myRandom.nextInt(theWidth);
+        if (myFloor[row][column] instanceof Texture) {
+            myFloor[row][column] = theTile;
         } else {
-            placeTileObject(tile);
+            placeTileObject(theTile, theHeight, theWidth);
         }
     }
 
     private void placeEnemies() {
-        int enemiesToCreate = r.nextInt(8);
+        int enemiesToCreate = myRandom.nextInt(8);
         for(int i = 0; i < enemiesToCreate; i++){
             TileObject enemy = EnemyFactory.createEnemy();
-            placeTileObject(enemy);
+            placeTileObject(enemy, FLOOR_HEIGHT, FLOOR_WIDTH);
         }
     }
 
     private void placeItems(){
-        int berriesToCreate = r.nextInt(3);
+        int berriesToCreate = myRandom.nextInt(3);
         for(int i = 0; i < berriesToCreate; i++){
             TileObject oranBerry = new OranBerry();
-            placeTileObject(oranBerry);
+            placeTileObject(oranBerry, FLOOR_HEIGHT, FLOOR_WIDTH);
         }
-        int seedsToCreate = r.nextInt(1);
+        int seedsToCreate = myRandom.nextInt(1);
         for(int i = 0; i < seedsToCreate; i++){
             TileObject seed = new VisionSeed();
-            placeTileObject(seed);
+            placeTileObject(seed, FLOOR_HEIGHT, FLOOR_WIDTH);
         }
     }
 
-    private void placeSouthHallway(final int start, final int end, final int column, final TileObject tile) throws IOException {
-        if(end < FLOOR_HEIGHT) placeVerticalTileObjects(start, end-1, column-1, tile);
-        if(end < FLOOR_HEIGHT) placeVerticalTileObjects(start, end, column+1, tile);
-        if(end >= FLOOR_HEIGHT){
-            placeVerticalTileObjects(start-1, end-2, column, new Texture()); //place textures
-            placeVerticalTileObjects(end-2, end-1, column, new Wall());
+    private void placeSouthHallway(final int theStart, final int theEnd, final int theColumn,
+                                   final TileObject theTile) throws IOException {
+        if(theEnd < FLOOR_HEIGHT) placeVerticalTileObjects(theStart, theEnd-1, theColumn-1, theTile);
+        if(theEnd < FLOOR_HEIGHT) placeVerticalTileObjects(theStart, theEnd, theColumn+1, theTile);
+        if(theEnd >= FLOOR_HEIGHT){
+            placeVerticalTileObjects(theStart-1, theEnd-2, theColumn, new Texture()); //place textures
+            placeVerticalTileObjects(theEnd-2, theEnd-1, theColumn, new Wall());
 
         } else {
-            placeVerticalTileObjects(start-1, end+1, column, new Texture()); //place textures
+            placeVerticalTileObjects(theStart-1, theEnd+1, theColumn, new Texture()); //place textures
         }
     }
 
-    private void placeEastHallway(final int start, final int end, final int row, final TileObject tile) throws IOException {
-        placeHorizontalTileObjects(start, end, row-1, tile);
-        placeHorizontalTileObjects(start, end, row+1, tile);
-        if(end >= FLOOR_WIDTH){
-            placeHorizontalTileObjects(start-1, end-2, row, new Texture()); //place textures
-            placeHorizontalTileObjects(end-2, end-1, row, new Wall()); //place wall
+    private void placeEastHallway(final int theStart, final int theEnd, final int theRow,
+                                  final TileObject theTile) throws IOException {
+        placeHorizontalTileObjects(theStart, theEnd, theRow-1, theTile);
+        placeHorizontalTileObjects(theStart, theEnd, theRow+1, theTile);
+        if(theEnd >= FLOOR_WIDTH){
+            placeHorizontalTileObjects(theStart-1, theEnd-2, theRow, new Texture()); //place textures
+            placeHorizontalTileObjects(theEnd-2, theEnd-1, theRow, new Wall()); //place wall
 
         } else {
-            placeHorizontalTileObjects(start-1, end+1, row, new Texture()); //place textures
+            placeHorizontalTileObjects(theStart-1, theEnd+1, theRow, new Texture()); //place textures
         }
     }
 
-    private void placeTexturesInRoom(final int start, final int end, final int topRow, final int bottomRow) throws IOException {
-        for (int i = topRow; i < bottomRow; i++){
-            placeHorizontalTileObjects(start, end, i, new Texture());
+    private void placeTexturesInRoom(final int theStart, final int theEnd, final int theTopRow,
+                                     final int theBottomRow) throws IOException {
+        for (int i = theTopRow; i < theBottomRow; i++){
+            placeHorizontalTileObjects(theStart, theEnd, i, new Texture());
         }
     }
 
-    private void placeHorizontalTileObjects(final int start, final int end, final int row, final TileObject tile) throws IOException {
-        int theEnd = 0;
-        if (end >= FLOOR_WIDTH){
-            theEnd = FLOOR_WIDTH -1;
+    private void placeHorizontalTileObjects(final int theStart, final int theEnd, final int theRow,
+                                            final TileObject theTile) throws IOException {
+        int newEnd = 0;
+        if (theEnd >= FLOOR_WIDTH){
+            newEnd = FLOOR_WIDTH -1;
         } else {
-            theEnd = end;
+            newEnd = theEnd;
         }
-        for(int i = start; i < theEnd; i++){
-            TileObject newTile = tileObjectFactory(tile);
-            if( !(floor[row][i] instanceof Texture) ) floor[row][i] = newTile;
+        for(int i = theStart; i < newEnd; i++){
+            TileObject newTile = tileObjectFactory(theTile);
+            if( !(myFloor[theRow][i] instanceof Texture) ) myFloor[theRow][i] = newTile;
         }
     }
 
-    private TileObject tileObjectFactory(final TileObject tile) throws IOException {
-        if (tile instanceof Texture) return new Texture();
-        if (tile instanceof Wall) return new Wall();
+    private TileObject tileObjectFactory(final TileObject theTile) throws IOException {
+        if (theTile instanceof Texture) return new Texture();
+        if (theTile instanceof Wall) return new Wall();
         return new Wall();
     }
 
-    private void placeVerticalTileObjects(final int start, final int end, final int column, final TileObject tile) throws IOException {
-        int theEnd = 0;
-        if (end >= FLOOR_HEIGHT){
-            theEnd = FLOOR_HEIGHT -1;
+    private void placeVerticalTileObjects(final int theStart, final int theEnd, final int theColumn,
+                                          final TileObject theTile) throws IOException {
+        int newEnd = 0;
+        if (theEnd >= FLOOR_HEIGHT){
+            newEnd = FLOOR_HEIGHT -1;
         } else {
-            theEnd = end;
+            newEnd = theEnd;
         }
-        for(int i = start; i < theEnd; i++){
-            TileObject newTile = tileObjectFactory(tile);
-            if( !(floor[i][column] instanceof Texture) ) floor[i][column] = newTile;
+        for(int i = theStart; i < newEnd; i++){
+            TileObject newTile = tileObjectFactory(theTile);
+            if( !(myFloor[i][theColumn] instanceof Texture) ) myFloor[i][theColumn] = newTile;
         }
     }
 
     private void fillNullTilesWithWalls(){
-        for(int i = 0; i < floor.length; i++){
-            for (int j = 0; j < floor[0].length; j++){
-                if(floor[i][j] == null) floor[i][j] = new Wall();
+        for(int i = 0; i < myFloor.length; i++){
+            for (int j = 0; j < myFloor[0].length; j++){
+                if(myFloor[i][j] == null) myFloor[i][j] = new Wall();
             }
         }
     }
 
-    public TileObject[][] getFloor(){
-        return floor;
+    public TileObject[][] getMyFloor(){
+        return myFloor;
+    }
+
+    public void setMyFloor(final TileObject[][] theFloor){
+        myFloor = theFloor;
     }
 
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < floor.length; i++){
-            for(int j = 0; j < floor[0].length; j++){
-                sb.append(floor[i][j].toString());
+        for(int i = 0; i < myFloor.length; i++){
+            for(int j = 0; j < myFloor[0].length; j++){
+                sb.append(myFloor[i][j].toString());
             }
             sb.append("\n");
         }
@@ -249,22 +273,30 @@ public class FloorGenerator {
         StringBuilder sb = new StringBuilder();
         sb.append(toString());
         sb.append("\n");
-        sb.append("Floor Layout size: " + numberOfRoomsHorizontally + " x " + numberOfRoomsVertically);
+        sb.append("Floor Layout size: " + myNumberOfRoomsHorizontally + " x " + myNumberOfRoomsVertically);
         sb.append("\n");
-        sb.append("Number of Rooms: " + numberOfRooms);
+        sb.append("Number of Rooms: " + myNumberOfRooms);
         sb.append("\n");
-        sb.append("Max Room Height: " + maxRoomHeight);
+        sb.append("Max Room Height: " + myMaxRoomHeight);
         sb.append("\n");
-        sb.append("Max Room Width: " + maxRoomWidth);
+        sb.append("Max Room Width: " + myMaxRoomWidth);
         return sb.toString();
     }
 
-    public int getPlayerRow() {
-        return playerRow;
+    public int getMyPlayerRow() {
+        return myPlayerRow;
     }
 
-    public int getPlayerColumn() {
-        return playerColumn;
+    public int getMyPlayerColumn() {
+        return myPlayerColumn;
+    }
+
+    public void placePlayerTest(final Hero theHero, final int theHeight, final int theWidth) throws IOException {
+        placePlayer(myPlayer, theHeight, theWidth);
+    }
+
+    public void placeTileObjectTest(final TileObject theTile, final int theHeight, final int theWidth) throws IOException {
+        placeTileObject(theTile, theHeight, theWidth);
     }
 
 }

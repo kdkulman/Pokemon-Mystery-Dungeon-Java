@@ -5,7 +5,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.net.URL;
 
-public class Texture extends TileObject{
+public class Texture extends TileObject {
 
     public Texture() throws IOException {
         super("Texture", "T", false);

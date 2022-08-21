@@ -1,6 +1,5 @@
 package Views;
 
-import javax.swing.*;
 import java.awt.*;
 
 public interface View {
@@ -12,8 +11,8 @@ public interface View {
     int SCREEN_WIDTH = SCREEN_TILE_WIDTH * TILE_SIZE;
     int SCREEN_HEIGHT = SCREEN_TILE_HEIGHT * TILE_SIZE;
     int FPS = 30;
-    Font font = new Font("Dialog", Font.PLAIN, 8*SCALE);
-    Font messageFont = new Font("Dialog", Font.PLAIN, 7*SCALE);
+    Font FONT = new Font("Dialog", Font.PLAIN, 8*SCALE);
+    Font MESSAGE_FONT = new Font("Dialog", Font.PLAIN, 7*SCALE);
 
 
     public default void drawStringWithOutline(final Graphics g, final String string, final int x, final int y){
