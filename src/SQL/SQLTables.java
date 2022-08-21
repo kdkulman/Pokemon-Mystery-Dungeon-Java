@@ -6,7 +6,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public class SQLTables {
     private SQLiteDataSource myEnemyTable;
     private Connection myConnection;
@@ -15,11 +18,19 @@ public class SQLTables {
     private int myReturnValue;
     private ResultSet myResultSet;
 
+    /**
+     * Constructor for objects of class SQLTables
+     * @throws SQLException if there is an error with the SQL construction
+     */
     public SQLTables() throws SQLException {
         createEnemyTable();
         fillEnemyTable();
     }
 
+    /**
+     * Creates the enemy table in the database
+     * @Throws SQLException if there is an error with table creation
+     */
     private void createEnemyTable() {
         this.myEnemyTable = new SQLiteDataSource();
 
@@ -46,6 +57,9 @@ public class SQLTables {
 
     }
 
+    /**
+     * Fills the enemy table with data
+     */
     private void fillEnemyTable() {
 
         this.myQuery = "INSERT INTO 'enemyDB' " +
@@ -64,6 +78,10 @@ public class SQLTables {
         System.out.println("Values filled into enemy table successfully!");
     }
 
+    /**
+     * Gets the Donkey Kong stats from the database
+     * @return Donkey Kong stats
+     */
     public String extractDonkeyKongInfo() {
         String result = "";
         //this.query = "SELECT * FROM 'enemyDB';";
@@ -91,6 +109,10 @@ public class SQLTables {
         return result;
     }
 
+    /**
+     * Gets the Team Rocket Grunt stats from the database
+     * @return Team Rocket Grunt stats
+     */
     public String extractTeamRocketInfo() {
         String result = "";
         this.myQuery = "SELECT * FROM enemyDB LIMIT 1 OFFSET 1";

@@ -3,10 +3,17 @@ package DungeonCharacter.Hero;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.net.URL;
-
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public class Magikarp extends Hero {
     private double MY_BIG_ATTACK_CHANCE;
 
+    /**
+     * Constructor for the Magikarp class.
+     * @throws IOException
+     */
     public Magikarp() throws IOException {
         super("Magikarp", 60, 60,
                 0, 1, 0,
@@ -15,6 +22,11 @@ public class Magikarp extends Hero {
         setSprite();
     }
 
+    /**
+     * Sets the sprite for the Magikarp class.
+     * @throws IOException
+     * @throws IllegalArgumentException
+     */
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Hero/Magikarp/Magikarp_Up_Idle.png");
@@ -32,7 +44,10 @@ public class Magikarp extends Hero {
         }
     }
 
-
+    /**
+     * Magikarp overrides the special attack method
+     * @return string damage
+     */
     @Override
     public String specialAttack() {
         if(this.MY_BIG_ATTACK_CHANCE > Math.random()) {
@@ -45,6 +60,10 @@ public class Magikarp extends Hero {
         }
     }
 
+    /**
+     * myBigAttackChance is a getter for the private variable MY_BIG_ATTACK_CHANCE.
+     * @return double MY_BIG_ATTACK_CHANCE
+     */
     public double getMyBigAttackChance() {
         return this.MY_BIG_ATTACK_CHANCE;
     }

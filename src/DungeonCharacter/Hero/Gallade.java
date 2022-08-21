@@ -3,7 +3,10 @@ package DungeonCharacter.Hero;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.net.URL;
-
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public class Gallade extends Hero{
     private final int MY_SELF_INFLICTION = 12;
 
@@ -12,7 +15,9 @@ public class Gallade extends Hero{
                 3, 15);
         setSprite();
     }
-
+    /**
+     * Sets the sprite for the Gallade class
+     */
     protected void setSprite(){
         try {
             URL url = this.getClass().getResource("/Sprites/Hero/Gallade/Gallade_Up_Idle.png");
@@ -29,7 +34,10 @@ public class Gallade extends Hero{
             System.out.println("GALLADE input MUST BE NULL");
         }
     }
-
+    /**
+     * Gallade special attack override
+     * @return String damage done
+     */
     @Override
     public String specialAttack() {
         String damage = this.getTarget().takeDamage((int) this.getAttack());

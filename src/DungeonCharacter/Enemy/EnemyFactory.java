@@ -7,14 +7,19 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
-
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public class EnemyFactory {
 
     private static EnemyFactory myInstance;
     private static SQLTables myEnemyTable;
     private static String myDKValues;
     private static String myTRGValues;
-
+    /**
+     * Constructor for EnemyFactory.
+     */
     private EnemyFactory() {
         try {
             this.myEnemyTable = new SQLTables();
@@ -24,12 +29,18 @@ public class EnemyFactory {
         }
     }
 
-
+    /**
+     * Returns the singleton instance of EnemyFactory.
+     * @return EnemyFactory
+     */
     public static EnemyFactory getInstance() {
         if (myInstance == null) return new EnemyFactory();
         return myInstance;
     }
-
+    /**
+     * Returns a specified enemy.
+     * @return Enemy
+     */
     public Enemy createSpecificEnemy(final String theType) throws IOException {
         if(Objects.equals(theType, "DK")) {
             Enemy newDK = new DonkeyKong();
@@ -41,7 +52,10 @@ public class EnemyFactory {
             return newTRG;
         }
     }
-
+    /**
+     * Returns a random enemy.
+     * @return Enemy
+     */
     public static Enemy createEnemy() {
         Random rand = new Random();
         if (rand.nextInt(10) % 2 == 0) {
@@ -67,11 +81,16 @@ public class EnemyFactory {
     }
 
 
-
-    public static Enemy setEnemyValues( final Enemy THE_ENEMY, final String THE_TYPE){
-        Enemy temp = THE_ENEMY;
+    /**
+     * Sets the values of the enemy.
+     * @param theEnemy Enemy to set values of.
+     * @param theType String dictating the type of enemy.
+     * @return Enemy
+     */
+    public static Enemy setEnemyValues( final Enemy theEnemy, final String theType){
+        Enemy temp = theEnemy;
         Scanner valueScan = null;
-        switch (THE_TYPE) {
+        switch (theType) {
             case "DK":
                 valueScan = new Scanner(myDKValues);
                 temp.setEnemyValues(valueScan.nextLine(), valueScan.nextInt(), valueScan.nextInt(),

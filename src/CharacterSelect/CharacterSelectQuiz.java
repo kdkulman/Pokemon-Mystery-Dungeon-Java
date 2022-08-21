@@ -6,6 +6,10 @@ import java.io.IOException;
 
 //Singleton class
 //Model for CharacterSelectView
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public class CharacterSelectQuiz {
 
     private static CharacterSelectQuiz myInstance;
@@ -19,18 +23,34 @@ public class CharacterSelectQuiz {
     private static CharacterSelectQuestion[] myArrayOfQuestions;
     private Hero myPlayer;
 
+    /**
+     * Private constructor
+     */
     private CharacterSelectQuiz(){
         createQuiz();
     }
 
+    /**
+     *
+     * @return current question from array
+     */
     public static CharacterSelectQuestion getCurrentQuestion() {
         return myArrayOfQuestions[myCurrentQuestionIndex];
     }
 
+    /**
+     *
+     * @return myPlayer field
+     */
     public Hero getMyPlayer() {
         return myPlayer;
     }
 
+    /**
+     *
+     * @param thePoints
+     * @throws IOException
+     */
     public void addCharacterPoints(final CharacterSelect.CharacterSelectQuestion.Points thePoints) throws IOException {
         if (thePoints == CharacterSelectQuestion.Points.JIRACHI){
             myPointsForJirachi++;
@@ -49,6 +69,11 @@ public class CharacterSelectQuiz {
 
     }
 
+    /**
+     * Method that decides which hero the player will be based on points
+     *
+     * @throws IOException
+     */
     private void decideHero() throws IOException {
         int max = 0;
         System.out.println(myPointsForMagikarp + " points for magikarp");
@@ -76,16 +101,28 @@ public class CharacterSelectQuiz {
         }
     }
 
+    /**
+     * method that returns current quiz instance or creates new quiz if none
+     * @return
+     * @throws IOException
+     */
     public static CharacterSelectQuiz getMyInstance() throws IOException {
         if (myInstance == null){
             myInstance = new CharacterSelectQuiz();
         }
         return myInstance;
     }
+    /**
+     *
+     * @return myIsQuizCompleted field
+     */
     public static boolean isQuizCompleted() {
         return myIsQuizCompleted;
     }
-
+    /**
+     *
+     * @return myCurrentQuestionIndex field
+     */
     private static void createQuiz(){
         myArrayOfQuestions = new CharacterSelectQuestion[NUMBER_OF_QUESTIONS];
 
