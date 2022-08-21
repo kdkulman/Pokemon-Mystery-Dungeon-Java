@@ -7,7 +7,6 @@ public class FloorTraversal {
     private boolean myTraversableBoolean;
     private final int myPlayerRow;
     private final int myPlayerColumn;
-
     private final int myFloorHeight;
     private final int myFloorWidth;
 

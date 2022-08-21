@@ -41,25 +41,43 @@ public class FloorGenerator {
         putRoomsInFloor();
         placeEnemies();
         placeItems();
-        placeTileObject(new Staircase());//place staircase
-        placePlayer(thePlayer);
+        placeTileObject(new Staircase(), FLOOR_HEIGHT, FLOOR_WIDTH);//place staircase
+        placePlayer(thePlayer, FLOOR_HEIGHT, FLOOR_WIDTH);
         fillNullTilesWithWalls();
     }
 
-    private void placePlayer(final Hero thePlayer) throws IOException {
-        int row = myRandom.nextInt(FLOOR_HEIGHT);
-        int column = myRandom.nextInt(FLOOR_WIDTH);
-        if (myFloor[row][column] instanceof Texture){ //if it is a texture
+    //JUNIT TEST CONSTRUCTOR
+    private FloorGenerator(final Hero thePlayer, final TileObject[][] theFloor, final int theFloorHeight,
+                           final int theFloorWidth) throws IOException {
+        myEnemyFactory = EnemyFactory.getInstance();
+        myPlayer = thePlayer;
+        myRandom = new Random();
+        myFloor = new TileObject[FLOOR_HEIGHT][FLOOR_WIDTH];
+        myNumberOfRoomsHorizontally = generateFloorLayout();
+        myNumberOfRoomsVertically = generateFloorLayout();
+        myNumberOfRooms = generateNumberOfRooms();
+        myRooms = new Room[myNumberOfRooms];
+        myMaxRoomWidth = (FLOOR_WIDTH / myNumberOfRoomsHorizontally);
+        myMaxRoomHeight = (FLOOR_HEIGHT / myNumberOfRoomsVertically);
+        createListOfRooms();
+        putRoomsInFloor();
+        placeEnemies();
+        placeItems();
+        placeTileObject(new Staircase(), FLOOR_HEIGHT, FLOOR_WIDTH);//place staircase
+        placePlayer(myPlayer, FLOOR_HEIGHT, FLOOR_WIDTH);
+        fillNullTilesWithWalls();
+    }
+
+    private void placePlayer(final Hero thePlayer, final int theHeight, final int theWidth) throws IOException {
+        int row = myRandom.nextInt(theHeight);
+        int column = myRandom.nextInt(theWidth);
+        if (myFloor[row][column] instanceof Texture){
             myFloor[row][column] = thePlayer;
             myPlayerRow = row;
             myPlayerColumn = column;
         } else {
-            placePlayer(thePlayer);
+            placePlayer(thePlayer, theHeight, theWidth);
         }
-    }
-
-    private void placeHero(final TileObject thePlayer) {
-        myFloor[20][30] = thePlayer;
     }
 
     private int generateFloorLayout(){
@@ -125,13 +143,13 @@ public class FloorGenerator {
         }
     }
 
-    private void placeTileObject(final TileObject theTile){
-        int row = myRandom.nextInt(FLOOR_HEIGHT);
-        int column = myRandom.nextInt(FLOOR_WIDTH);
+    private void placeTileObject(final TileObject theTile, final int theHeight, final int theWidth){
+        int row = myRandom.nextInt(theHeight);
+        int column = myRandom.nextInt(theWidth);
         if (myFloor[row][column] instanceof Texture) {
             myFloor[row][column] = theTile;
         } else {
-            placeTileObject(theTile);
+            placeTileObject(theTile, theHeight, theWidth);
         }
     }
 
@@ -139,7 +157,7 @@ public class FloorGenerator {
         int enemiesToCreate = myRandom.nextInt(8);
         for(int i = 0; i < enemiesToCreate; i++){
             TileObject enemy = EnemyFactory.createEnemy();
-            placeTileObject(enemy);
+            placeTileObject(enemy, FLOOR_HEIGHT, FLOOR_WIDTH);
         }
     }
 
@@ -147,12 +165,12 @@ public class FloorGenerator {
         int berriesToCreate = myRandom.nextInt(3);
         for(int i = 0; i < berriesToCreate; i++){
             TileObject oranBerry = new OranBerry();
-            placeTileObject(oranBerry);
+            placeTileObject(oranBerry, FLOOR_HEIGHT, FLOOR_WIDTH);
         }
         int seedsToCreate = myRandom.nextInt(1);
         for(int i = 0; i < seedsToCreate; i++){
             TileObject seed = new VisionSeed();
-            placeTileObject(seed);
+            placeTileObject(seed, FLOOR_HEIGHT, FLOOR_WIDTH);
         }
     }
 
@@ -235,6 +253,10 @@ public class FloorGenerator {
         return myFloor;
     }
 
+    public void setMyFloor(final TileObject[][] theFloor){
+        myFloor = theFloor;
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -267,6 +289,14 @@ public class FloorGenerator {
 
     public int getMyPlayerColumn() {
         return myPlayerColumn;
+    }
+
+    public void placePlayerTest(final Hero theHero, final int theHeight, final int theWidth) throws IOException {
+        placePlayer(myPlayer, theHeight, theWidth);
+    }
+
+    public void placeTileObjectTest(final TileObject theTile, final int theHeight, final int theWidth) throws IOException {
+        placeTileObject(theTile, theHeight, theWidth);
     }
 
 }
