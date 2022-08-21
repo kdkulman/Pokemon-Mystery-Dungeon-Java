@@ -12,12 +12,21 @@ import TileObjects.Items.VisionSeed;
 
 import java.awt.event.KeyAdapter;
 import java.io.IOException;
-
+/**
+ * @author Stephen VanLuven, Kevin Kulman, and Anthony Owens
+ * @Version 1.0
+ */
 public final class InputControls extends KeyAdapter {
     private static int myPlayerRow;
     private static int myPlayerColumn;
     private static TileObject[][] myFloor;
 
+    /**
+     * regular attack input method
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     * @throws IOException
+     */
     public static Floor useRegularAttack(final Floor theFloor) throws IOException {
         TileObject[][] tempFloor = theFloor.getFloorArray();
         updateFloorFields(theFloor);
@@ -63,6 +72,11 @@ public final class InputControls extends KeyAdapter {
         return new Floor(tempFloor, myPlayerRow, myPlayerColumn, player);
     }
 
+    /**
+     * perform attack method
+     * @param thePlayer the hero attacking
+     * @param theFoe the enemy to be attacked
+     */
     private static void performAttack(final Hero thePlayer, final Enemy theFoe) {
         theFoe.setTarget(thePlayer);
         thePlayer.setTarget(theFoe);
@@ -72,6 +86,11 @@ public final class InputControls extends KeyAdapter {
         theFoe.clearTarget();
     }
 
+    /**
+     * special attack method
+     * @param thePlayer the hero attacking
+     * @param theFoe the enemy to be attacked
+     */
     private static void performSpecialAttack(final Hero thePlayer, final Enemy theFoe) {
         theFoe.setTarget(thePlayer);
         thePlayer.setTarget(theFoe);
@@ -81,7 +100,12 @@ public final class InputControls extends KeyAdapter {
         theFoe.clearTarget();
     }
 
-
+    /**
+     * use special attack input method
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     * @throws IOException
+     */
     public static Floor useSpecialAttack(final Floor theFloor) throws IOException {
         TileObject[][] tempFloor = theFloor.getFloorArray();
         updateFloorFields(theFloor);
@@ -127,6 +151,11 @@ public final class InputControls extends KeyAdapter {
         return new Floor(tempFloor, myPlayerRow, myPlayerColumn, player);
     }
 
+    /**
+     * Method checking if player direction is valid attack direction
+     * @param theFloor The floor layout to be checked
+     * @return true if valid attack direction, false otherwise
+     */
     private static boolean checkAttackDirection(final Floor theFloor) {
         TileObject[][] tempFloor = theFloor.getFloorArray();
         Hero player = (Hero) tempFloor[myPlayerRow][myPlayerColumn];
@@ -148,6 +177,11 @@ public final class InputControls extends KeyAdapter {
         }
     }
 
+    /**
+     * Use oranberry input method
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     */
     public static Floor useOranBerry(final Floor theFloor) {
         updateFloorFields(theFloor);
         Floor returnFloor = theFloor;
@@ -162,6 +196,11 @@ public final class InputControls extends KeyAdapter {
         return returnFloor;
     }
 
+    /**
+     * use vision seed input method
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     */
     public static Floor useVisionSeed(final Floor theFloor) {
         updateFloorFields(theFloor);
         Floor returnFloor = theFloor;
@@ -181,18 +220,30 @@ public final class InputControls extends KeyAdapter {
         return returnFloor;
     }
 
+    /**
+     * Quit game input method
+     */
     public static void quitGame() {
         System.exit(0);
     }
 
-    //This method exists for readability - shorthanding these fields
-    //And elminates some duplicate lines of code
+    /**
+     * This method exists for readability - shorthanding these fields
+     * And elminates some duplicate lines of code
+     * @param theFloor The floor to be manipulated
+     */
     private static void updateFloorFields(final Floor theFloor){
         myPlayerRow = theFloor.getMyPlayerRow();
         myPlayerColumn = theFloor.getMyPlayerColumn();
         myFloor = theFloor.getFloorArray();
     }
 
+    /**
+     * Method that calls floor generate method and returns new floor
+     * @param theHero The hero to be placed on the floor
+     * @return new floor
+     * @throws IOException
+     */
     public static Floor getGoodMaze(final Hero theHero) throws IOException {
         Floor returnFloor = new Floor(theHero);
         return returnFloor;
@@ -203,6 +254,11 @@ public final class InputControls extends KeyAdapter {
         updateOranBerry.collectOranBerry();
     }
 
+    /**
+     * Method that updates minimap visibility
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     */
     private static Floor updateTileObjectVisibility(final Floor theFloor){
         updateFloorFields(theFloor);
         myFloor[myPlayerRow -1][myPlayerColumn -1].setVisibleOnMiniMap();
@@ -219,30 +275,64 @@ public final class InputControls extends KeyAdapter {
         return returnFloor;
     }
 
+    /**
+     * Move up input method
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     * @throws IOException
+     */
     public static Floor moveUp(final Floor theFloor) throws IOException {
         updateFloorFields(theFloor);
         return move(theFloor, myPlayerRow -1, myPlayerColumn,
                 "Cannot move myUp!", DungeonCharacter.Direction.UP);
     }
 
+    /**
+     * Move down input method
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     * @throws IOException
+     */
     public static Floor moveDown(final Floor theFloor) throws IOException {
         updateFloorFields(theFloor);
         return move(theFloor, myPlayerRow +1, myPlayerColumn,
                 "Cannot move myDown!", DungeonCharacter.Direction.DOWN);
     }
 
+    /**
+     * Move left input method
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     * @throws IOException
+     */
     public static Floor moveLeft(final Floor theFloor) throws IOException {
         updateFloorFields(theFloor);
         return move(theFloor, myPlayerRow, myPlayerColumn -1,
                 "Cannot move myLeft!", DungeonCharacter.Direction.LEFT);
     }
 
+    /**
+     * Move right input method
+     * @param theFloor The floor to be manipulated
+     * @return new floor
+     * @throws IOException
+     */
     public static Floor moveRight(final Floor theFloor) throws IOException {
         updateFloorFields(theFloor);
         return move(theFloor, myPlayerRow, myPlayerColumn +1,
                 "Cannot move myRight!", DungeonCharacter.Direction.RIGHT);
     }
 
+    /**
+     * Move method
+     * @param theFloor The floor to be manipulated
+     * @param theDestinationRow The row to move to
+     * @param theDestinationColumn The column to move to
+     * @param theErrorMessage The error message to be displayed
+     * @param theDirection The direction to face
+     * @return new floor
+     * @throws IOException
+     */
     public static Floor move(final Floor theFloor, final int theDestinationRow,
                              final int theDestinationColumn, final String theErrorMessage,
                              final DungeonCharacter.Direction theDirection) throws IOException {
@@ -281,6 +371,11 @@ public final class InputControls extends KeyAdapter {
         System.out.println("Cannot move myUp!");
         return theFloor;
     }
+
+    /**
+     * save game method
+     * @param theFloor The floor to be saved
+     */
     public static void saveGame(final Floor theFloor){
         try{
             SaveManager.saveCurrentGameState(theFloor);
